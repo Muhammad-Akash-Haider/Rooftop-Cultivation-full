@@ -1,22 +1,41 @@
-import Ecommerce from "./components/Ecommerce";
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import Section from "./components/Section";
-import E2 from "./components/E2";
-import Footer from "./components/Footer";
+
+import Sellerdashboard from "./Dashboards/SellerDashboard/Sellerdashboard";
+import { PrimeReactProvider } from 'primereact/api';
+import { Route, Routes } from 'react-router-dom';
+import Home from "./components/Home"
+import Profileverify from './Dashboards/SellerDashboard/Profileverify';
+import Addplant from './Dashboards/SellerDashboard/Addplant';
+import Orders from './Dashboards/SellerDashboard/Orders';
+import PaymentHistory from './Dashboards/SellerDashboard/PaymentHistory';
+import Yournurcery from './Dashboards/SellerDashboard/YourNurcery';
+import Returns from './Dashboards/SellerDashboard/Returns';
+import AllProducts from './Dashboards/SellerDashboard/AllProducts';
+
+
 
 
 
 function App() {
   return (
-   <div>
-    <Header/>
-    <Nav/>
-    <Section/>
-    <Ecommerce/>
-    <E2/>
-    <Footer/>
-   </div>
+    <div>
+      <PrimeReactProvider>
+
+        <Routes>
+         
+          <Route path="/Profileverify" element={<Profileverify />}></Route>
+          <Route path="/addplant" element={<Addplant />}></Route>
+          <Route path="/myorders" element={<Orders />}></Route>
+          <Route path="/paymenthistory" element={<PaymentHistory />}></Route>
+          <Route path="/yournurcery" element={<Yournurcery />}></Route>
+          <Route path="/returns" element={<Returns />}></Route>
+          <Route path="/Products" element={<AllProducts />}></Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
+
+        </Routes>
+
+      </PrimeReactProvider>
+    </div>
   );
 }
 
