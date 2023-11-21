@@ -12,14 +12,14 @@ import img12 from'../images/img12.jpg'
 export default function E2() {
   return (
           <div className='ml-5'>
-      <div className='ml-10 pl-12 font-bold text-xl'>New Arrivals</div>
+      <div className='pl-12 ml-10 text-xl font-bold'>New Arrivals</div>
       <section class="text-gray-600 body-font">
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-wrap -m-4">
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-        <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+        <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Lily</h2>
@@ -27,9 +27,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Daffodil</h2>
@@ -37,9 +37,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Bamboo</h2>
@@ -47,9 +47,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Moringa</h2>
@@ -57,9 +57,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Rose</h2>
@@ -67,9 +67,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Moringa</h2>
@@ -77,9 +77,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Neptune</h2>
@@ -87,9 +87,9 @@ export default function E2() {
         </div>
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className='block relative h-48 rounded overflow-hidden'>
-            <img className='object-cover object-center w-full h-full block' src={img12} alt="" />
-        </a>
+      <span className='relative block h-48 overflow-hidden rounded'>
+            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+        </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
           <h2 class="text-gray-900 title-font text-lg font-medium">Bamboo</h2>
