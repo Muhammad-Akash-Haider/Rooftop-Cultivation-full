@@ -1,5 +1,6 @@
 import React from 'react'
-import Plants from'../images/Plants.png'
+import img15 from'../images/img15.png'
+import { Link } from 'react-router-dom';
 
 const Section=()=>{
   return (
@@ -13,13 +14,15 @@ const Section=()=>{
       </div>
       <p class="mb-8 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora ullam eveniet commodi deserunt qui ad nisi, ratione voluptas architecto molestiae eaque eius ut tenetur mollitia totam porro odio, velit molestias!</p>
       <div class="flex justify-center">
+        
+        <Link to="Cart">
         <button class="inline-flex text-white bg-[#00967C] border-0 py-2 px-7 focus:outline-none
-         hover:bg-[#1B4636] rounded text-lg"> Categories </button>
+         hover:bg-[#1B4636] rounded text-lg"> Categories </button></Link>
         <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">New Arrivals</button>
       </div>
     </div>
     <div className='lg:max-w-s lg:w-s md:w-1/2 w-5/6'>
-        <img className='object-cover object-center rounded' src={Plants} alt="" />
+        <img className='object-cover object-center rounded' src={img15} alt="" />
     </div>
   </div>
 </section>

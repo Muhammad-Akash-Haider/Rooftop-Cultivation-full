@@ -1,7 +1,11 @@
 
+import { Link, Route, Routes } from "react-router-dom";
+
+
+
 import Sellerdashboard from "./Dashboards/SellerDashboard/Sellerdashboard";
 import { PrimeReactProvider } from 'primereact/api';
-import { Route, Routes } from 'react-router-dom';
+
 import Home from "./components/Home"
 import Profileverify from './Dashboards/SellerDashboard/Profileverify';
 import Addplant from './Dashboards/SellerDashboard/Addplant';
@@ -13,11 +17,17 @@ import AllProducts from './Dashboards/SellerDashboard/AllProducts';
 
 
 
+import Login from "./components/Pages/Login";
+import Register from "./components/Pages/Register"
+
 
 
 function App() {
   return (
-    <div>
+
+    
+ 
+    <>
       <PrimeReactProvider>
 
         <Routes>
@@ -35,7 +45,8 @@ function App() {
         </Routes>
 
       </PrimeReactProvider>
-    </div>
+    </>
+
   );
 }
 
