@@ -13,8 +13,8 @@ export default function Ecommerce() {
   return (
     <div className='ml-5'>
 
-      <div className='pl-12 ml-10 text-xl font-bold'>Categories</div>
-      <section class="text-gray-600 body-font cursor-pointer">
+      {/* <div className='pl-12 ml-10 text-xl font-bold'>Categories</div>
+      <section class="text-gray-600 body-font cursor-pointer"> */}
 
       <div className='pl-12 ml-10 text-xl font-bold'>Categories</div>
       <section class="text-gray-600 body-font">
