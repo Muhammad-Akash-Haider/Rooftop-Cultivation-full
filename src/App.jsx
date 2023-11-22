@@ -15,8 +15,6 @@ import Yournurcery from './Dashboards/SellerDashboard/YourNurcery';
 import Returns from './Dashboards/SellerDashboard/Returns';
 import AllProducts from './Dashboards/SellerDashboard/AllProducts';
 
-
-
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register"
 
@@ -24,9 +22,6 @@ import Register from "./components/Pages/Register"
 
 function App() {
   return (
-
-    
- 
     <>
       <PrimeReactProvider>
 
@@ -41,6 +36,8 @@ function App() {
           <Route path="/Products" element={<AllProducts />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
+          <Route path="/login" element={<Login/>}></Route>
+          <Route path="/register" element={<Register />}></Route>
 
         </Routes>
 
