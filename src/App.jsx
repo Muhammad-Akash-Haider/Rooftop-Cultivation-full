@@ -17,6 +17,9 @@ import AllProducts from './Dashboards/SellerDashboard/AllProducts';
 import Checkout from "./components/Pages/Checkout";
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register"
+import Product from "./components/Pages/Product";
+import Forgot from "./components/Pages/Forgot";
+import Header from "./components/Header";
 
 
 
@@ -36,10 +39,14 @@ function App() {
           <Route path="/Products" element={<AllProducts />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
-          <Route path="/login" element={<Login/>}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+
+          <Route path="/product" element={<Product />}></Route>
+          <Route path="/forgot" element={<Forgot />}></Route>
+
+
           <Route path="/checkout" element={<Checkout />}></Route>
-          
 
         </Routes>
 
