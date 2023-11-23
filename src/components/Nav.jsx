@@ -17,7 +17,7 @@ const Nav = () => {
                 <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
               </span>
               <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base justify-center">
-                <span class="mr-5 cursor-pointer hover:text-black">Home</span>
+               <Link to="/"><span class="mr-5 cursor-pointer hover:text-black">Home</span></Link> 
                 <span class="mr-5 cursor-pointer hover:text-black">About</span>
                 <span class="mr-5 cursor-pointer hover:text-black">Contact</span>
                 <span class="mr-5 cursor-pointer hover:text-black">Profile</span>

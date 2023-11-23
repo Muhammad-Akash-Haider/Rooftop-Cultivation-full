@@ -1,12 +1,11 @@
+
+
 import React from 'react'
 
-
-import img12 from'./'
-
-export default function Add_To_Cart() {
+function Cart() {
   return (
     <div>
-        <section class="text-gray-600 body-font overflow-hidden">
+  <section class="text-gray-600 body-font overflow-hidden">
   {/* <div class="container px-5 py-24 mx-auto"> */}
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
@@ -47,3 +46,5 @@ export default function Add_To_Cart() {
     </div>
   )
 }
+
+export default Cart
