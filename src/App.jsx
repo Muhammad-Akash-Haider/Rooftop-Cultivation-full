@@ -6,7 +6,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import Sellerdashboard from "./Dashboards/SellerDashboard/Sellerdashboard";
 import { PrimeReactProvider } from 'primereact/api';
 
-import Home from "./components/Home"
+import Home from "./components/Pages/Home"
 import Profileverify from './Dashboards/SellerDashboard/Profileverify';
 import Addplant from './Dashboards/SellerDashboard/Addplant';
 import Orders from './Dashboards/SellerDashboard/Orders';
@@ -14,7 +14,7 @@ import PaymentHistory from './Dashboards/SellerDashboard/PaymentHistory';
 import Yournurcery from './Dashboards/SellerDashboard/YourNurcery';
 import Returns from './Dashboards/SellerDashboard/Returns';
 import AllProducts from './Dashboards/SellerDashboard/AllProducts';
-
+import Checkout from "./components/Pages/Checkout";
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
@@ -41,9 +41,12 @@ function App() {
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
+
           <Route path="/product" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
 
+
+          <Route path="/checkout" element={<Checkout />}></Route>
 
         </Routes>
 
