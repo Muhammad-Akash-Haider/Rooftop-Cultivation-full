@@ -12,8 +12,8 @@ const Nav = () => {
           <header class="text-black body-font">
             <div class="container cursor-pointer mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
               <span class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-                <img className='fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" />
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" />
+                <span d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></span>
                 <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
               </span>
               <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base justify-center">
