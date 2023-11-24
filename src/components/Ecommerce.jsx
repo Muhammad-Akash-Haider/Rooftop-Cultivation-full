@@ -8,14 +8,14 @@ import img5 from'../images/img5.jpg'
 import img6 from'../images/img6.jpg'
 import img7 from'../images/img7.jpg'
 import img12 from'../images/img12.jpg'
+import seed from'../images/seed.png'
+import fruit2 from'../images/fruit2.png'
+import vegetable from'../images/vegetable.png'
+import flower from'../images/flower.png'
 
 export default function Ecommerce() {
   return (
     <div className='ml-5'>
-
-      {/* <div className='pl-12 ml-10 text-xl font-bold'>Categories</div>
-      <section class="text-gray-600 body-font cursor-pointer"> */}
-
       <div className='pl-12 ml-10 text-xl font-bold'>Categories</div>
       <section class="text-gray-600 body-font">
 
@@ -23,7 +23,7 @@ export default function Ecommerce() {
     <div class="flex flex-wrap -m-4">
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
         <span className='relative block h-48 overflow-hidden rounded'>
-            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+            <img className='block object-cover object-center w-full h-full' src={fruit2} alt="" />
         </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
@@ -41,7 +41,7 @@ export default function Ecommerce() {
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
       <span className='relative block h-48 overflow-hidden rounded'>
-            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+            <img className='block object-cover object-center w-full h-full' src={flower} alt="" />
         </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
@@ -50,7 +50,7 @@ export default function Ecommerce() {
       </div>
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
       <span className='relative block h-48 overflow-hidden rounded'>
-            <img className='block object-cover object-center w-full h-full' src={img12} alt="" />
+            <img className='block object-cover object-center w-full h-full' src={seed} alt="" />
         </span>
         <div class="mt-4">
           <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">PLANTS</h3>
