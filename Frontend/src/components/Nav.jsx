@@ -15,14 +15,13 @@ const Nav = () => {
           <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
         </span>
         
-        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base justify-center gap-7">
+        <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
 
-          <Link to="/Product">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                 <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
               </svg>
-            </div></Link>
+            </div>
 
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -46,14 +45,8 @@ const Nav = () => {
             <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' />
           </div>
 
-          {/* <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base justify-center">
-            <Link to="/"><span class="mr-5 cursor-pointer hover:text-black">Home</span></Link>
-            <span class="mr-5 cursor-pointer hover:text-black">About</span>
-            <span class="mr-5 cursor-pointer hover:text-black">Contact</span>
-            <span class="mr-5 cursor-pointer hover:text-black">Profile</span>
 
-          </nav> */}
-          <div className='flex justify-between gap-2'>
+          <div className='flex justify-between ml-20 gap-2'>
             <Link to="/Login">
               <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
               </button></Link>
