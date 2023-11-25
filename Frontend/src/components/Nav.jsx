@@ -1,14 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../images/LOGO.png'
-// import { useSelector } from 'react-redux';
-// import { selectUser } from '../store/userSlice';
-const user_id = localStorage.getItem('user_id');
-const user_type = localStorage.getItem('user_type');
+
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../images/LOGO.png';
 
 const Nav = () => {
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  const [user_type, setUser_type] = useState(localStorage.getItem('user_type'));
 
-  // const user = useSelector(selectUser);
+  const logout = () => {
+    localStorage.clear();
+    setUser_id(null);
+    setUser_type(null);
+  };
+
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+    setUser_type(localStorage.getItem('user_type'));
+  }, [user_id, user_type]); 
+
+ 
 
   return (
     <header class="text-gray-700 body-font">
@@ -18,7 +29,7 @@ const Nav = () => {
           <span d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></span>
           <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
         </span>
-        
+
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
 
           <div>
@@ -49,15 +60,30 @@ const Nav = () => {
             <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' />
           </div>
 
+          {user_id ?
+            (<div className='flex justify-between gap-2 ml-20'>
 
-          <div className='flex justify-between gap-2 ml-20'>
-            <Link to="/Login">
-              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
-              </button></Link>
-            <Link to="/Register">
-              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
-              </button></Link>
-          </div>
+              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0" onClick={logout} >Logout
+              </button>
+              <Link to="SellerDashboard">
+              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0"  >Seller dashboard
+              </button>
+              </Link>
+
+            </div>)
+            :
+            (<div className='flex justify-between gap-2 ml-20'>
+              <Link to="/Login">
+                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
+                </button></Link>
+              <Link to="/Register">
+                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
+                </button></Link>
+            </div>)
+          }
+
+
+
         </nav>
       </div>
     </header>
