@@ -30,16 +30,16 @@ export default function Register() {
 
   const submit = () => {
    
-    if (userData.password == userData.confirm_password) {
+    if (userData.password === userData.confirm_password) {
 
-      if( userData.First_name!= '',
-      userData.last_name != '',
-      userData.email != '',
-      userData.password !=  '',
-      userData.confirm_password != '',
-      userData.user_type !=  '',
-      userData.city != '',
-      userData.phone !=  '')
+      if( userData.First_name!== '',
+      userData.last_name !== '',
+      userData.email !== '',
+      userData.password !==  '',
+      userData.confirm_password !== '',
+      userData.user_type !==  '',
+      userData.city !== '',
+      userData.phone !==  '')
       {
         const backendEndpoint = 'http://localhost:5000/user/signup';
 
