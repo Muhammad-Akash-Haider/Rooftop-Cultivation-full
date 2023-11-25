@@ -1,10 +1,12 @@
 const express = require('express')
 const app= express();
-const port= 5999
+const port= 5000
 const ConnetDB= require('./Config/db')
 const bodyparser =require('body-parser')
 
-
+var cors = require('cors')
+ 
+app.use(cors())
 //Configuring Express Server
 
 app.use(bodyparser.json())
@@ -22,7 +24,7 @@ const user=require('./Routes/userRoutes')
 
 
 
-//Routes Track
+//Routes Trackttps://www.thunderclient.com/welcome
 
 // app.use('/admin',admin)
 // app.use('/chat', chat)
