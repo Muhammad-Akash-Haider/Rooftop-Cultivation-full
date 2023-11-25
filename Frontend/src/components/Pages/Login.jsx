@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from 'react-redux';
+import { setUser } from "../../store/userSlice";
 
 function Login() {
-
   const [userData, setUserData] = useState({
-   
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,15 +21,9 @@ function Login() {
       [name]: value,
     }));
   };
-  const navigate = useNavigate();
 
   const submit = () => {
-
-
-
-    if (
-      userData.email !== '',
-      userData.password !== '') {
+    if (userData.email !== '' && userData.password !== '') {
       const backendEndpoint = 'http://localhost:5000/user/login';
 
       fetch(backendEndpoint, {
@@ -40,27 +36,25 @@ function Login() {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
+          // Use dispatch here with the action
+          dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
+
           toast.success("Successfully registered", {
             position: toast.POSITION.TOP_RIGHT,
           });
-         
+          navigate('/')
         })
         .catch((error) => {
           console.error('Error:', error);
           toast.warning("Incorrect email or password", {
             position: toast.POSITION.TOP_RIGHT,
           });
-
         });
     } else {
       toast.warning("missing input fields", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-
-
-
-
   }
 
 

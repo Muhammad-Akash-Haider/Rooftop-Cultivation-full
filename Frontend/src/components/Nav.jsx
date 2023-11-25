@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../images/LOGO.png'
-
+import { useSelector } from 'react-redux';
+import { selectUser } from '../store/userSlice';
 
 
 const Nav = () => {
 
+  const user = useSelector(selectUser);
+  
   return (
     <header class="text-gray-700 body-font">
       <div class="container cursor-pointer mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -14,7 +17,9 @@ const Nav = () => {
           <span d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></span>
           <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
         </span>
-        
+        <h1>user details</h1><br />
+        user type{user.user_type }<br/>
+        user id{ user.user_id}
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
 
             <div>
@@ -46,7 +51,7 @@ const Nav = () => {
           </div>
 
 
-          <div className='flex justify-between ml-20 gap-2'>
+          <div className='flex justify-between gap-2 ml-20'>
             <Link to="/Login">
               <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
               </button></Link>
