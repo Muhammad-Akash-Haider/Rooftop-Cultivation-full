@@ -1,10 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../images/LOGO.png'
-
-
+// import { useSelector } from 'react-redux';
+// import { selectUser } from '../store/userSlice';
+const user_id = localStorage.getItem('user_id');
+const user_type = localStorage.getItem('user_type');
 
 const Nav = () => {
+
+  // const user = useSelector(selectUser);
 
   return (
     <header class="text-gray-700 body-font">
@@ -17,11 +21,11 @@ const Nav = () => {
         
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
 
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
-              </svg>
-            </div>
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+            </svg>
+          </div>
 
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -46,7 +50,7 @@ const Nav = () => {
           </div>
 
 
-          <div className='flex justify-between ml-20 gap-2'>
+          <div className='flex justify-between gap-2 ml-20'>
             <Link to="/Login">
               <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
               </button></Link>
@@ -54,7 +58,7 @@ const Nav = () => {
               <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
               </button></Link>
           </div>
-          </nav>
+        </nav>
       </div>
     </header>
   )

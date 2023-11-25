@@ -64,33 +64,41 @@ exports.signup = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-
-
-  const email = req.body.email;
-  const password = req.body.password;
-
-  var hash = bcrypt.hashSync(password, saltRounds);
-
+  const { email, password } = req.body;
 
   if (email && password) {
-    connection.query('SELECT password FROM users WHERE email = ?', [email],
-      (error, row, fields) => {
-        if (bcrypt.compareSync(password, hash)) {
-          res.json({
-            status: true,
-            Message: "Wellcome.**********SYou are Successfully login"
-          });
+    try {
+      // Adjust your query to also select user_id and user_type
+      const query = 'SELECT id, user_type, password FROM users WHERE email = ?';
+      connection.query(query, [email], async (error, results, fields) => {
+        if (error) {
+          res.status(500).send('Server error');
+          return;
+        }
+
+        if (results.length > 0) {
+          // Compare the password with the hashed password in the database
+          const match = await bcrypt.compare(password, results[0].password);
+          if (match) {
+            res.json({
+              status: true,
+              message: "Welcome. You are successfully logged in.",
+
+              user_id: results[0].id,    // Send user_id
+              user_type: results[0].user_type // Send user_type
+              
+            });
+          } else {
+            res.send('Incorrect Email and/or Password!');
+          }
         } else {
           res.send('Incorrect Email and/or Password!');
         }
-        res.end();
       });
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
   } else {
-    res.send('Please enter Username and Password!');
-    res.end();
+    res.send('Please enter Email and Password!');
   }
-
-
-
-
-}
+};
