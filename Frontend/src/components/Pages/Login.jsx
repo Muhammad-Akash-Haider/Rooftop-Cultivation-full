@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch } from 'react-redux';
-import { setUser } from "../../store/userSlice";
+// import { useDispatch } from 'react-redux';
+// import { setUser } from "../../store/userSlice";
 
 function Login() {
   const [userData, setUserData] = useState({
@@ -12,7 +12,7 @@ function Login() {
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch(); 
+  // const dispatch = useDispatch(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,8 +37,9 @@ function Login() {
         .then(data => {
           console.log('Success:', data);
           // Use dispatch here with the action
-          dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
-
+          // dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
+          localStorage.setItem('user_id', data.user_id);
+          localStorage.setItem('user_type', data.user_type);
           toast.success("Successfully registered", {
             position: toast.POSITION.TOP_RIGHT,
           });
