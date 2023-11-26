@@ -3,13 +3,13 @@ const app= express();
 const port= 5000
 const ConnetDB= require('./Config/db')
 const bodyparser =require('body-parser')
-
 var cors = require('cors')
- 
+
 app.use(cors())
 //Configuring Express Server
 
-app.use(bodyparser.json())
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }))
 
 
 //Routes
