@@ -23,6 +23,7 @@ import 'react-quill/dist/quill.snow.css';
 
 
 
+
 const Addplant = () => {
 
 
@@ -45,12 +46,12 @@ const Addplant = () => {
 
   const formik = useFormik({
     initialValues: {
-      buyer_id: localStorage.getItem('user_id') || '',
+      seller_id: localStorage.getItem('user_id') || '',
       name: '',
       price: '',
       stock: '',
       category: '',
-      // discription:''
+     
     },
     onSubmit: (values) => {
       // Here, you handle your form submission
@@ -127,7 +128,7 @@ const Addplant = () => {
           </Link>
           <Link to="/yournurcery">
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< CgProfile className="inline text-white" /> &nbsp;
-              Your nursery</li></Link>discription
+              Your nursery</li></Link>
 
 
           <Link to="/Profileverify" ><li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< MdOutlineDomainVerification className="inline text-white" /> &nbsp;
@@ -173,9 +174,7 @@ const Addplant = () => {
 
           <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
           <ReactQuill theme="snow"
-          // name='discription'
-            // value={productData.description} onChange={handleChange}
-            // onChange={formik.handleChange} value={formik.values.discription} 
+         
             onChange={handleEditorChange}
           />
           {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
