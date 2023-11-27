@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 
 import { MdSpaceDashboard } from 'react-icons/md';
@@ -12,7 +12,7 @@ import { BsShopWindow } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { MdOutlineDomainVerification } from 'react-icons/md';
 import { TbTruckReturn } from 'react-icons/tb';
-import {Link}  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -24,6 +24,27 @@ const PaymentHistory = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const [paymentData, setpaymentData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/payment/get');
+
+        const data = await response.json();
+
+        setpaymentData(data.rows);
+
+
+      } catch (error) {
+        console.error('Error fetching payment data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <div className="flex">
@@ -41,30 +62,30 @@ const PaymentHistory = () => {
             </li>
           </Link>
           <Link to="/addplant">
-          <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />
-            &nbsp; Add plant</li>
-            </Link>
+            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />
+              &nbsp; Add plant</li>
+          </Link>
           <Link to="/Products" >
-          <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< BsShopWindow className="inline text-white" />
-            &nbsp; All Products</li></Link>
-           
-            <Link to="/myorders">
-          <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< FaAccusoft className="inline text-white" /> &nbsp;
-            Orders</li></Link>
-            <Link to="/paymenthistory">
-          <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'> < MdOutlinePayments className="inline text-white" /> &nbsp;
-            Payments history</li>
-            </Link>
-            <Link to="/yournurcery">
-          <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< CgProfile className="inline text-white" /> &nbsp;
-            Your nursery</li></Link>
-        
+            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< BsShopWindow className="inline text-white" />
+              &nbsp; All Products</li></Link>
+
+          <Link to="/myorders">
+            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< FaAccusoft className="inline text-white" /> &nbsp;
+              Orders</li></Link>
+          <Link to="/paymenthistory">
+            <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'> < MdOutlinePayments className="inline text-white" /> &nbsp;
+              Payments history</li>
+          </Link>
+          <Link to="/yournurcery">
+            <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< CgProfile className="inline text-white" /> &nbsp;
+              Your nursery</li></Link>
+
 
           <Link to="/Profileverify" ><li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< MdOutlineDomainVerification className="inline text-white" /> &nbsp;
             Verify Profile</li> </Link>
-            <Link to="/returns" >
-          <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
-            Returns</li></Link>
+          <Link to="/returns" >
+            <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
+              Returns</li></Link>
 
         </ol>
       </aside>
@@ -73,56 +94,46 @@ const PaymentHistory = () => {
       {/*Routing*/}
       <div className={`md:p-4 lg:ml-64 lg:md-64 lg:pl-0 w-65 sm:w-[100vw] mt-10 lg:mt-0 lg:w-[cal(100vw-243px)] m-auto `}>
 
-      <div className='w-full bg-green-100  rounded-2xl h-[5%] md:p-5 p-7 sm:pb-8 md:h-[35%] shadow-md'>
-        <h2 className='order-first text-2xl font-semibold tracking-tight text-center text-gray-900 sm:text-2xl md:pt-4 '>Your Payment History</h2>
-      </div>
+        <div className='w-full bg-green-100  rounded-2xl h-[5%] md:p-5 p-7 sm:pb-8 md:h-[35%] shadow-md'>
+          <h2 className='order-first text-2xl font-semibold tracking-tight text-center text-gray-900 sm:text-2xl md:pt-4 '>Your Payment History</h2>
+        </div>
 
 
 
-      <table class="border-separate border border-slate-400 m-auto  md:mt-8">
-        <thead>
-          <tr>
-            <th class="border border-slate-300 p-2 md:px-9">Payment id</th>
-            <th class="border border-slate-300 p-2 md:px-9">Sender name</th>
-            <th class="border border-slate-300 p-2 md:px-9">Payment date</th>
-            <th class="border border-slate-300 p-2 md:px-9">Payment method</th>
-            <th class="border border-slate-300 p-2 md:px-9">Order Number</th>
-            <th class="border border-slate-300 p-2 md:px-9">Payment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-slate-300 p-2 md:px-9">111</td>
-            <td class="border border-slate-300 p-2 md:px-9">Ashba</td>
-            <td class="border border-slate-300 p-2 md:px-9">13 january 2023</td>
-            <td class="border border-slate-300 p-2 md:px-9">easipaisa</td>
-            <td class="border border-slate-300 p-2 md:px-9">43</td>
-            <td class="border border-slate-300 p-2 md:px-9">2200</td>
-          </tr>
-          <tr>
-            <td class="border border-slate-300 p-2 md:px-9">111</td>
-            <td class="border border-slate-300 p-2 md:px-9">Ashba</td>
-            <td class="border border-slate-300 p-2 md:px-9">13 january 2023</td>
-            <td class="border border-slate-300 p-2 md:px-9">easipaisa</td>
-            <td class="border border-slate-300 p-2 md:px-9">43</td>
-            <td class="border border-slate-300 p-2 md:px-9">2200</td>
-          </tr>
+        <table class="border-separate border border-slate-400 m-auto  md:mt-8">
+          <thead>
+            <tr>
 
-          <tr>
-            <td class="border border-slate-300 p-2 md:px-9">111</td>
-            <td class="border border-slate-300 p-2 md:px-9">Ashba</td>
-            <td class="border border-slate-300 p-2 md:px-9">13 january 2023</td>
-            <td class="border border-slate-300 p-2 md:px-9">easipaisa</td>
-            <td class="border border-slate-300 p-2 md:px-9">43</td>
-            <td class="border border-slate-300 p-2 md:px-9">2200</td>
-          </tr>
+              <th class="border border-slate-300 p-2 md:px-9">Sender name</th>
+              <th class="border border-slate-300 p-2 md:px-9">Payment date</th>
+              <th class="border border-slate-300 p-2 md:px-9">Payment method</th>
+              <th class="border border-slate-300 p-2 md:px-9">Order Date</th>
+              <th class="border border-slate-300 p-2 md:px-9">Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {paymentData.map((payment, index) => (
+
+              <tr>
+
+                <td class="border border-slate-300 p-2 md:px-9">{payment.sender_name}</td>
+                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_date}</td>
+                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_method}</td>
+                <td class="border border-slate-300 p-2 md:px-9">{payment.order_date}</td>
+                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_amount}</td>
+              </tr>
 
 
-        </tbody>
-      </table>
+            ))}
 
 
-       
+
+          </tbody>
+        </table>
+
+
+
 
       </div>
 

@@ -30,7 +30,7 @@ const user=require('./Routes/userRoutes')
 // app.use('/chat', chat)
 app.use('/nursery',nursery)
 app.use('/order',order)
-// app.use('/payment', payment)
+app.use('/payment', payment)
 app.use('/plant',plant)
 app.use('/user',user)
 
