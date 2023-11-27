@@ -38,8 +38,7 @@ exports.getAllPlants = async (req, res) => {
     connection.query('SELECT * FROM `plant`', (err, rows, fields) => {
         if (!err) {
             res.json({
-                rows,
-                Message: "Get All Plants from Database"
+                rows
             })
         }
 
