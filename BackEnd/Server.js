@@ -32,6 +32,7 @@ app.use('/nursery',nursery)
 app.use('/order',order)
 app.use('/payment', payment)
 app.use('/plant',plant)
+
 app.use('/user',user)
 
 app.use('*' ,(req,res, next)=>{
