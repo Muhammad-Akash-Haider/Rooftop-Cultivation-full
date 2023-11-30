@@ -1,6 +1,6 @@
 
 import { Link, Route, Routes } from "react-router-dom";
-
+import { ToastContainer } from 'react-toastify';
 
 
 import Sellerdashboard from "./Dashboards/SellerDashboard/Sellerdashboard";
@@ -28,6 +28,7 @@ import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
 function App() {
   return (
     <>
+     <ToastContainer />
       <PrimeReactProvider>
 
         <Routes>

@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 
 
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 
 import { MdSpaceDashboard } from 'react-icons/md';
@@ -28,6 +28,26 @@ const AllProducts = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const [plantData, setPlantData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/plant/get');
+       
+        const data = await response.json();
+        
+        setPlantData(data.rows);
+        
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
 
   return (
     <div className="flex">
@@ -94,16 +114,21 @@ const AllProducts = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="border border-slate-300 p-3 md:px-12">Pine palant</td>
-              <td class="border border-slate-300 p-3 md:px-12">1600</td>
-              <td class="border border-slate-300 p-3 md:px-12">Indoor plant</td>
-              <td class="border border-slate-300 p-3 md:px-12">12</td>
-              <td class="border border-slate-300 p-3 md:px-12">
-                < RiDeleteBin6Line className="inline text-xl text-red-600" /> &nbsp;
-                < FaRegEdit className="inline text-xl text-blue-800" />
-              </td>
-            </tr>
+
+          {plantData.map((plant, index) => (
+          <tr>
+          <td class="border border-slate-300 p-3 md:px-12">{plant.name}</td>
+          <td class="border border-slate-300 p-3 md:px-12">{plant.price}</td>
+          <td class="border border-slate-300 p-3 md:px-12">{plant.category}</td>
+          <td class="border border-slate-300 p-3 md:px-12">{plant.stock}</td>
+          <td class="border border-slate-300 p-3 md:px-12">
+            < RiDeleteBin6Line className="inline text-xl text-red-600" /> &nbsp;
+            < FaRegEdit className="inline text-xl text-blue-800" />
+          </td>
+        </tr>
+        
+        ))}
+           
 
           </tbody>
         </table>

@@ -1,7 +1,7 @@
 const express = require('express')
 
 
-const connection =require('../Config/db')
+const connection = require('../Config/db')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -11,77 +11,94 @@ const saltRounds = 10;
 
 // This is Register/Signup API
 
-exports.signup=async(req,res)=>{
-    const bodypassword = req.body.password;    
-    const encryptedPassword = await bcrypt.hash(bodypassword, saltRounds)
-    
-   
-const query ='INSERT INTO `users`(`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`) VALUES (?,?,?,?,?,?,?);'; 
+exports.signup = async (req, res) => {
+  const bodypassword = req.body.password;
+  const encryptedPassword = await bcrypt.hash(bodypassword, saltRounds)
 
 
-// Value to be inserted 
+  const query = 'INSERT INTO `users`(`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`,`phone`) VALUES (?,?,?,?,?,?,?,?);';
 
-let  id =req.body.id;
-let  First_name=req.body.First_name;
-let  last_name=req.body.last_name;
-let  password=encryptedPassword;
-let  email=req.body.email;
-let  user_type=req.body.user_type;
-let  city=req.body.country;
 
-// Value to be inserted 
+  // Value to be inserted 
 
-// Creating queries 
+  let id = req.body.id;
+  let First_name = req.body.First_name;
+  let last_name = req.body.last_name;
+  let password = encryptedPassword;
+  let email = req.body.email;
+  let user_type = req.body.user_type;
+  let city = req.body.city;
+  let phone = req.body.phone;
 
-connection.query(query, [id,First_name,last_name,email,password,user_type,city], (err, rows) => { 
-if (!err){
+
+
+  // Value to be inserted 
+
+  // Creating queries 
+  if (First_name != null && last_name != null && email != null && password != null && user_type != null && city != null && phone != null) {
+    connection.query(query, [id, First_name, last_name, email, password, user_type, city, phone], (err, rows) => {
+      if (!err) {
+        res.json({
+          status: true,
+          Message: "Wellcome!!!........Your Successsfully signUp"
+        })
+      }
+
+      else
+        console.log(err);
+
+    });
+  } else {
     res.json({
-            status: true,
-            Message:"Wellcome!!!........Your Successsfully signUp"  
-           })
-    }
+      status: false,
+      Message: "some data is missing"
+    })
+  }
 
-    else
-    console.log(err);
-       
-    }); 
+}
 
+
+
+
+
+
+
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (email && password) {
+    try {
+      // Adjust your query to also select user_id and user_type
+      const query = 'SELECT id, user_type, password FROM users WHERE email = ?';
+      connection.query(query, [email], async (error, results, fields) => {
+        if (error) {
+          res.status(500).send('Server error');
+          return;
         }
 
+        if (results.length > 0) {
+          // Compare the password with the hashed password in the database
+          const match = await bcrypt.compare(password, results[0].password);
+          if (match) {
+            res.json({
+              status: true,
+              message: "Welcome. You are successfully logged in.",
 
-
-
-
-
-
-        exports.login=async(req,res)=>{
-                
-                
-            const email = req.body.email;
-            const password = req.body.password;
-
-            var hash = bcrypt.hashSync(password, saltRounds);
-
-          
-            if (email && password) {
-              connection.query('SELECT password FROM users WHERE email = ?', [email], 
-                (error, row, fields)=> {
-                  if (bcrypt.compareSync(password,hash)) {
-                      res.json({
-                        status:true,
-                        Message:"Wellcome.**********SYou are Successfully login"
-                      });
-                  } else {
-                      res.send('Incorrect Email and/or Password!');
-                  }           
-                  res.end();
-              });
-            } else {
-              res.send('Please enter Username and Password!');
-              res.end();
-            }
-
-
-
-
+              user_id: results[0].id,    // Send user_id
+              user_type: results[0].user_type // Send user_type
+              
+            });
+          } else {
+            res.send('Incorrect Email and/or Password!');
+          }
+        } else {
+          res.send('Incorrect Email and/or Password!');
+        }
+      });
+    } catch (err) {
+      res.status(500).send('Server error');
     }
+  } else {
+    res.send('Please enter Email and Password!');
+  }
+};

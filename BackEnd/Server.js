@@ -1,13 +1,15 @@
 const express = require('express')
 const app= express();
-const port= 5999
+const port= 5000
 const ConnetDB= require('./Config/db')
 const bodyparser =require('body-parser')
+var cors = require('cors')
 
-
+app.use(cors())
 //Configuring Express Server
 
-app.use(bodyparser.json())
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({ extended: true }))
 
 
 //Routes
@@ -22,13 +24,13 @@ const user=require('./Routes/userRoutes')
 
 
 
-//Routes Track
+//Routes Trackttps://www.thunderclient.com/welcome
 
 // app.use('/admin',admin)
 // app.use('/chat', chat)
 app.use('/nursery',nursery)
 app.use('/order',order)
-// app.use('/payment', payment)
+app.use('/payment', payment)
 app.use('/plant',plant)
 app.use('/user',user)
 

@@ -1,10 +1,25 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import logo from '../images/LOGO.png'
 
-
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../images/LOGO.png';
 
 const Nav = () => {
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  const [user_type, setUser_type] = useState(localStorage.getItem('user_type'));
+
+  const logout = () => {
+    localStorage.clear();
+    setUser_id(null);
+    setUser_type(null);
+  };
+
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+    setUser_type(localStorage.getItem('user_type'));
+  }, [user_id, user_type]); 
+
+ 
 
   return (
     <header class="text-gray-700 body-font">
@@ -14,8 +29,9 @@ const Nav = () => {
           <span d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></span>
           <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
         </span>
-        
+
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
+
 
           <Link to="/My_Orders_Buyer">
             <div>
@@ -24,6 +40,13 @@ const Nav = () => {
               </svg>
             </div>
             </Link>
+
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+            </svg>
+          </div>
+
 
           <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -51,16 +74,31 @@ const Nav = () => {
             <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' />
           </div>
 
+          {user_id ?
+            (<div className='flex justify-between gap-2 ml-20'>
 
-          <div className='flex justify-between ml-20 gap-2'>
-            <Link to="/Login">
-              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
-              </button></Link>
-            <Link to="/Register">
-              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
-              </button></Link>
-          </div>
-          </nav>
+              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0" onClick={logout} >Logout
+              </button>
+              <Link to="SellerDashboard">
+              <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0"  >Seller dashboard
+              </button>
+              </Link>
+
+            </div>)
+            :
+            (<div className='flex justify-between gap-2 ml-20'>
+              <Link to="/Login">
+                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
+                </button></Link>
+              <Link to="/Register">
+                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
+                </button></Link>
+            </div>)
+          }
+
+
+
+        </nav>
       </div>
     </header>
   )
