@@ -86,7 +86,7 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
     let description = req.body.description;
     let images = req.files.map(file => file.filename).join(', ');
 
-    console.log(name , price , stock , category , description , images)
+    console.log(name , price , stock , category , description , images,'majid')
 
     if ( name != null && price != null && stock != null && category != null && description != null && images != null) {
 

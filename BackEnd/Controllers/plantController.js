@@ -15,9 +15,7 @@ exports.getPlantbyId = async (req, res) => {
     connection.query('SELECT * FROM plant WHERE id = ' + req.params.id, (err, rows, fields) => {
         if (!err) {
             res.json({
-                rows,
-                status: true,
-                Message: "Get Plant by id"
+                rows
             })
         }
 
