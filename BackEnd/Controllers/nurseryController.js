@@ -8,22 +8,27 @@ const connection = require('../Config/db')
 // Get Nursery by Id
 
 exports.getNurserybyId = async (req, res) => {
-    console.log(req.params.id)
 
 
-    connection.query('SELECT * FROM nursery WHERE id = ' + req.params.id, (err, rows, fields) => {
+    // Use a parameterized query to prevent SQL injection
+    connection.query('SELECT * FROM nursery WHERE seller_id = ?', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
                 status: true,
                 Message: "Get Nursery by id"
-            })
-        }
-
-        else
+            });
+        } else {
             console.log(err);
-    })
+            // It's a good practice to send a response in case of error as well
+            res.status(500).json({
+                status: false,
+                message: "Internal Server Error"
+            });
+        }
+    });
 }
+
 
 
 //  Get All Nursey

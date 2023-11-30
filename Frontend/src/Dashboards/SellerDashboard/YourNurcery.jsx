@@ -15,6 +15,8 @@ import { Link } from 'react-router-dom';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { useEffect } from 'react';
+
 import { useFormik } from 'formik';
 
 import ReactQuill from 'react-quill';
@@ -87,7 +89,39 @@ const Yournurcery = () => {
     },
   });
 
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
 
+  const [fetchData, setfetchData] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/nursery/get/nursery/${user_id}`);
+        const data = await response.json();
+
+        formik.setValues({
+          seller_id: localStorage.getItem('user_id') || '',
+          business_name: data.rows[0].business_name ,
+          address: data.rows[0].business_location,
+          // Add other fields as needed
+        });
+        setImages(data.rows[0].image)
+        setContent(data.rows[0].description)
+        setfetchData(data.rows[0]);
+
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
 
@@ -158,7 +192,7 @@ const Yournurcery = () => {
 
           <h1 className='pt-3 text-xl md:p-2'>Business Details</h1>
           <ReactQuill theme="snow"
-         
+            value={content}
             onChange={handleEditorChange}
           />
           {/* https://github.com/zenoamaro/react-quill  // how to use see here */}

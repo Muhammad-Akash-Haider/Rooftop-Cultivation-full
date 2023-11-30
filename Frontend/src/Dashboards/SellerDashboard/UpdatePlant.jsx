@@ -218,6 +218,7 @@ const UpdatePlant = () => {
             
 
             {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
+            
             {/* {fetchData.images && fetchData.images.split(',').map((image, index) => (
              <div key={index}>
             
@@ -231,6 +232,7 @@ const UpdatePlant = () => {
             <input
               type="file"
               multiple
+              defaultValue={fetchData.images}
               name="images"
               onChange={handleImageChange}
               className="p-2 mb-2 border border-gray-300 rounded-md"
