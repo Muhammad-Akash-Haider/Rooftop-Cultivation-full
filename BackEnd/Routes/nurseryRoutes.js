@@ -25,39 +25,67 @@ const upload = multer({ storage: storage });
 
 router.post('/post/nursery', upload.array('images', 5), (req, res) => {
     try {
-        const query = 'INSERT INTO `nursery`( `seller_id`,`business_name`, `business_location`, `description`, `gallery`) VALUES (?,?,?,?,?);';
 
-        // Value to be inserted 
-
+        
+   
         let seller_id = req.body.seller_id;
         let business_name = req.body.business_name;
         let address = req.body.address;
         let description = req.body.description;
         let images = req.files.map(file => file.filename).join(', ');
-        // Creating queries 
-
-        if (seller_id != null && business_name != null && address != null && description != null && images != null ) {
-
-            connection.query(query, [seller_id, business_name, address, description, images], (err, rows) => {
-                if (!err) {
+        
+        // Check for missing data before running any queries
+        if (!seller_id || !business_name || !address || !description || !images) {
+            return res.json({
+                message: "Some data is missing",
+            });
+        }
+        
+        // Use placeholders to prevent SQL injection
+        connection.query('SELECT * FROM `nursery` WHERE seller_id = ?', [seller_id], (err, rows) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({
+                    status: false,
+                    message: "Internal Server Error",
+                });
+            }
+        // Value to be inserted 
+            if (rows.length > 0) {
+                // Seller exists, perform update
+                const updateQuery = 'UPDATE nursery SET business_name = ?, business_location = ?, description = ?, gallery = ? WHERE seller_id = ?;';
+                connection.query(updateQuery, [business_name, address, description, images, seller_id], (err, result) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            status: false,
+                            message: "Internal Server Error",
+                        });
+                    }
+                    res.json({
+                        status: true,
+                        message: "Data updated in the Plants table",
+                    });
+                });
+            } else {
+                // Insert new record
+                const query = 'INSERT INTO `nursery`( `seller_id`, `business_name`, `business_location`, `description`, `gallery`) VALUES (?,?,?,?,?);';
+                connection.query(query, [seller_id, business_name, address, description, images], (err, rows) => {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).json({
+                            status: false,
+                            message: "Internal Server Error",
+                        });
+                    }
                     res.json({
                         status: true,
                         message: "Data inserted into the Plants table",
                     });
-                } else {
-                    console.error(err);
-                    res.status(500).json({
-                        status: false,
-                        message: "Internal Server Error",
-                    });
-                }
-            });
-        } else {
-            res.json({
-
-                message: "some data missing",
-            });
-        } 
+                });
+            }
+        });
+        
 
 
     } catch (error) {
