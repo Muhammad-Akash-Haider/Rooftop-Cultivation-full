@@ -20,6 +20,7 @@ import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
 import Forgot from "./components/Pages/Forgot";
 import Header from "./components/Header";
+import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 
 
 
@@ -33,6 +34,7 @@ function App() {
          
           <Route path="/Profileverify" element={<Profileverify />}></Route>
           <Route path="/addplant" element={<Addplant />}></Route>
+          <Route path="/update/:id" element={<UpdatePlant />}></Route>
           <Route path="/myorders" element={<Orders />}></Route>
           <Route path="/paymenthistory" element={<PaymentHistory />}></Route>
           <Route path="/yournurcery" element={<Yournurcery />}></Route>

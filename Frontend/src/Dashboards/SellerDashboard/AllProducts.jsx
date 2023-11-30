@@ -123,7 +123,7 @@ const AllProducts = () => {
           <td class="border border-slate-300 p-3 md:px-12">{plant.stock}</td>
           <td class="border border-slate-300 p-3 md:px-12">
             < RiDeleteBin6Line className="inline text-xl text-red-600" /> &nbsp;
-            < FaRegEdit className="inline text-xl text-blue-800" />
+            <Link to={`/update/${plant.id}`} >< FaRegEdit className="inline text-xl text-blue-800" /></Link> 
           </td>
         </tr>
         
