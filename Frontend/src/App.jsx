@@ -5,7 +5,6 @@ import { Link, Route, Routes } from "react-router-dom";
 
 import Sellerdashboard from "./Dashboards/SellerDashboard/Sellerdashboard";
 import { PrimeReactProvider } from 'primereact/api';
-
 import Home from "./components/Pages/Home"
 import Profileverify from './Dashboards/SellerDashboard/Profileverify';
 import Addplant from './Dashboards/SellerDashboard/Addplant';
@@ -20,6 +19,9 @@ import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
 import Forgot from "./components/Pages/Forgot";
 import Header from "./components/Header";
+import My_Orders from "./components/Pages/My_Orders";
+import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
+
 
 
 
@@ -37,17 +39,15 @@ function App() {
           <Route path="/yournurcery" element={<Yournurcery />}></Route>
           <Route path="/returns" element={<Returns />}></Route>
           <Route path="/Products" element={<AllProducts />}></Route>
-          <Route path="/" element={<Home />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-
           <Route path="/product" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
-
-
           <Route path="/checkout" element={<Checkout />}></Route>
-
+          <Route path="/My_Orders" element={<My_Orders/>}></Route>
+          <Route path="/" element={<Home/>}></Route>
+          <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>
 
       </PrimeReactProvider>
