@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2023 at 04:42 AM
+-- Generation Time: Dec 01, 2023 at 04:38 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -55,10 +55,8 @@ CREATE TABLE `nursery` (
 --
 
 INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`, `phone_number`) VALUES
-(1, 3, 'asmdmadn', 'wah acantt', 'asddddssssssssssssssssssssssss', 'images-1701015533101-screencapture-bookmee-co-uk-seller-profile-2023-11-12-10_30_56.png', NULL),
-(2, 3, 'asmdmadn', 'wah acantt', 'asddddssssssssssssssssssssssss', 'images-1701015582656-screencapture-bookmee-co-uk-seller-profile-2023-11-12-10_30_56.png', NULL),
-(3, 3, 'asmdmadn', 'wah acantt', 'asddddssssssssssssssssssssssss', 'images-1701015708843-screencapture-bookmee-co-uk-seller-profile-2023-11-12-10_30_56.png', NULL),
-(4, 23, 'jasndlasd', 'wah cant', '<p class=\"ql-align-center\">Company name, Business structure, Owners, Location, Mission statement, Products and services, Target audience, Business goals, Target customers, Competitive advantages.&nbsp;</p><p><br></p><p>A business description can be a brief explanation of a company or a more detailed discussion of a product or service.&nbsp;It can also include how the company plans to succ</p>', 'images-1701016082117-WhatsApp Image 2023-05-19 at 2.53.10 PM (1).jpeg, images-1701016082121-WhatsApp Image 2023-05-19 at 2.53.10 PM.jpeg, images-1701016082124-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg', NULL);
+(5, 23, 'true business name', 'wah cant', '<p>alkdnflasndas</p><p>amaing</p>', 'images-1701364567479-asdasdasd (another copy).jpeg', NULL),
+(6, 25, 'majid greneery', 'wah cant', '<h2>Background</h2><ul><li>Aloe is a cactus-like plant that grows in hot, dry climates. It is cultivated in subtropical regions around the world, including the southern border areas of Texas, New Mexico, Arizona, and California.</li><li>Historically, aloe has been used for skin conditions and was thought to improve baldness and promote wound healing.</li><li>Aloe is used topically (applied to the skin) and orally. Topical use of aloe is promoted for acne, lichen planus (a very itchy rash on the skin or in the mouth), oral submucous fibrosis, burning mouth syndrome, burns, and radiation-induced skin toxicity. Oral use of aloe is promoted for weight loss, diabetes, hepatitis, and inflammatory bowel disease (a group of conditions caused by gut inflammation that includes Crohn’s disease and ulcerative colitis).</li></ul><p><br></p>', 'images-1701398903332-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,9 +78,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_name`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
-(1, 'ali', '12/7/2023', 'alevora plant', 'pending', 2000),
-(2, 'zahra', '12/9/2023', 'virginica plant', 'pending', 4000),
-(3, 'danyal', '11/8/2023', 'rose dragon plant', 'pending', 2500);
+(1, 'ali', '12/7/2023', 'alevora plant', 'completed', 2000),
+(2, 'zahra', '12/9/2023', 'virginica plant', 'cancel', 4000),
+(3, 'danyal', '11/8/2023', 'rose dragon plant', 'Pending', 2500);
 
 -- --------------------------------------------------------
 
@@ -129,10 +127,12 @@ CREATE TABLE `plant` (
 --
 
 INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `description`, `images`) VALUES
-(17, '23', 'alevora palnt', 2355, 5, 'seeds', '<p>this is a an owesome plant</p><h1>you will like this</h1>', 'images-1700920948206-Screencast from 23-11-2023 14:10:07.webm, images-1700920948256-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png, images-1700920948260-123123.png'),
-(18, '23', 'virginica', 2600, 5, 'flowers', '<h2><strong style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">Properties </strong><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;</span></h2><p><br></p><p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">                             Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701008973971-WhatsApp Image 2023-05-19 at 2.53.10 PM (1).jpeg, images-1701008973976-WhatsApp Image 2023-05-19 at 2.53.10 PM.jpeg'),
+(17, '23', 'marenas', 1230, 17, 'plants', '<p>no data is written hereddfdf</p>', 'images-1701360635113-asdasdasd (another copy).jpeg, images-1701360635114-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png'),
+(18, '23', 'sdsdadaddfsdf', 1233, 17, 'plants', 'dcsdcdcsdc', 'images-1701352975340-asdasdasd.jpeg'),
 (19, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009200881-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
-(20, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009253853-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg');
+(20, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009253853-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
+(24, '2', '\"asmamsa\"', 232, 3, '\"flower\"', 's <p>asjkdkajd</p><ol><li>asdsadasdasasdasd</li></ol><h1>asdasdsadsad</h1>', 'images-1701179709717-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png'),
+(25, '25', 'alevera', 2355, 5, 'plants', '<h2>Background</h2><ul><li>Aloe is a cactus-like plant that grows in hot, dry climates. It is cultivated in subtropical regions around the world, including the southern border areas of Texas, New Mexico, Arizona, and California.</li><li>Historically, aloe has been used for skin conditions and was thought to improve baldness and promote wound healing.</li><li>Aloe is used topically (applied to the skin) and orally. Topical use of aloe is promoted for acne, lichen planus (a very itchy rash on the skin or in the mouth), oral submucous fibrosis, burning mouth syndrome, burns, and radiation-induced skin toxicity. Oral use of aloe is promoted for weight loss, diabetes, hepatitis, and inflammatory bowel disease (a group of conditions caused by gut inflammation that includes Crohn’s disease and ulcerative colitis).</li></ul>', 'images-1701398182365-asdasdasd (another copy).jpeg');
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `phone`) VALUES
-(23, 'Majid', 'ali', 'majidali37406@gmail.com', '$2b$10$qCxCh8gT7uGHow9rGeQpY.pRzdTuGVOvqlNN3jJoMODqdc0IH0LPC', '1', 'Rawalpindi', '03110794433');
+(23, 'Majid', 'ali', 'majidali37406@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03110794433'),
+(25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854');
 
 -- --------------------------------------------------------
 
@@ -255,7 +256,7 @@ ALTER TABLE `verified_users`
 -- AUTO_INCREMENT for table `nursery`
 --
 ALTER TABLE `nursery`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -273,7 +274,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`
@@ -285,7 +286,7 @@ ALTER TABLE `return/cancels`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
