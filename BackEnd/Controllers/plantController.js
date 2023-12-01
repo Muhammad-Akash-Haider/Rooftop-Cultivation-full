@@ -24,6 +24,24 @@ exports.getPlantbyId = async (req, res) => {
     })
 }
 
+exports.getPantToEdit = async (req, res) => {
+    console.log(req.params.id)
+
+
+    connection.query('SELECT * FROM plant WHERE id = ' + req.params.id, (err, rows, fields) => {
+        if (!err) {
+            res.json({
+                rows
+            })
+        }
+
+        else
+            console.log(err);
+    })
+}
+
+
+
 
 
 

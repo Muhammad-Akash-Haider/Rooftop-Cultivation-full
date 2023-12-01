@@ -4,12 +4,13 @@ const connection = require('../Config/db')
 
 const router = express.Router()
 
-const { getPlantbyId, getAllPlants, deletePlantById } = require('../Controllers/plantController')
+const { getPlantbyId, getAllPlants, deletePlantById ,getPantToEdit } = require('../Controllers/plantController')
 
 //Get Request All and By ID
 // router.route('/get/Users').get(getUsers)
 
 router.route('/get/:id').get(getPlantbyId)
+router.route('/getplant/:id').get(getPantToEdit)
 router.route('/get').get(getAllPlants)
 
 router.route('/deleteby/:id').delete(deletePlantById)

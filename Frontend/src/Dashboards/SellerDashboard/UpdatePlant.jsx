@@ -63,11 +63,11 @@ const UpdatePlant = () => {
     onSubmit: (values) => {
       // Here, you handle your form submission
       const formData = new FormData();
-      
+
       images.forEach(image => {
         formData.append('images', image);
       });
-    
+
       // Append other form data
       Object.keys(values).forEach(key => {
         formData.append(key, values[key]);
@@ -107,13 +107,13 @@ const UpdatePlant = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/plant/get/${id}`);
+        const response = await fetch(`http://localhost:5000/plant/getplant/${id}`);
         const data = await response.json();
-
+        console.log(data)
         // Assuming your response data structure is like { name, price, stock, category, description }
         formik.setValues({
           seller_id: localStorage.getItem('user_id') || '',
-          name: data.rows[0].name || '',
+          name: data.rows[0]?.name || '',
           price: data.rows[0].price || '',
           stock: data.rows[0].stock || '',
           category: data.rows[0].category || '',
@@ -176,10 +176,10 @@ const UpdatePlant = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
-            
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
+
         </ol>
       </aside>
 
@@ -220,24 +220,28 @@ const UpdatePlant = () => {
               value={content}
               onChange={handleEditorChange}
             />
-            
 
             {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
-            
-            {/* {fetchData.images && fetchData.images.split(',').map((image, index) => (
-             <div key={index}>
-            
-             <img src={`http://localhost:5000/uploads/${image}`}alt={"not fouud"} />
-           
-           </div>
-            ))} */}
+
+            <div className='flex flex-row p-2'>
+              {fetchData.images && fetchData.images.split(',').map((image, index) => (
+                <div key={index} >
+
+                  <img className='w-40 h-40 m-1 rounded'
+                    src={`http://localhost:5000/uploads/${image.trim()}`} alt={"not fouud"} />
+
+                </div>
+              ))}
+
+            </div>
 
 
-            <h1 className='pt-3 text-xl md:p-4'>Upload your gallery</h1>
+
+            <h1 className='pt-3 text-xl md:p-4'>Update your gallery</h1>
             <input
               type="file"
               multiple
-              defaultValue={fetchData.images}
+              // defaultValue={fetchData.images}
               name="images"
               onChange={handleImageChange}
               className="p-2 mb-2 border border-gray-300 rounded-md"
