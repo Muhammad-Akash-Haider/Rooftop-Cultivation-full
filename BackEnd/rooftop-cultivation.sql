@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2023 at 04:38 AM
+-- Generation Time: Dec 01, 2023 at 05:31 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -32,6 +32,19 @@ CREATE TABLE `chat` (
   `sender_id` int(64) NOT NULL,
   `message` varchar(500) NOT NULL,
   `time` time(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Notifications`
+--
+
+CREATE TABLE `Notifications` (
+  `id` int(200) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `reason` varchar(300) NOT NULL,
+  `time` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -67,6 +80,7 @@ INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, 
 CREATE TABLE `orders` (
   `id` int(64) NOT NULL,
   `customer_name` varchar(128) NOT NULL,
+  `seller_id` int(100) NOT NULL,
   `order_date` varchar(200) DEFAULT NULL,
   `product_name` varchar(128) NOT NULL,
   `status` varchar(100) NOT NULL,
@@ -77,10 +91,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_name`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
-(1, 'ali', '12/7/2023', 'alevora plant', 'completed', 2000),
-(2, 'zahra', '12/9/2023', 'virginica plant', 'cancel', 4000),
-(3, 'danyal', '11/8/2023', 'rose dragon plant', 'Pending', 2500);
+INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
+(1, 'ali', 0, '12/7/2023', 'alevora plant', 'completed', 2000),
+(2, 'zahra', 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
+(3, 'danyal', 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
 
 -- --------------------------------------------------------
 
@@ -90,6 +104,7 @@ INSERT INTO `orders` (`id`, `customer_name`, `order_date`, `product_name`, `stat
 
 CREATE TABLE `payments_history` (
   `id` int(64) NOT NULL,
+  `seller_id` int(11) NOT NULL,
   `sender_name` varchar(128) NOT NULL,
   `payment_date` int(64) NOT NULL,
   `payment_method` char(128) NOT NULL,
@@ -101,9 +116,9 @@ CREATE TABLE `payments_history` (
 -- Dumping data for table `payments_history`
 --
 
-INSERT INTO `payments_history` (`id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
-(1, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
-(2, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
+INSERT INTO `payments_history` (`id`, `seller_id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
+(1, 0, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
+(2, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
 
 -- --------------------------------------------------------
 
@@ -142,6 +157,7 @@ INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `d
 
 CREATE TABLE `return/cancels` (
   `id` int(64) NOT NULL,
+  `seller_id` int(100) NOT NULL,
   `customer_name` char(64) NOT NULL,
   `order_date` varchar(200) NOT NULL,
   `price` int(10) NOT NULL,
@@ -153,10 +169,10 @@ CREATE TABLE `return/cancels` (
 -- Dumping data for table `return/cancels`
 --
 
-INSERT INTO `return/cancels` (`id`, `customer_name`, `order_date`, `price`, `reasons`, `status`) VALUES
-(1, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(2, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(3, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
+INSERT INTO `return/cancels` (`id`, `seller_id`, `customer_name`, `order_date`, `price`, `reasons`, `status`) VALUES
+(1, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
+(2, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
+(3, 0, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
 
 -- --------------------------------------------------------
 
@@ -181,7 +197,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `phone`) VALUES
 (23, 'Majid', 'ali', 'majidali37406@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03110794433'),
-(25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854');
+(25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854'),
+(26, 'muhammad ', 'ashba', 'ashba@gmail.com', '$2b$10$0aYB9LjezbOBHMkaDFxNsunRQxIypIo2i3Zqr7pYR9/eRDwEypnF6', '0', 'Rawalpindi', '03110794433');
 
 -- --------------------------------------------------------
 
@@ -204,6 +221,12 @@ CREATE TABLE `verified_users` (
 --
 ALTER TABLE `chat`
   ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `Notifications`
+--
+ALTER TABLE `Notifications`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `nursery`
@@ -253,6 +276,12 @@ ALTER TABLE `verified_users`
 --
 
 --
+-- AUTO_INCREMENT for table `Notifications`
+--
+ALTER TABLE `Notifications`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `nursery`
 --
 ALTER TABLE `nursery`
@@ -286,7 +315,7 @@ ALTER TABLE `return/cancels`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

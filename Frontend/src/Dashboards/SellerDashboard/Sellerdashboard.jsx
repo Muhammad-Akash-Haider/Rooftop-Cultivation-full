@@ -128,19 +128,19 @@ const Sellerdashboard = () => {
          <dl class="grid  gap-x-4 gap-y-4 text-center  grid-cols-1  md:grid-cols-4 lg:grid-cols-4 ">
          
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200  w-[235px] md:w-[245px] " >
-             <dt class=" leading-7 text-gray-600 text-xl">44pkr</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">0 pkr</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total sales</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200 px-10 w-[235px]  md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">14</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Orders</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200 px-10  w-[235px] md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">3</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Returns</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3 rounded-2xl  bg-slate-200 px-10 w-[235px]  md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">13</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Notifications</dd>
            </div>
           
