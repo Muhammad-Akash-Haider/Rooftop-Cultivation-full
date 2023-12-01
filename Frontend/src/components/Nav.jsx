@@ -24,12 +24,13 @@ const Nav = () => {
   return (
     <header class="text-gray-700 body-font">
       <div class="container cursor-pointer mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+       <Link to="/">
         <span class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
           <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" />
           <span d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></span>
           <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
         </span>
-
+        </Link>
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
 
 
@@ -41,11 +42,11 @@ const Nav = () => {
             </div>
             </Link>
 
-          <div>
+          {/* <div>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
               <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
             </svg>
-          </div>
+          </div> */}
 
 
           <div>

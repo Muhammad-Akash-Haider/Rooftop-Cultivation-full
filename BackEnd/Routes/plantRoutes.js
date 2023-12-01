@@ -12,7 +12,7 @@ const { getPlantbyId, getAllPlants, deletePlantById } = require('../Controllers/
 router.route('/get/:id').get(getPlantbyId)
 router.route('/get').get(getAllPlants)
 
-router.route('/delete/by/:id').delete(deletePlantById)
+router.route('/deleteby/:id').delete(deletePlantById)
 
 
 // add data of plant

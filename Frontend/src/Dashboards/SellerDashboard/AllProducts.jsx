@@ -17,6 +17,8 @@ import { CgProfile } from 'react-icons/cg';
 import { MdOutlineDomainVerification } from 'react-icons/md';
 import { TbTruckReturn } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -28,18 +30,25 @@ const AllProducts = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
+
 
   const [plantData, setPlantData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async () => { 
       try {
-        const response = await fetch('http://localhost:5000/plant/get');
+        const response = await fetch(`http://localhost:5000/plant/get/${user_id}`);
        
         const data = await response.json();
-        
+       
         setPlantData(data.rows);
-        
+   
       } catch (error) {
         console.error('Error fetching plant data:', error);
       }
@@ -48,6 +57,38 @@ const AllProducts = () => {
     fetchData();
   }, []); // Empty dependency array means this effect runs once after the initial render
 
+
+
+  const handleDelete = async (plantId) => {
+    try {
+      const isConfirmed = window.confirm('Are you sure you want to delete this product?');
+
+      if (!isConfirmed) {
+        // If the user cancels the deletion, do nothing
+        return;
+      }
+      // Make an API call to delete the plant with the given plantId
+    
+      const response = await fetch(`http://localhost:5000/plant/deleteby/${plantId}`, {
+        method: 'DELETE',
+        // You may need to include headers or credentials based on your API setup
+      });
+
+      if (response.ok) {
+        // If the API call is successful, update the state to remove the deleted plant
+        setPlantData((plantData) =>
+        plantData.filter((plant) => plant.id !== plantId)
+        );
+        toast.success("Successfully deleted a plant", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } else {
+        console.error('Failed to delete plant');
+      }
+    } catch (error) {
+      console.error('Error deleting plant:', error);
+    }
+  };
 
   return (
     <div className="flex">
@@ -116,13 +157,13 @@ const AllProducts = () => {
           <tbody>
 
           {plantData.map((plant, index) => (
-          <tr>
+          <tr key={index}>
           <td class="border border-slate-300 p-3 md:px-12">{plant.name}</td>
           <td class="border border-slate-300 p-3 md:px-12">{plant.price}</td>
           <td class="border border-slate-300 p-3 md:px-12">{plant.category}</td>
           <td class="border border-slate-300 p-3 md:px-12">{plant.stock}</td>
           <td class="border border-slate-300 p-3 md:px-12">
-            < RiDeleteBin6Line className="inline text-xl text-red-600" /> &nbsp;
+            < RiDeleteBin6Line    onClick={() => handleDelete(plant.id)}  className="inline text-xl text-red-600" /> &nbsp;
             <Link to={`/update/${plant.id}`} >< FaRegEdit className="inline text-xl text-blue-800" /></Link> 
           </td>
         </tr>
