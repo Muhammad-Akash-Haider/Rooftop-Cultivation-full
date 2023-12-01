@@ -15,6 +15,7 @@ import { CgProfile } from 'react-icons/cg';
 import { MdOutlineDomainVerification } from 'react-icons/md';
 import { TbTruckReturn } from 'react-icons/tb';
 import {Link}  from 'react-router-dom';
+import logo from '../../images/LOGO.png';
 
 
 
@@ -105,6 +106,10 @@ const Sellerdashboard = () => {
             <Link to="/returns" >
           <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
             Returns</li></Link>
+            
+            <Link to="/" >
+          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+            </Link>
 
         </ol>
       </aside>

@@ -40,6 +40,7 @@ function Login() {
           // dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
           localStorage.setItem('user_id', data.user_id);
           localStorage.setItem('user_type', data.user_type);
+          localStorage.setItem('user_name', data.user_name);
           toast.success("Successfully registered", {
             position: toast.POSITION.TOP_RIGHT,
           });

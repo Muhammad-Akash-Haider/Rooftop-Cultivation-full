@@ -69,7 +69,7 @@ exports.login = async (req, res) => {
   if (email && password) {
     try {
       // Adjust your query to also select user_id and user_type
-      const query = 'SELECT id, user_type, password FROM users WHERE email = ?';
+      const query = 'SELECT *  FROM users WHERE email = ?';
       connection.query(query, [email], async (error, results, fields) => {
         if (error) {
           res.status(500).send('Server error');
@@ -85,8 +85,8 @@ exports.login = async (req, res) => {
               message: "Welcome. You are successfully logged in.",
 
               user_id: results[0].id,    // Send user_id
-              user_type: results[0].user_type // Send user_type
-              
+              user_type: results[0].user_type ,// Send user_type
+              user_name : results[0].First_name +' '+results[0].last_name,
             });
           } else {
             res.send('Incorrect Email and/or Password!');
