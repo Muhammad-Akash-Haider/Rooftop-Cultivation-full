@@ -48,6 +48,35 @@ const Orders = () => {
     fetchData();
   }, []);
 
+  const handleStatusChange = async (index, newStatus) => {
+    // Create a copy of the productData array to modify
+    const updatedProductData = [...productData];
+
+    // Update the status of the selected product
+    updatedProductData[index].status = newStatus;
+
+    // Update the state with the modified array
+    setproductData(updatedProductData);
+
+    // Make an API call to update the status on the backend
+    try {
+      const response = await fetch(`http://localhost:5000/order/updateStatus/${updatedProductData[index].id}`, {
+        method: 'PUT', // Use the appropriate HTTP method (PUT, PATCH, etc.)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to update status on the backend');
+      }
+    } catch (error) {
+      console.error('Error updating status on the backend:', error);
+    }
+  };
+
+
 
 
   return (
@@ -124,10 +153,12 @@ const Orders = () => {
                 <td class="border border-slate-300 p-3 md:px-12">{product.order_date}</td>
                 <td class="border border-slate-300 p-3 md:px-12">{product.product_name}</td>
                 <td class="border border-slate-300 p-3 md:px-12">
-                  <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '>
+                  <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '
+                    onChange={(e) => handleStatusChange(index, e.target.value)}
+                    >
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
+                    <option value="cancel">Cancel</option>
                   </select>
                 </td>
               </tr>

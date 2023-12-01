@@ -12,7 +12,7 @@ exports.getPlantbyId = async (req, res) => {
     console.log(req.params.id)
 
 
-    connection.query('SELECT * FROM plant WHERE id = ' + req.params.id, (err, rows, fields) => {
+    connection.query('SELECT * FROM plant WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows

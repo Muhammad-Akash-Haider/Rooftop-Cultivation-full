@@ -25,6 +25,39 @@ exports.getOrderbyId = async (req, res) => {
     })
 }
 
+exports.updteOrderStatus = async (req, res) => {
+
+    const productId = req.params.id;
+    const newStatus = req.body.status;
+
+    console.log( req.body  , newStatus,  req.params.id);
+    // Validate input
+    if (!productId || !newStatus) {
+        return res.status(400).json({ error: 'Invalid input' });
+    }
+
+
+    const updateQuery = 'UPDATE `orders` SET status = ? WHERE id = ?';
+
+    connection.query(updateQuery, [newStatus, productId], (updateErr, updateResults) => {
+    
+
+        if (updateErr) {
+            console.error('Error updating status:', updateErr);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (updateResults.affectedRows === 0) {
+            // No rows were affected, meaning the product with the given ID was not found
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        // Successful update
+        res.json({ message: 'Status updated successfully' });
+    });
+
+}
+
 
 
 
