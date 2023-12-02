@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2023 at 05:31 AM
+-- Generation Time: Dec 02, 2023 at 10:22 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -81,6 +81,7 @@ CREATE TABLE `orders` (
   `id` int(64) NOT NULL,
   `customer_name` varchar(128) NOT NULL,
   `seller_id` int(100) NOT NULL,
+  `buyer_id` int(50) NOT NULL,
   `order_date` varchar(200) DEFAULT NULL,
   `product_name` varchar(128) NOT NULL,
   `status` varchar(100) NOT NULL,
@@ -91,10 +92,10 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
-(1, 'ali', 0, '12/7/2023', 'alevora plant', 'completed', 2000),
-(2, 'zahra', 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
-(3, 'danyal', 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
+INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `buyer_id`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
+(1, 'ali', 0, 0, '12/7/2023', 'alevora plant', 'Completed', 2000),
+(2, 'zahra', 0, 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
+(3, 'danyal', 0, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
 
 -- --------------------------------------------------------
 
@@ -105,6 +106,7 @@ INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `order_date`, `product
 CREATE TABLE `payments_history` (
   `id` int(64) NOT NULL,
   `seller_id` int(11) NOT NULL,
+  `buyer_id` int(50) NOT NULL,
   `sender_name` varchar(128) NOT NULL,
   `payment_date` int(64) NOT NULL,
   `payment_method` char(128) NOT NULL,
@@ -116,9 +118,9 @@ CREATE TABLE `payments_history` (
 -- Dumping data for table `payments_history`
 --
 
-INSERT INTO `payments_history` (`id`, `seller_id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
-(1, 0, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
-(2, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
+INSERT INTO `payments_history` (`id`, `seller_id`, `buyer_id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
+(1, 0, 0, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
+(2, 0, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
 
 -- --------------------------------------------------------
 
@@ -147,7 +149,8 @@ INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `d
 (19, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009200881-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
 (20, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009253853-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
 (24, '2', '\"asmamsa\"', 232, 3, '\"flower\"', 's <p>asjkdkajd</p><ol><li>asdsadasdasasdasd</li></ol><h1>asdasdsadsad</h1>', 'images-1701179709717-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png'),
-(25, '25', 'alevera', 2355, 5, 'plants', '<h2>Background</h2><ul><li>Aloe is a cactus-like plant that grows in hot, dry climates. It is cultivated in subtropical regions around the world, including the southern border areas of Texas, New Mexico, Arizona, and California.</li><li>Historically, aloe has been used for skin conditions and was thought to improve baldness and promote wound healing.</li><li>Aloe is used topically (applied to the skin) and orally. Topical use of aloe is promoted for acne, lichen planus (a very itchy rash on the skin or in the mouth), oral submucous fibrosis, burning mouth syndrome, burns, and radiation-induced skin toxicity. Oral use of aloe is promoted for weight loss, diabetes, hepatitis, and inflammatory bowel disease (a group of conditions caused by gut inflammation that includes Crohn’s disease and ulcerative colitis).</li></ul>', 'images-1701398182365-asdasdasd (another copy).jpeg');
+(28, '25', 'alevora palnt', 2323, 6, 'plants', '<p>jkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadl</p>', 'images-1701430221296-asdasdasd (another copy).jpeg, images-1701430221297-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png, images-1701430221646-Screenshot from 2023-11-29 21-16-08.png'),
+(29, '25', 'majid ali platation expert', 1233, 2, 'seeds', '<p>asjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadas</p>', 'images-1701438126054-screencapture-bookmee-co-uk-alex-barb-2023-12-01-18_37_34.png, images-1701438126065-asdasdasd (copy).jpeg');
 
 -- --------------------------------------------------------
 
@@ -158,6 +161,7 @@ INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `d
 CREATE TABLE `return/cancels` (
   `id` int(64) NOT NULL,
   `seller_id` int(100) NOT NULL,
+  `buyer_id` int(50) NOT NULL,
   `customer_name` char(64) NOT NULL,
   `order_date` varchar(200) NOT NULL,
   `price` int(10) NOT NULL,
@@ -169,10 +173,10 @@ CREATE TABLE `return/cancels` (
 -- Dumping data for table `return/cancels`
 --
 
-INSERT INTO `return/cancels` (`id`, `seller_id`, `customer_name`, `order_date`, `price`, `reasons`, `status`) VALUES
-(1, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(2, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(3, 0, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
+INSERT INTO `return/cancels` (`id`, `seller_id`, `buyer_id`, `customer_name`, `order_date`, `price`, `reasons`, `status`) VALUES
+(1, 0, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
+(2, 0, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
+(3, 0, 0, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
 
 -- --------------------------------------------------------
 
@@ -303,7 +307,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`
