@@ -26,17 +26,22 @@ const Orders = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
 
   const [productData, setproductData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/order/get');
+        const response = await fetch(`http://localhost:5000/order/get/${user_id}`);
 
         const data = await response.json();
-
+          console.log(data)
         setproductData(data.rows);
         
 
@@ -151,7 +156,7 @@ const Orders = () => {
 
             {productData.map((product, index) => (
 
-              <tr>
+              <tr key={index} >
                 <td class="border border-slate-300 p-3 md:px-12">{product.customer_name}</td>
                 <td class="border border-slate-300 p-3 md:px-12">{product.order_amount}</td>
                 <td class="border border-slate-300 p-3 md:px-12">{product.order_date}</td>

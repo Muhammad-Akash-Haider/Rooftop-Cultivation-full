@@ -26,12 +26,19 @@ const Returns = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
+
   const [returnData, setreturnData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/order/returns');
+        const response = await fetch(`http://localhost:5000/order/returns/${user_id}`);
 
         const data = await response.json();
 
@@ -113,7 +120,7 @@ const Returns = () => {
               <th class="border border-slate-300 p-3 md:px-10">Customer name</th>
               <th class="border border-slate-300 p-3 md:px-10">Order date</th>
               <th class="border border-slate-300 p-3 md:px-10">Cancel/Return date</th>
-              <th class="border border-slate-300 p-3 md:px-10">Reason</th>
+              {/* <th class="border border-slate-300 p-3 md:px-10">Reason</th> */}
               <th class="border border-slate-300 p-3 md:px-10">Status</th>
             </tr>
           </thead>
@@ -121,11 +128,11 @@ const Returns = () => {
 
             {returnData.map((returns, index) => (
 
-              <tr>
+              <tr key={index}>
                 <td class="border border-slate-300 p-3 md:px-11">{returns.customer_name}</td>
                 <td class="border border-slate-300 p-3 md:px-11">{returns.order_date}</td>
                 <td class="border border-slate-300 p-3 md:px-11">{returns.price}</td>
-                <td class="border border-slate-300 p-3 md:px-11">{returns.reasons}</td>
+                {/* <td class="border border-slate-300 p-3 md:px-11">{returns.reasons}</td> */}
                 <td class="border border-slate-300 p-3 md:px-11">{returns.status}</td>
               </tr>
 

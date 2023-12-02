@@ -22,3 +22,19 @@ exports.paymenthistory = async (req, res) => {
 }
 
 
+exports.getpaymentsbyId = async (req, res) => {
+    console.log(req.params.id)
+
+
+    connection.query('SELECT * FROM `payments_history` WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
+        if (!err) {
+            res.json({
+                rows,
+               
+            })
+        }
+
+        else
+            console.log(err);
+    })
+}

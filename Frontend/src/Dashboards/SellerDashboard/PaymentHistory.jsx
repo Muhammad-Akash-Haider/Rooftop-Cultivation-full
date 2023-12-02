@@ -25,12 +25,20 @@ const PaymentHistory = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
+
+  
   const [paymentData, setpaymentData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/payment/get');
+        const response = await fetch(`http://localhost:5000/payment/get/${user_id}`);
 
         const data = await response.json();
 
@@ -106,7 +114,7 @@ const PaymentHistory = () => {
 
         <table class="border-separate border border-slate-400 m-auto  md:mt-8">
           <thead>
-            <tr>
+            <tr  >
 
               <th class="border border-slate-300 p-2 md:px-9">Sender name</th>
               <th class="border border-slate-300 p-2 md:px-9">Payment date</th>
@@ -119,7 +127,7 @@ const PaymentHistory = () => {
 
             {paymentData.map((payment, index) => (
 
-              <tr>
+              <tr key={index} > 
 
                 <td class="border border-slate-300 p-2 md:px-9">{payment.sender_name}</td>
                 <td class="border border-slate-300 p-2 md:px-9">{payment.payment_date}</td>

@@ -11,7 +11,7 @@ exports.getOrderbyId = async (req, res) => {
     console.log(req.params.id)
 
 
-    connection.query('SELECT * FROM orders WHERE id = ' + req.params.id, (err, rows, fields) => {
+    connection.query('SELECT * FROM orders WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -33,7 +33,7 @@ exports.updteOrderStatus = async (req, res) => {
     console.log( req.body  , newStatus,  req.params.id);
     // Validate input
     if (!productId || !newStatus) {
-        return res.status(400).json({ error: 'Invalid input' });
+        return res.status(400).json({ error: 'Invalid input' });0
     }
 
 
@@ -80,9 +80,9 @@ exports.getAllOrder = async (req, res) => {
     })
 }
 
-exports.getAllreturns = async (req, res) => {
-
-    connection.query('SELECT * FROM `return/cancels`', (err, rows, fields) => {
+exports.getAllreturnsByid = async (req, res) => {
+  console.log(req.params.id)
+    connection.query('SELECT * FROM `return/cancels` WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
