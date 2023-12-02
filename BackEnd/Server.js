@@ -21,6 +21,7 @@ const order=require('./Routes/orderRoutes')
 const payment=require('./Routes/paymentsRoutes')
 const plant=require('./Routes/plantRoutes')
 const user=require('./Routes/userRoutes')
+const Dasboard=require('./Controllers/DashboardController')
 
 
 
@@ -32,6 +33,7 @@ app.use('/nursery',nursery)
 app.use('/order',order)
 app.use('/payment', payment)
 app.use('/plant',plant)
+app.use('/dashboard',Dasboard)
 
 app.use('/user',user)
 

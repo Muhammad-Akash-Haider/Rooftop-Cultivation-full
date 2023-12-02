@@ -31,6 +31,35 @@ const Sellerdashboard = () => {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
 
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+   
+    setUser_id(localStorage.getItem('user_id'));
+  
+  }, []); 
+
+
+  const [DashboardData, SetDashboardData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => { 
+      try {
+        const response = await fetch(`http://localhost:5000/dashboard/dashboardDetails/${user_id}`);
+       
+        const data = await response.json();
+       
+        SetDashboardData(data);
+        
+   
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+
   useEffect(() => {
       const data = {
           labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -128,19 +157,19 @@ const Sellerdashboard = () => {
          <dl class="grid  gap-x-4 gap-y-4 text-center  grid-cols-1  md:grid-cols-4 lg:grid-cols-4 ">
          
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200  w-[235px] md:w-[245px] " >
-             <dt class=" leading-7 text-gray-600 text-xl">0 pkr</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.total_amount} pkr</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total sales</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200 px-10 w-[235px]  md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.orders}</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Orders</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200 px-10  w-[235px] md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.returns}</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Returns</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3 rounded-2xl  bg-slate-200 px-10 w-[235px]  md:w-[245px]">
-             <dt class=" leading-7 text-gray-600 text-xl">0</dt>
+             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.notifications}</dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Notifications</dd>
            </div>
           
