@@ -48,7 +48,7 @@ function App() {
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/product" element={<Product />}></Route>
+          <Route path="/product/:id" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
           <Route path="/checkout" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>

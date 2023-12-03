@@ -41,7 +41,10 @@ const Nav = () => {
             user_type == 1 ?
              <div></div>
               :
-              <div>
+              <div className='flex justify-between gap-2 ml-20'>
+                
+                <div>
+                  
                 <Link to="/My_Orders_Buyer">
                   <div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -49,6 +52,9 @@ const Nav = () => {
                     </svg>
                   </div>
                 </Link>
+                </div>
+                <div>
+                  
                 <Link to="/My_Orders">
                   <div>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
@@ -56,6 +62,7 @@ const Nav = () => {
                     </svg>
                   </div>
                 </Link>
+                </div>
 
               </div>
 

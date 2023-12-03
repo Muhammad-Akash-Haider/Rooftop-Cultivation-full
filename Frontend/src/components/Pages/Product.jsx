@@ -1,13 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React ,{useEffect,useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import logo from './images2/LOGO.png'
 import img12 from'./images2/img12.jpg'
-import fruit2 from'./images2/fruit2.png'
-import seed from'./images2/seed.png'
-import flower from'./images2/flower.png'
+
 import Nav from "./../Nav";
 
 function Product() {
+
+  const param = useParams();
+
+  const id = param.id;
+  
+const [fetchData, setfetchData] = useState([]);
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/plant/getplant/${id}`);
+      const data = await response.json();
+      setfetchData(data.rows[0])
+
+    } catch (error) {
+      console.error('Error fetching plant data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
   return (
     <div>
       <div className='bg-[#00967C] p-2 gap-7 flex'>
@@ -23,10 +45,10 @@ function Product() {
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={img12}/>
       <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-        <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
-        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">Plant Name</h1>
+        <h2 class="text-sm title-font text-gray-500 tracking-widest">NURCERY NAME</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{fetchData.name}</h1>
         <div class="flex mb-4">
-          <span class="flex items-center">
+          {/* <span class="flex items-center">
             <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-[#00967C]" viewBox="0 0 24 24">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
             </svg>
@@ -43,8 +65,8 @@ function Product() {
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
             </svg>
             <span class="text-gray-600 ml-3">4001 Reviews</span>
-          </span>
-          <span class="flex gap-3 ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
+          </span> */}
+          {/* <span class="flex gap-3 ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
             <a class="text-[#1877F2]">
               <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
@@ -60,11 +82,11 @@ function Product() {
                 <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
               </svg>
             </a>
-          </span>
+          </span> */}
         </div>
-        <p class="leading-relaxed">Description Majid ko pata ni kiya ho giya har waqaat humry pechy phra rehta hai ky kaam kro kaam kro khud kaam krta hai ni... sirf ahram haram krta rehta hai. Ya Allah Majid ko hidayat ky rasty pr chala.... Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur tempora praesentium officia temporibus deleniti.</p>
+        <p class="leading-relaxed" dangerouslySetInnerHTML={{ __html: fetchData.description }} ></p>
         <div class="flex gap-24 mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-        <span class="title-font font-medium text-2xl text-gray-900">Rs. 580.00</span>
+        <span class="title-font font-medium text-2xl text-gray-900">Rs. {fetchData.price}</span>
           <div class="flex ml-6 items-center">
             <span class="mr-3">Quantity</span>
             <div class="relative">

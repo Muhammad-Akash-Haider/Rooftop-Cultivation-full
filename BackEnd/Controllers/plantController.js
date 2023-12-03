@@ -8,6 +8,22 @@ const connection = require('../Config/db')
 
 // Get Nursery by Id
 
+exports.getNewArivals= async (req, res) => {
+    console.log(req.params.id)
+
+
+    connection.query('SELECT * FROM plant ' , (err, rows, fields) => {
+        if (!err) {
+            res.json({
+                rows
+            })
+        }
+
+        else
+            console.log(err);
+    })
+}
+
 exports.getPlantbyId = async (req, res) => {
     console.log(req.params.id)
 
@@ -51,7 +67,7 @@ exports.getPantToEdit = async (req, res) => {
 exports.getAllPlants = async (req, res) => {
 
 
-    connection.query('SELECT * FROM `plant`', (err, rows, fields) => {
+    connection.query('SELECT * FROM `plant`LIMIT 16 ', (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows

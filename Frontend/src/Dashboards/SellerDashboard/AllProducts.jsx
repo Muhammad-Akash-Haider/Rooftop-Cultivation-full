@@ -160,6 +160,7 @@ const AllProducts = () => {
           </thead>
           <tbody>
 
+        
           {plantData.map((plant, index) => (
           <tr key={index}>
           <td class="border border-slate-300 p-3 md:px-12">{plant.name}</td>
