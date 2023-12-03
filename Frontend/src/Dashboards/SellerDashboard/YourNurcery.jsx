@@ -48,7 +48,7 @@ const Yournurcery = () => {
 
   const formik = useFormik({
     initialValues: {
-      seller_id: localStorage.getItem('user_id') ,
+      seller_id: localStorage.getItem('user_id'),
       business_name: '',
       address: '',
     },
@@ -92,13 +92,13 @@ const Yournurcery = () => {
 
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
-   
+
     setUser_id(localStorage.getItem('user_id'));
-  
-  }, []); 
+
+  }, []);
 
   const [fetchData, setfetchData] = useState([]);
-  
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,13 +106,14 @@ const Yournurcery = () => {
         const response = await fetch(`http://localhost:5000/nursery/get/nursery/${user_id}`);
         const data = await response.json();
 
+
         formik.setValues({
           seller_id: localStorage.getItem('user_id') || '',
-          business_name: data.rows[0].business_name ,
+          business_name: data.rows[0].business_name,
           address: data.rows[0].business_location,
           // Add other fields as needed
         });
-        setImages(data.rows[0].image)
+        setImages(data.rows[0].gallery)
         setContent(data.rows[0].description)
         setfetchData(data.rows[0]);
 
@@ -168,9 +169,9 @@ const Yournurcery = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
 
         </ol>
       </aside>
@@ -185,38 +186,56 @@ const Yournurcery = () => {
 
         <div className='content-center md:p-3 mt-7' >
 
-        <form onSubmit={formik.handleSubmit}>
-          
-          <h1 className='pt-3 text-xl md:p-2'>Business Name</h1>
-          <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Enter Business name'  name='business_name' onChange={formik.handleChange} value={formik.values.business_name}
+          <form onSubmit={formik.handleSubmit}>
+
+            <h1 className='pt-3 text-xl md:p-2'>Business Name</h1>
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Enter Business name' name='business_name' onChange={formik.handleChange} value={formik.values.business_name}
             />
 
-          <h1 className='pt-3 text-xl md:p-2'>Business Address</h1>
-          <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Provide your address' name='address' onChange={formik.handleChange} value={formik.values.address} />
+            <h1 className='pt-3 text-xl md:p-2'>Business Address</h1>
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Provide your address' name='address' onChange={formik.handleChange} value={formik.values.address} />
 
 
-          <h1 className='pt-3 text-xl md:p-2'>Business Details</h1>
-          <ReactQuill theme="snow"
-            value={content}
-            onChange={handleEditorChange}
-          />
-          {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
+            <h1 className='pt-3 text-xl md:p-2'>Business Details</h1>
+            <ReactQuill theme="snow"
+              value={content}
+              onChange={handleEditorChange}
+            />
 
-          <h1 className='pt-3 text-xl md:p-4'>Upload your gallery</h1>
-          <input
-            type="file"
-            multiple
-            name="images"
-            onChange={handleImageChange}
-            className="p-2 mb-2 border border-gray-300 rounded-md"
-          />
-          <br />
 
-          <button type='submit'  class="bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-2 px-4 rounded">
-            Save Nurcery
-          </button>
+            {/* <div className='flex flex-row p-2'>
+              {images && images.split('').map((image, index) => (
+                <div key={index} >
 
-         </form>
+                  <img className='w-40 h-40 m-1 rounded'
+                    src={`http://localhost:5000/uploads/${image.trim()}`} alt={"not fouud"} />
+
+                </div>
+              ))}
+            </div> */}
+
+            {images ?
+              <h1 className='pt-3 text-xl md:p-4'>Update your gallery</h1>
+              :
+              <h1 className='pt-3 text-xl md:p-4'>Upload your gallery</h1>
+
+            }
+
+
+            <input
+              type="file"
+              multiple
+              name="images"
+              onChange={handleImageChange}
+              className="p-2 mb-2 border border-gray-300 rounded-md"
+            />
+            <br />
+
+            <button type='submit' class="bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-2 px-4 rounded">
+              Save Nurcery
+            </button>
+
+          </form>
 
 
         </div>

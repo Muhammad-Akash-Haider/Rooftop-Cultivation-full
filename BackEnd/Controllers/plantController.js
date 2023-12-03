@@ -8,6 +8,22 @@ const connection = require('../Config/db')
 
 // Get Nursery by Id
 
+exports.getNewArivals = async (req, res) => {
+    console.log(req.params.id)
+
+
+    connection.query('SELECT * FROM plant ', (err, rows, fields) => {
+        if (!err) {
+            res.json({
+                rows
+            })
+        }
+
+        else
+            console.log(err);
+    })
+}
+
 exports.getPlantbyId = async (req, res) => {
     console.log(req.params.id)
 
@@ -51,7 +67,7 @@ exports.getPantToEdit = async (req, res) => {
 exports.getAllPlants = async (req, res) => {
 
 
-    connection.query('SELECT * FROM `plant`', (err, rows, fields) => {
+    connection.query('SELECT * FROM `plant`LIMIT 16 ', (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows
@@ -62,6 +78,42 @@ exports.getAllPlants = async (req, res) => {
             console.log(err);
     })
 }
+exports.getPlantsbyCategory = async (req, res) => {
+    console.log(req.params.id);
+    var category
+
+    const queryAsync = (sql, values) => {
+        return new Promise((resolve, reject) => {
+            connection.query(sql, values, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    };
+
+    try {
+        const query1 = 'SELECT * FROM `plant` WHERE id = ?';
+        const results1 = await queryAsync(query1, [req.params.id]);
+        category = results1[0].category
+
+        const query2 = 'SELECT * FROM `plant` WHERE category = ?';
+        const rows = await queryAsync(query2, [category]);
+
+        res.json({
+            rows
+        })
+
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+
+
+};
 
 
 
