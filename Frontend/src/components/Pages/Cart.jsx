@@ -2,6 +2,8 @@ import React,{useState ,useEffect } from 'react'
 import Header from "../Header";
 import Nav from "../Nav";
 import { useParams } from 'react-router-dom';
+import { IoAddCircleOutline } from "react-icons/io5";
+import { GrSubtractCircle } from "react-icons/gr";
 
 
 function Checkout() {
@@ -30,6 +32,22 @@ function Checkout() {
     fetchData();
   }, []); // Empty dependency array means this effect runs once after the initial render
 
+  const updateStock = async (productId) => {
+    try {
+      const response = await fetch('http://localhost:5000/cart/updateStock', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+      const result = await response.json();
+      console.log(result); // You can handle the result as needed
+    } catch (error) {
+      console.error('Error updating stock:', error);
+    }
+  };
 
 
     return (
@@ -84,7 +102,11 @@ function Checkout() {
                   </div>
                 </td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">
+                <div className="flex flex-row items-center justify-center">
+                  <GrSubtractCircle   className='mr-2 text-xl text-red-800'/>
                   {cart.stock}
+                    <IoAddCircleOutline  onClick={updateStock(cart.id)} className='ml-2 text-2xl text-green-800 '/>
+                 </div>
                 </td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">PKR {cart.price}</td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">
