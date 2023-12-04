@@ -41,7 +41,7 @@ function Login() {
           localStorage.setItem('user_id', data.user_id);
           localStorage.setItem('user_type', data.user_type);
           localStorage.setItem('user_name', data.user_name);
-          toast.success("Successfully registered", {
+          toast.success("Successfully Loged in", {
             position: toast.POSITION.TOP_RIGHT,
           });
           navigate('/')

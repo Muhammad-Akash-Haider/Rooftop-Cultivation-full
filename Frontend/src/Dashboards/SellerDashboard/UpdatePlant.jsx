@@ -31,8 +31,6 @@ const UpdatePlant = () => {
 
   const id = param.id;
 
-
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {

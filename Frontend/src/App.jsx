@@ -13,7 +13,7 @@ import PaymentHistory from './Dashboards/SellerDashboard/PaymentHistory';
 import Yournurcery from './Dashboards/SellerDashboard/YourNurcery';
 import Returns from './Dashboards/SellerDashboard/Returns';
 import AllProducts from './Dashboards/SellerDashboard/AllProducts';
-import Checkout from "./components/Pages/Checkout";
+import Checkout from "./components/Pages/Cart";
 import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
@@ -50,9 +50,10 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/product/:id" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
-          <Route path="/checkout" element={<Checkout />}></Route>
+          <Route path="/cart/:id" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
+       
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>
 
