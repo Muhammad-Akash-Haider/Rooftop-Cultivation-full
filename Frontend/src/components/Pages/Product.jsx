@@ -53,14 +53,13 @@ function Product() {
         })
           .then(response => response.json())
           .then(data => {
-            console.log('Success:', data);
-            toast.success("Successfully added to cart", {
+            toast.success(data.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
           })
-          .catch((error) => {
+          .catch((error ,message) => {
             console.error('Error:', error);
-            toast.warning("Try Again", {
+            toast.warning( message, {
               position: toast.POSITION.TOP_RIGHT,
             });
           });

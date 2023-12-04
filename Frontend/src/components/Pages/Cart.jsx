@@ -4,34 +4,48 @@ import Nav from "../Nav";
 import { useParams } from 'react-router-dom';
 import { IoAddCircleOutline } from "react-icons/io5";
 import { GrSubtractCircle } from "react-icons/gr";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 function Checkout() {
   const param = useParams();
 
   const id = param.id;
-  console.log(id)  
+  const [cartData, setCartData] = useState([]);
+
+  const handleDelete = async (cartId) => {
+    try {
+      const isConfirmed = window.confirm('Are you sure you want to delete this product?');
+
+      if (!isConfirmed) {
+        // If the user cancels the deletion, do nothing
+        return;
+      }
+      // Make an API call to delete the plant with the given plantId
+    
+      const response = await fetch(`http://localhost:5000/cart/deletecartitem/${cartId}`, {
+        method: 'DELETE',
+        // You may need to include headers or credentials based on your API setup
+      });
+
+      if (response.ok) {
+        // If the API call is successful, update the state to remove the deleted plant
+
+        toast.success("Successfully deleted a cart item", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        fetchData();
+      } else {
+        console.error('Failed to delete cart item');
+      }
+    } catch (error) {
+      console.error('Error deleting cartitem:', error);
+    }
+  };
   
 
-  const [cartData, setcartData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => { 
-      try {
-        const response = await fetch(`http://localhost:5000/cart/CartItems/${id}`);
-       
-        const data = await response.json();
-   
-        setcartData(data.rows);
-   
-      } catch (error) {
-        console.error('Error fetching plant data:', error);
-      }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array means this effect runs once after the initial render
-
+  // Define the updateStock function
   const updateStock = async (productId) => {
     try {
       const response = await fetch('http://localhost:5000/cart/updateStock', {
@@ -44,10 +58,48 @@ function Checkout() {
 
       const result = await response.json();
       console.log(result); // You can handle the result as needed
+
+      // After updating stock, trigger re-fetch of cart data
+      fetchData();
     } catch (error) {
       console.error('Error updating stock:', error);
     }
   };
+  const downgradeStock = async (productId) => {
+    try {
+      const response = await fetch('http://localhost:5000/cart/Downgrade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+      const result = await response.json();
+      console.log(result); // You can handle the result as needed
+
+      // After updating stock, trigger re-fetch of cart data
+      fetchData();
+    } catch (error) {
+      console.error('Error updating stock:', error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart/CartItems/${id}`);
+      const data = await response.json();
+      setCartData(data.rows);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  
+  // Fetch cart data useEffect
+  useEffect(() => {
+ 
+    fetchData(); // Call fetchData immediately after defining it
+  }, [id]); // Include id in the dependency array
 
 
     return (
@@ -74,21 +126,6 @@ function Checkout() {
             </thead>
             <tbody>
 
-   
-          {/* {plantData.map((plant, index) => (
-          <tr key={index}>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.name}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.price}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.category}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.stock}</td>
-          <td class="border border-slate-300 p-3 md:px-12">
-            < RiDeleteBin6Line    onClick={() => handleDelete(plant.id)}  className="inline text-xl text-red-600" /> &nbsp;
-            <Link to={`/update/${plant.id}`} >< FaRegEdit className="inline text-xl text-blue-800" /></Link> 
-          </td>
-        </tr>
-        
-        ))}               */}
-
          {cartData.map((cart, index) => (
               <tr key={index}>
                 <td>
@@ -103,18 +140,14 @@ function Checkout() {
                 </td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">
                 <div className="flex flex-row items-center justify-center">
-                  <GrSubtractCircle   className='mr-2 text-xl text-red-800'/>
+                  <GrSubtractCircle onClick={()=>downgradeStock(cart.id)}  className='mr-2 text-xl text-red-800'/>
                   {cart.stock}
-                    <IoAddCircleOutline  onClick={updateStock(cart.id)} className='ml-2 text-2xl text-green-800 '/>
+                    <IoAddCircleOutline  onClick={()=>updateStock(cart.id)} className='ml-2 text-2xl text-green-800 '/>
                  </div>
                 </td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">PKR {cart.price}</td>
                 <td className="p-4 px-6 text-center whitespace-nowrap">
-                  <button>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <span strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
+                < RiDeleteBin6Line    onClick={() => handleDelete(cart.id)}  className="inline text-xl text-red-600" /> 
                 </td>
               </tr>
               
