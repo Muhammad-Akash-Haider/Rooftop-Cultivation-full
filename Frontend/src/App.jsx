@@ -24,6 +24,7 @@ import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 
 import My_Orders from "./components/Pages/My_Orders";
 import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
+import CategoryPlants from "./components/Pages/CategoryPlants"
 
 
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
+          <Route path="/categoryPlants/:category" element={<CategoryPlants/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>

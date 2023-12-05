@@ -172,8 +172,9 @@ const Addplant = () => {
             name='category'  onChange={formik.handleChange} value={formik.values.category}>
             <option value="someOption" default >select</option>
             <option value="seeds">seeds</option>
-            <option value="plants">plants</option>
+            <option value="fruits">Fruits</option>
             <option value="flowers">flowers</option>
+            <option value="vegetables">Vegetables</option>
           </select>
 
           <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
