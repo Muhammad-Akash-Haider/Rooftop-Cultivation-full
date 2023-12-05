@@ -80,7 +80,7 @@ function Product() {
         console.error('Error fetching plant data:', error);
       }
     };
-    window.scrollTo(0, 0);
+    
     fetchData();
   }, []);
 
@@ -99,7 +99,7 @@ function Product() {
         console.error('Error fetching plant data:', error);
       }
     };
-
+    
     fetchData();
   }, []);
 
@@ -214,7 +214,7 @@ function Product() {
                   <p class="mt-1">Rs. {plant.price}</p>
                 
                   <Link to= {`/product/${plant.id}`}>
-                    <button onClick={ window.scrollTo(0, 0) } className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-24 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Buy
+                    <button onClick={()=> window.scrollTo(0, 0) } className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-24 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Buy
                     </button></Link>
                 </div>
               </div>
