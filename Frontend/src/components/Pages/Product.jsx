@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 import Nav from "./../Nav";
 import Footer from '../Footer'
 
 function Product() {
-
+  
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  const [user_type, setUser_type] = useState(localStorage.getItem('user_type'));
+  
+  const navigate = useNavigate();
+  
   const param = useParams();
 
   const id = param.id;
@@ -15,6 +23,51 @@ function Product() {
 
   const [activeImg, setActiveImage] = useState()
 
+  const [stock ,setstoke] =useState(1)
+
+
+  const AddProductToCart = (stock, product_id) => {
+    
+        
+    if (user_id == null) {
+     
+      toast.warning("Please Login First", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      navigate('/login');
+    } else if (user_type === '1') {
+    
+      toast.warning("You Are Not A Buyer", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (user_type === '0') {
+    
+        const backendEndpoint = 'http://localhost:5000/cart/AddToCart';
+     
+        fetch(backendEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ product_id, user_id, stock }), // Corrected the body object
+        })
+          .then(response => response.json())
+          .then(data => {
+            toast.success(data.message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          })
+          .catch((error ,message) => {
+            console.error('Error:', error);
+            toast.warning( message, {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+          });
+      
+    }
+  };
+  
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +80,7 @@ function Product() {
         console.error('Error fetching plant data:', error);
       }
     };
-
+    
     fetchData();
   }, []);
 
@@ -46,7 +99,7 @@ function Product() {
         console.error('Error fetching plant data:', error);
       }
     };
-
+    
     fetchData();
   }, []);
 
@@ -128,16 +181,16 @@ function Product() {
                   <span class="mr-3">Quantity</span>
                   <div class="relative">
 
-                    <input id="text" name="text" placeholder='1' class=" w-12 bg-white rounded border border-gray-300 focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 py-0 px-1 leading-8 transition-colors text-sm duration-200 ease-in-out" type="text" />
+                    <input id="text" name="text" placeholder='1' class=" w-12 bg-white rounded border border-gray-300 focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 py-0 px-1 leading-8 transition-colors text-sm duration-200 ease-in-out" type="number"  value={stock} onChange={(event) => setstoke(event.target.value)} />
                   </div>
 
                 </div>
               </div>
               <div class=" flex gap-2 text-center py-2 px-8 w-full outline-none">
-                <button class="ml-auto text text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Buy Now</button>
-                <button class="ml-auto text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Add to Cart</button>
+                {/* <button class="ml-auto text text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Buy Now</button> */}
+                <button onClick={()=> AddProductToCart(stock , fetchData.id )} class="ml-auto text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Add to Cart</button>
               </div>
-            </div>
+            </div> 
           </div>
         </div>
       </section>
@@ -159,10 +212,10 @@ function Product() {
                   <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{plant.category}</h3>
                   <h2 class="text-gray-900 title-font text-lg font-medium">{plant.name}</h2>
                   <p class="mt-1">Rs. {plant.price}</p>
-
                 
-                    <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-20 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Add to Cart
-                    </button>
+                  <Link to= {`/product/${plant.id}`}>
+                    <button onClick={()=> window.scrollTo(0, 0) } className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-24 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Buy
+                    </button></Link>
                 </div>
               </div>
 

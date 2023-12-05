@@ -1,50 +1,200 @@
+import React,{useState ,useEffect } from 'react'
+import Header from "../Header";
+import Nav from "../Nav";
+import { useParams } from 'react-router-dom';
+import { IoAddCircleOutline } from "react-icons/io5";
+import { GrSubtractCircle } from "react-icons/gr";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RiDeleteBin6Line } from 'react-icons/ri';
+
+function Checkout() {
+  const param = useParams();
+  
+  const [id, setid] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+
+    setid(localStorage.getItem('user_id'));
+  }, [id ]);
+  
+  
+  const [cartData, setCartData] = useState([]);
+  const [carttotal ,setcarttotal] =useState()
+
+  const handleDelete = async (cartId) => {
+    try {
+      const isConfirmed = window.confirm('Are you sure you want to delete this product?');
+
+      if (!isConfirmed) {
+        // If the user cancels the deletion, do nothing
+        return;
+      }
+      // Make an API call to delete the plant with the given plantId
+    
+      const response = await fetch(`http://localhost:5000/cart/deletecartitem/${cartId}`, {
+        method: 'DELETE',
+        // You may need to include headers or credentials based on your API setup
+      });
+
+      if (response.ok) {
+        // If the API call is successful, update the state to remove the deleted plant
+
+        toast.success("Successfully deleted a cart item", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        fetchData();
+        cartTotal(); 
+      } else {
+        console.error('Failed to delete cart item');
+      }
+    } catch (error) {
+      console.error('Error deleting cartitem:', error);
+    }
+  };
+  
+
+  // Define the updateStock function
+  const updateStock = async (productId) => {
+    try {
+      const response = await fetch('http://localhost:5000/cart/updateStock', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+      const result = await response.json();
+      console.log(result); // You can handle the result as needed
+
+      // After updating stock, trigger re-fetch of cart data
+      fetchData();
+      cartTotal(); 
+    } catch (error) {
+      console.error('Error updating stock:', error);
+    }
+  };
+  const downgradeStock = async (productId) => {
+    try {
+      const response = await fetch('http://localhost:5000/cart/Downgrade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
+      });
+
+      const result = await response.json();
+      console.log(result); // You can handle the result as needed
+
+      // After updating stock, trigger re-fetch of cart data
+      fetchData();
+      cartTotal(); 
+    } catch (error) {
+      console.error('Error updating stock:', error);
+    }
+  };
+ 
+
+  const cartTotal = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart/carttotal/${id}`);
+      const data = await response.json();
+      setcarttotal(data.row[0].total_amount);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart/CartItems/${id}`);
+      const data = await response.json();
+      setCartData(data.rows);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  
+  // Fetch cart data useEffect
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    fetchData();  // Call fetchData immediately after defining it
+    cartTotal();  
+  }, [id]); // Include id in the dependency array
 
 
-import React from 'react'
+    return (
+        <>
 
-function Cart() {
-  return (
-    <div>
-  <section class="text-gray-600 body-font overflow-hidden">
-  {/* <div class="container px-5 py-24 mx-auto"> */}
-    <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-        <h2 class="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
-        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">Apple Plant</h1>
-        <div class="flex mb-4">
-          <a class="flex-grow text-green-500 border-b-2 border-green-500 py-2 text-lg px-1">Description</a>
-          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Reviews</a>
-          <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Details</a>
-        </div>
-        <p class="leading-relaxed mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sit voluptates blanditiis exercitationem doloribus ipsum, labore corrupti iusto facere. Omnis ullam autem earum id voluptate magnam iure assumenda quae explicabo.</p>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">Color</span>
-          <span class="ml-auto text-gray-900">Blue</span>
-        </div>
-        <div class="flex border-t border-gray-200 py-2">
-          <span class="text-gray-500">Size</span>
-          <span class="ml-auto text-gray-900">Medium</span>
-        </div>
-        <div class="flex border-t border-b mb-6 border-gray-200 py-2">
-          <span class="text-gray-500">Quantity</span>
-          <span class="ml-auto text-gray-900">4</span>
-        </div>
-        <div class="flex">
-          <span class="title-font font-medium text-2xl text-gray-900">$58.00</span>
-          <button class="flex ml-auto text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">Buy</button>
-          <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-            <svg fill="currentColor" stroklinecap="round" strokeLinejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
-              <span d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></span>
-            </svg>
-          </button>
+            <Header />
+            <Nav />
+
+            
+      <div className="container p-8 mx-auto mt-12">
+        <div className="w-full overflow-x-auto">
+          <div className="my-2">
+            <h3 className="text-xl font-bold tracking-wider">Shopping Cart items</h3>
+          </div>
+          <table className="w-full shadow-inner">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Image</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Product</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Qty</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Price</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+
+         {cartData.map((cart, index) => (
+              <tr key={index}>
+                <td>
+                  <div className="flex justify-center">
+                    <img src={`http://localhost:5000/uploads/${cart.images.split(',')[0]}`}className="object-cover h-28 w-28 rounded-2xl" alt="image" />
+                  </div>
+                </td>
+                <td className="p-4 px-6 text-center whitespace-nowrap">
+                  <div className="flex flex-col items-center justify-center">
+                    <h3>{cart.name}</h3>
+                  </div>
+                </td>
+                <td className="p-4 px-6 text-center whitespace-nowrap">
+                <div className="flex flex-row items-center justify-center">
+                  <GrSubtractCircle onClick={()=>downgradeStock(cart.id)}  className='mr-2 text-xl text-red-800'/>
+                  {cart.stock}
+                    <IoAddCircleOutline  onClick={()=>updateStock(cart.id)} className='ml-2 text-2xl text-green-800 '/>
+                 </div>
+                </td>
+                <td className="p-4 px-6 text-center whitespace-nowrap">PKR {cart.price}</td>
+                <td className="p-4 px-6 text-center whitespace-nowrap">
+                < RiDeleteBin6Line    onClick={() => handleDelete(cart.id)}  className="inline text-xl text-red-600" /> 
+                </td>
+              </tr>
+              
+            ))}   
+            </tbody>
+          </table>
+         
+          <div className="mt-4">
+            <div className="py-4 rounded-md shadow">
+             
+              <div className="flex items-center justify-between px-4 py-2 mt-3 border-t-2 ">
+                <span className="text-xl font-bold">Total</span>
+                <span className="text-2xl font-bold">PKR {carttotal}</span>
+              </div>
+            </div>
+          </div>
+          <div className="mt-4">
+            <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]">
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       </div>
-      {/* <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={img12}> */}
-    {/* </div> */}
-  </div>
-</section>
-    </div>
-  )
+        </>
+    )
 }
 
-export default Cart
+export default Checkout
