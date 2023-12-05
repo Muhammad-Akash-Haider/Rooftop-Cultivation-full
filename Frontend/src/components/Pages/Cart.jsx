@@ -118,7 +118,7 @@ function Checkout() {
   
   // Fetch cart data useEffect
   useEffect(() => {
- 
+    window.scrollTo(0, 0);
     fetchData();  // Call fetchData immediately after defining it
     cartTotal();  
   }, [id]); // Include id in the dependency array

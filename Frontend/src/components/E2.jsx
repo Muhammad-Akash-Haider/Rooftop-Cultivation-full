@@ -21,7 +21,7 @@ export default function E2() {
         console.error('Error fetching plant data:', error);
       }
     };
-
+    window.scrollTo(0, 0);
     fetchData();
   }, []); // Empty dependency array means this effect runs once after the initial render
 
@@ -48,7 +48,7 @@ export default function E2() {
                   <h2 class="text-gray-900 title-font text-lg font-medium">{plant.name}</h2>
                   <p class="mt-1">Rs. {plant.price}</p>
 
-                  <Link to= {`product/${plant.id}`}>
+                  <Link to= {`/product/${plant.id}`}>
                     <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-24 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Buy
                     </button></Link>
                 </div>
