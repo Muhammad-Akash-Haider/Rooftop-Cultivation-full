@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2023 at 10:22 AM
+-- Generation Time: Dec 05, 2023 at 08:18 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Database: `rooftop-cultivation`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(100) NOT NULL,
+  `buyer_id` varchar(100) NOT NULL,
+  `product_id` int(100) NOT NULL,
+  `stock` int(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
+(5, '25', 31, 2),
+(7, '26', 31, 3);
 
 -- --------------------------------------------------------
 
@@ -47,6 +68,13 @@ CREATE TABLE `Notifications` (
   `time` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Notifications`
+--
+
+INSERT INTO `Notifications` (`id`, `user_id`, `reason`, `time`) VALUES
+(1, 25, 'order', '2 25');
+
 -- --------------------------------------------------------
 
 --
@@ -68,8 +96,7 @@ CREATE TABLE `nursery` (
 --
 
 INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`, `phone_number`) VALUES
-(5, 23, 'true business name', 'wah cant', '<p>alkdnflasndas</p><p>amaing</p>', 'images-1701364567479-asdasdasd (another copy).jpeg', NULL),
-(6, 25, 'majid greneery', 'wah cant', '<h2>Background</h2><ul><li>Aloe is a cactus-like plant that grows in hot, dry climates. It is cultivated in subtropical regions around the world, including the southern border areas of Texas, New Mexico, Arizona, and California.</li><li>Historically, aloe has been used for skin conditions and was thought to improve baldness and promote wound healing.</li><li>Aloe is used topically (applied to the skin) and orally. Topical use of aloe is promoted for acne, lichen planus (a very itchy rash on the skin or in the mouth), oral submucous fibrosis, burning mouth syndrome, burns, and radiation-induced skin toxicity. Oral use of aloe is promoted for weight loss, diabetes, hepatitis, and inflammatory bowel disease (a group of conditions caused by gut inflammation that includes Crohn’s disease and ulcerative colitis).</li></ul><p><br></p>', 'images-1701398903332-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png', NULL);
+(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593342454-kissan-nnl1o120i.png, images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1701593342456-2-8.jpg, images-1701593342460-image-pepper-nursery-new.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -94,8 +121,8 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `buyer_id`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
 (1, 'ali', 0, 0, '12/7/2023', 'alevora plant', 'Completed', 2000),
-(2, 'zahra', 0, 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
-(3, 'danyal', 0, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
+(2, 'zahra', 25, 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
+(3, 'danyal', 25, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
 
 -- --------------------------------------------------------
 
@@ -120,7 +147,7 @@ CREATE TABLE `payments_history` (
 
 INSERT INTO `payments_history` (`id`, `seller_id`, `buyer_id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
 (1, 0, 0, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
-(2, 0, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
+(2, 25, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
 
 -- --------------------------------------------------------
 
@@ -144,13 +171,9 @@ CREATE TABLE `plant` (
 --
 
 INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `description`, `images`) VALUES
-(17, '23', 'marenas', 1230, 17, 'plants', '<p>no data is written hereddfdf</p>', 'images-1701360635113-asdasdasd (another copy).jpeg, images-1701360635114-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png'),
-(18, '23', 'sdsdadaddfsdf', 1233, 17, 'plants', 'dcsdcdcsdc', 'images-1701352975340-asdasdasd.jpeg'),
-(19, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009200881-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
-(20, '23', 'alevora palnt', 2355, 3, 'flowers', '<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">&nbsp;Iris virginica is&nbsp;</span><span style=\"background-color: rgba(80, 151, 255, 0.18); color: rgb(4, 12, 40);\">a perennial plant that grows up to 0.6–0.9 m (2–3 ft) tall</span><span style=\"background-color: rgb(255, 255, 255); color: rgb(32, 33, 36);\">. The plant\'s sword-shaped basal leaves are erect or sometimes arching and measure up to 91 cm (3 ft) long and 2.5 cm (1 in) across at the base. The leaves have smooth margins and are bluish green to green and glabrous.</span></p>', 'images-1701009253853-WhatsApp Image 2023-05-19 at 2.53.09 PM.jpeg'),
-(24, '2', '\"asmamsa\"', 232, 3, '\"flower\"', 's <p>asjkdkajd</p><ol><li>asdsadasdasasdasd</li></ol><h1>asdasdsadsad</h1>', 'images-1701179709717-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png'),
-(28, '25', 'alevora palnt', 2323, 6, 'plants', '<p>jkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadljkasbdkajbdljsadlksadl</p>', 'images-1701430221296-asdasdasd (another copy).jpeg, images-1701430221297-screencapture-bookmee-co-uk-seller-notification-all-notifications-2023-11-12-10_30_30.png, images-1701430221646-Screenshot from 2023-11-29 21-16-08.png'),
-(29, '25', 'majid ali platation expert', 1233, 2, 'seeds', '<p>asjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadasasjbdlsajdlksadas</p>', 'images-1701438126054-screencapture-bookmee-co-uk-alex-barb-2023-12-01-18_37_34.png, images-1701438126065-asdasdasd (copy).jpeg');
+(30, '25', 'Iris virginica', 2500, 7, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1701592866157-images.jpeg, images-1701592866158-download (1).jpeg, images-1701592866158-1.jpeg'),
+(31, '25', 'Setosa', 1400, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg, images-1701593799952-satosa1).jpeg'),
+(32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg');
 
 -- --------------------------------------------------------
 
@@ -175,8 +198,8 @@ CREATE TABLE `return/cancels` (
 
 INSERT INTO `return/cancels` (`id`, `seller_id`, `buyer_id`, `customer_name`, `order_date`, `price`, `reasons`, `status`) VALUES
 (1, 0, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(2, 0, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
-(3, 0, 0, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
+(2, 25, 0, 'sehar', '2023-20-22', 2000, 'Product damage', 'returned'),
+(3, 25, 0, 'hassan', '2023-2-22', 3000, 'Product damage', 'returned');
 
 -- --------------------------------------------------------
 
@@ -219,6 +242,12 @@ CREATE TABLE `verified_users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `chat`
@@ -280,16 +309,22 @@ ALTER TABLE `verified_users`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `Notifications`
 --
 ALTER TABLE `Notifications`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `nursery`
 --
 ALTER TABLE `nursery`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -307,7 +342,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`

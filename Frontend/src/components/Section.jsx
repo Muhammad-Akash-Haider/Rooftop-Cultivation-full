@@ -16,9 +16,9 @@ const Section=()=>{
       <div class="flex justify-center">
         
       
-        <button class="inline-flex text-white bg-[#00967C] border-0 py-2 px-7 focus:outline-none
+        <button onClick={()=> window.scrollTo(0, 900)} class="inline-flex text-white bg-[#00967C] border-0 py-2 px-7 focus:outline-none
          hover:bg-[#1B4636] rounded text-lg"> Categories </button>
-        <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">New Arrivals</button>
+        <button onClick={()=> window.scrollTo(0, 1300)} class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">New Arrivals</button>
       </div>
     </div>
     <div className='w-5/6 lg:max-w-s lg:w-s md:w-1/2'>

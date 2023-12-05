@@ -78,6 +78,7 @@ exports.getAllPlants = async (req, res) => {
             console.log(err);
     })
 }
+
 exports.getPlantsbyCategory = async (req, res) => {
     console.log(req.params.id);
     var category
@@ -115,6 +116,30 @@ exports.getPlantsbyCategory = async (req, res) => {
 
 };
 
+exports.PlantsbyCategory = async (req, res) => {
+    try {
+        const query = 'SELECT * FROM plant WHERE category = ?';
+        connection.query(query, [req.params.category], (err, rows, fields) => {
+            if (!err) {
+                res.json({
+                    rows
+                });
+            } else {
+                console.error(err);
+                res.status(500).json({
+                    error: 'Internal Server Error',
+                    status: 'failure',
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Internal Server Error',
+            status: 'failure',
+        });
+    }
+};
 
 
 

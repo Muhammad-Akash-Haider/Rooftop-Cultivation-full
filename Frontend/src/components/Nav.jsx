@@ -46,20 +46,20 @@ const Nav = () => {
            
                 <Link to="/My_Orders">
                   <div>
-                  <CgProfile className='text-2xl bold' />
+                  <CgProfile className='text-2xl ' />
                   </div>
                 </Link>
                 
                 <Link to="/My_Orders_Buyer">
                   <div className="w-15">
-                  <TbTruckReturn className='text-3xl bold' />   
+                  <TbTruckReturn className='text-3xl ' />   
                   </div>
                 </Link>
             
           
                 <Link to={`/cart`}>
                   <div>
-                  <BsCart3 className='text-2xl bold' />
+                  <BsCart3 className='text-2xl ' />
                   </div>
                 </Link>
               
