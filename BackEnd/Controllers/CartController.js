@@ -75,6 +75,22 @@ exports.CartItems = async (req, res) => {
     });
 }
 
+exports.cartTotal=async(req,res)=>{
+
+  connection.query('SELECT cart.buyer_id, SUM(cart.stock * plant.price) AS total_amount FROM `plant` INNER JOIN `cart` ON plant.id = cart.product_id WHERE cart.buyer_id = ? GROUP BY cart.buyer_id', [req.params.id], (err, row) => {
+    if (!err) {
+        res.json({
+            row,
+            status: true,
+        });
+    } else {
+        console.log(err);
+    }
+});
+
+
+}
+
 
 exports.UpdateStock = async (req, res) => {
     const { productId } = req.body;

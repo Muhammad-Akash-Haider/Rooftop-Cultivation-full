@@ -10,9 +10,16 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 
 function Checkout() {
   const param = useParams();
+  
+  const [id, setid] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
 
-  const id = param.id;
+    setid(localStorage.getItem('user_id'));
+  }, [id ]);
+  
+  
   const [cartData, setCartData] = useState([]);
+  const [carttotal ,setcarttotal] =useState()
 
   const handleDelete = async (cartId) => {
     try {
@@ -36,6 +43,7 @@ function Checkout() {
           position: toast.POSITION.TOP_RIGHT,
         });
         fetchData();
+        cartTotal(); 
       } else {
         console.error('Failed to delete cart item');
       }
@@ -61,6 +69,7 @@ function Checkout() {
 
       // After updating stock, trigger re-fetch of cart data
       fetchData();
+      cartTotal(); 
     } catch (error) {
       console.error('Error updating stock:', error);
     }
@@ -80,11 +89,23 @@ function Checkout() {
 
       // After updating stock, trigger re-fetch of cart data
       fetchData();
+      cartTotal(); 
     } catch (error) {
       console.error('Error updating stock:', error);
     }
   };
+ 
 
+  const cartTotal = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/cart/carttotal/${id}`);
+      const data = await response.json();
+      setcarttotal(data.row[0].total_amount);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+  
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:5000/cart/CartItems/${id}`);
@@ -98,7 +119,8 @@ function Checkout() {
   // Fetch cart data useEffect
   useEffect(() => {
  
-    fetchData(); // Call fetchData immediately after defining it
+    fetchData();  // Call fetchData immediately after defining it
+    cartTotal();  
   }, [id]); // Include id in the dependency array
 
 
@@ -157,22 +179,10 @@ function Checkout() {
          
           <div className="mt-4">
             <div className="py-4 rounded-md shadow">
-              <h3 className="text-xl font-bold text-[#00967C]">Order Summary</h3>
-              <div className="flex justify-between px-4">
-                <span className="font-bold">Subtotal</span>
-                <span className="font-bold">$35.25</span>
-              </div>
-              <div className="flex justify-between px-4">
-                <span className="font-bold">Discount</span>
-                <span className="font-bold text-red-600">- $5.00</span>
-              </div>
-              <div className="flex justify-between px-4">
-                <span className="font-bold">Sales Tax</span>
-                <span className="font-bold">$2.25</span>
-              </div>
+             
               <div className="flex items-center justify-between px-4 py-2 mt-3 border-t-2 ">
                 <span className="text-xl font-bold">Total</span>
-                <span className="text-2xl font-bold">$37.50</span>
+                <span className="text-2xl font-bold">PKR {carttotal}</span>
               </div>
             </div>
           </div>

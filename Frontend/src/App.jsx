@@ -50,7 +50,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/product/:id" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
-          <Route path="/cart/:id" element={<Checkout />}></Route>
+          <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
        
