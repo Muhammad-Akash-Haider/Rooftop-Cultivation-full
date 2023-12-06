@@ -19,6 +19,7 @@ import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
 import Forgot from "./components/Pages/Forgot";
 import Header from "./components/Header";
+import Business from "./components/Pages/Business";
 
 import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
+          <Route path="/business/:id" element={<Business/>}></Route>
           <Route path="/categoryPlants/:category" element={<CategoryPlants/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>

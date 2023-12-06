@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 05, 2023 at 08:18 AM
+-- Generation Time: Dec 06, 2023 at 04:52 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -40,7 +40,7 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
 (5, '25', 31, 2),
-(7, '26', 31, 3);
+(7, '26', 31, 4);
 
 -- --------------------------------------------------------
 
@@ -87,16 +87,15 @@ CREATE TABLE `nursery` (
   `business_name` varchar(200) NOT NULL,
   `business_location` varchar(300) NOT NULL,
   `description` varchar(7000) NOT NULL,
-  `gallery` varchar(500) NOT NULL,
-  `phone_number` int(20) DEFAULT NULL
+  `gallery` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nursery`
 --
 
-INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`, `phone_number`) VALUES
-(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593342454-kissan-nnl1o120i.png, images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1701593342456-2-8.jpg, images-1701593342460-image-pepper-nursery-new.jpg', NULL);
+INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`) VALUES
+(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593342454-kissan-nnl1o120i.png, images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1701593342456-2-8.jpg, images-1701593342460-image-pepper-nursery-new.jpg');
 
 -- --------------------------------------------------------
 
