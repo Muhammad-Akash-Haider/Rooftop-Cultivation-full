@@ -135,7 +135,10 @@ function Product() {
             </div>
 
             <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-              <h2 class="text-sm title-font text-gray-500 tracking-widest">NURCERY NAME</h2>
+              <Link to={`/business/${fetchData.seller_id}`}>
+              <h2 class="text-sm title-font text-gray-500 tracking-widest">VIEW BUSINESS DETAILS</h2>
+              </Link>
+              
               <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{fetchData.name}</h1>
               <div class="flex mb-4">
                 {/* <span class="flex items-center">
