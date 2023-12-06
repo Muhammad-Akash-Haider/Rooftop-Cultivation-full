@@ -41,20 +41,20 @@ function Business() {
         <div>
             <Nav />
 
-           
-                <Swiper navigation={true} modules={[Navigation]} className="mySwiper ">
 
-                    {fetchnurseryData.gallery && fetchnurseryData.gallery.split(',').map((image, index) => (
-                        <SwiperSlide key={index} >
+            <Swiper navigation={true} modules={[Navigation]} className="mySwiper ">
 
-                            <img className='w-40 m-1 rounded'
-                                src={`http://localhost:5000/uploads/${image.trim()}`} alt={"not fouud"} />
+                {fetchnurseryData.gallery && fetchnurseryData.gallery.split(',').map((image, index) => (
+                    <SwiperSlide key={index} >
 
-                        </SwiperSlide>
-                    ))}
+                        <img className='w-40 m-1 rounded'
+                            src={`http://localhost:5000/uploads/${image.trim()}`} alt={"not fouud"} />
 
-                </Swiper>
-        
+                    </SwiperSlide>
+                ))}
+
+            </Swiper>
+
 
             <div className='flex justify-between w-full px-32 mt-16'>
                 <div className='flex justify-center text-center'>
@@ -70,11 +70,19 @@ function Business() {
                 </div>
                 <div className='flex items-center justify-between text-center'>
 
-                    <h2 className='px-4 text-xl font-bold'>{fetchnurseryData.business_location}</h2>
 
                     <h2 className='px-4 text-xl font-bold' >{fetchnurseryData.phone}</h2>
 
                 </div>
+
+
+            </div>
+            
+            <div className='items-center block mt-10 text-center'>
+
+                <h2 className='px-1 text-xl '>{fetchnurseryData.business_location}</h2>
+
+
             </div>
 
             <div className='px-24 mt-16 mb-32'>
