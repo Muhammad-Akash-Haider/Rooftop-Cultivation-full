@@ -22,42 +22,50 @@ function Login() {
     }));
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (userData.email !== '' && userData.password !== '') {
       const backendEndpoint = 'http://localhost:5000/user/login';
-
-      fetch(backendEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Success:', data);
-          // Use dispatch here with the action
-          // dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
-          localStorage.setItem('user_id', data.user_id);
-          localStorage.setItem('user_type', data.user_type);
-          localStorage.setItem('user_name', data.user_name);
-          toast.success("Successfully Loged in", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          navigate('/')
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          toast.warning("Incorrect email or password", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
+  
+      try {
+        const response = await fetch(backendEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
         });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const data = await response.json();
+  
+        // Use dispatch here with the action
+        // dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
+  
+        localStorage.setItem('user_id', data.user_id);
+        localStorage.setItem('user_type', data.user_type);
+        localStorage.setItem('user_name', data.user_name);
+  
+        toast.success('Successfully Logged in', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+  
+        navigate('/');
+      } catch (error) {
+        console.error('Error:', error);
+        toast.warning('Incorrect email or password', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
     } else {
-      toast.warning("missing input fields", {
+      toast.warning('Missing input fields', {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-  }
+  };
+  
 
 
 
