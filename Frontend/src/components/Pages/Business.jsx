@@ -42,7 +42,9 @@ function Business() {
             <Nav />
 
 
-            <Swiper navigation={true} modules={[Navigation]} className="mySwiper ">
+            <Swiper navigation={true} modules={[Navigation]} className="mySwiper "
+             style={{ height: "500px" }}
+             >
 
                 {fetchnurseryData.gallery && fetchnurseryData.gallery.split(',').map((image, index) => (
                     <SwiperSlide key={index} >
