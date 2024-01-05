@@ -66,7 +66,7 @@ const Sellerdashboard = () => {
           datasets: [
               {
                   label: 'Sales',
-                  data: [540, 325, 702, 620],
+                  data: [5, 5, 2, 6],
                   backgroundColor: [
                       'rgba(255, 159, 64, 0.2)',
                       'rgba(75, 192, 192, 0.2)',

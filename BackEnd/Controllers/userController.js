@@ -15,10 +15,7 @@ exports.signup = async (req, res) => {
   const bodypassword = req.body.password;
   const encryptedPassword = await bcrypt.hash(bodypassword, saltRounds)
 
-
-  const query = 'INSERT INTO `users`(`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`,`phone`) VALUES (?,?,?,?,?,?,?,?);';
-
-
+  const signUpquery = 'INSERT INTO `users`( `First_name`, `last_name`, `email`, `password`, `user_type`, `city`,`phone`) VALUES (?,?,?,?,?,?,?);';
   // Value to be inserted 
 
   let id = req.body.id;
@@ -30,24 +27,40 @@ exports.signup = async (req, res) => {
   let city = req.body.city;
   let phone = req.body.phone;
 
-
-
   // Value to be inserted 
 
   // Creating queries 
   if (First_name != null && last_name != null && email != null && password != null && user_type != null && city != null && phone != null) {
-    connection.query(query, [id, First_name, last_name, email, password, user_type, city, phone], (err, rows) => {
-      if (!err) {
-        res.json({
-          status: true,
-          Message: "Wellcome!!!........Your Successsfully signUp"
-        })
+
+    const query = 'SELECT * FROM users WHERE email = ?';
+    connection.query(query, [email], async (error, results, fields) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).json({ status: false, message: 'Internal server error.' });
       }
 
-      else
-        console.log(err);
+      if (results.length > 0) {
+        return res.json({ status: true, message: 'Email already registered.' });
+      } else {
 
+        connection.query(signUpquery, [First_name, last_name, email, password, user_type, city, phone], (err, rows) => {
+          if (!err) {
+            return res.json({
+              status: true,
+              message: "Wellcome!!!........Your Successsfully signUp"
+            })
+
+
+          }else {
+            console.log(err);
+
+          }
+        });
+
+      }
     });
+
+
   } else {
     res.json({
       status: false,
@@ -56,10 +69,6 @@ exports.signup = async (req, res) => {
   }
 
 }
-
-
-
-
 
 
 
@@ -77,7 +86,7 @@ exports.login = async (req, res) => {
         console.error(error);
         return res.status(500).json({ status: false, message: 'Internal server error.' });
       }
-     
+
       if (results.length > 0) {
         const match = await bcrypt.compare(password, results[0].password);
         if (match) {
@@ -86,7 +95,7 @@ exports.login = async (req, res) => {
             message: 'Welcome. You are successfully logged in.',
             user_id: results[0].id,
             user_type: results[0].user_type,
-            user_name : results[0].First_name +' '+results[0].last_name,
+            user_name: results[0].First_name + ' ' + results[0].last_name,
           });
         } else {
           return res.status(400).json({ status: false, message: 'Incorrect password.' });

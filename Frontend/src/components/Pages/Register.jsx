@@ -53,10 +53,10 @@ export default function Register() {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
-            toast.success("Successfully registered", {
+            toast.success(data.message, {
               position: toast.POSITION.TOP_RIGHT,
             });
-            navigate('/login');
+            // navigate('/login');
           })
           .catch((error) => {
             console.error('Error:', error);
