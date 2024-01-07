@@ -1,7 +1,7 @@
 
 
 
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 
 import { MdSpaceDashboard } from 'react-icons/md';
@@ -28,10 +28,10 @@ const Returns = () => {
 
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
-   
+
     setUser_id(localStorage.getItem('user_id'));
-  
-  }, []); 
+
+  }, []);
 
   const [returnData, setreturnData] = useState([]);
 
@@ -97,9 +97,9 @@ const Returns = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
 
         </ol>
       </aside>
@@ -114,33 +114,50 @@ const Returns = () => {
 
 
 
-        <table class="border-separate border border-slate-400 m-auto  md:mt-8">
-          <thead>
-            <tr>
-              <th class="border border-slate-300 p-3 md:px-10">Customer name</th>
-              <th class="border border-slate-300 p-3 md:px-10">Order date</th>
-              <th class="border border-slate-300 p-3 md:px-10">Cancel/Return date</th>
-              {/* <th class="border border-slate-300 p-3 md:px-10">Reason</th> */}
-              <th class="border border-slate-300 p-3 md:px-10">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {returnData.map((returns, index) => (
-
-              <tr key={index}>
-                <td class="border border-slate-300 p-3 md:px-11">{returns.customer_name}</td>
-                <td class="border border-slate-300 p-3 md:px-11">{returns.order_date}</td>
-                <td class="border border-slate-300 p-3 md:px-11">{returns.price}</td>
-                {/* <td class="border border-slate-300 p-3 md:px-11">{returns.reasons}</td> */}
-                <td class="border border-slate-300 p-3 md:px-11">{returns.status}</td>
+        <div class="relative overflow-x-auto md:mt-7">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  Customer name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Order date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Cancel/Return date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Status
+                </th>
               </tr>
+            </thead>
+            <tbody>
 
-            ))}
+              {returnData.map((returns, index) => (
+
+                <tr key={index} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {returns.customer_name}
+                  </th>
+                  <td class="px-6 py-4">
+                    {returns.order_date}
+                  </td>
+                  <td class="px-6 py-4">
+                    {returns.price}
+                  </td>
+                  <td class="px-6 py-4">
+                    {returns.status}
+                  </td>
+                </tr>
+
+              ))}
 
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+
 
       </div>
 

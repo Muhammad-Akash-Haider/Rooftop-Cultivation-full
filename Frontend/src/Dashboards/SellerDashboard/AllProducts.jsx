@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 
 
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 
 import { MdSpaceDashboard } from 'react-icons/md';
@@ -32,23 +32,23 @@ const AllProducts = () => {
   };
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
-   
+
     setUser_id(localStorage.getItem('user_id'));
-  
-  }, []); 
+
+  }, []);
 
 
   const [plantData, setPlantData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => { 
+    const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:5000/plant/get/${user_id}`);
-       
+
         const data = await response.json();
-       
+
         setPlantData(data.rows);
-   
+
       } catch (error) {
         console.error('Error fetching plant data:', error);
       }
@@ -68,7 +68,7 @@ const AllProducts = () => {
         return;
       }
       // Make an API call to delete the plant with the given plantId
-    
+
       const response = await fetch(`http://localhost:5000/plant/deleteby/${plantId}`, {
         method: 'DELETE',
         // You may need to include headers or credentials based on your API setup
@@ -77,7 +77,7 @@ const AllProducts = () => {
       if (response.ok) {
         // If the API call is successful, update the state to remove the deleted plant
         setPlantData((plantData) =>
-        plantData.filter((plant) => plant.id !== plantId)
+          plantData.filter((plant) => plant.id !== plantId)
         );
         toast.success("Successfully deleted a plant", {
           position: toast.POSITION.TOP_RIGHT,
@@ -131,10 +131,10 @@ const AllProducts = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
-            
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
+
         </ol>
       </aside>
 
@@ -147,37 +147,56 @@ const AllProducts = () => {
 
 
 
-        <table class="border-separate border border-slate-400 m-auto  md:mt-8">
-          <thead>
-            <tr>
 
-              <th class="border border-slate-300 p-3 md:px-12">Product name</th>
-              <th class="border border-slate-300 p-3 md:px-12">Product Price</th>
-              <th class="border border-slate-300 p-3 md:px-12">Category</th>
-              <th class="border border-slate-300 p-3 md:px-12">Stock</th>
-              <th class="border border-slate-300 p-3 md:px-12">Action</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg md:mt-7">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+              
+                <th scope="col" class="px-6 py-3">
+                  Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Product Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                 Stock
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {plantData.map((plant, index) => (
 
-        
-          {plantData.map((plant, index) => (
-          <tr key={index}>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.name}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.price}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.category}</td>
-          <td class="border border-slate-300 p-3 md:px-12">{plant.stock}</td>
-          <td class="border border-slate-300 p-3 md:px-12">
-            < RiDeleteBin6Line    onClick={() => handleDelete(plant.id)}  className="inline text-xl text-red-600" /> &nbsp;
-            <Link to={`/update/${plant.id}`} >< FaRegEdit className="inline text-xl text-blue-800" /></Link> 
-          </td>
-        </tr>
-        
-        ))}
-           
-
-          </tbody>
-        </table>
+              <tr key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {plant.name}
+                </th>
+                <td class="px-6 py-4">
+                {plant.price}
+                </td>
+                <td class="px-6 py-4">
+                {plant.category}
+                </td>
+                <td class="px-6 py-4">
+                {plant.stock}
+                </td>
+                <td class="px-6 py-4">
+                < RiDeleteBin6Line onClick={() => handleDelete(plant.id)} className="inline text-xl text-red-600" /> &nbsp;
+                  <Link to={`/update/${plant.id}`} >< FaRegEdit className="inline text-xl text-blue-800" /></Link>
+                </td>
+              </tr>
+             
+             ))}
+              
+            </tbody>
+          </table>
+        </div>
 
 
 

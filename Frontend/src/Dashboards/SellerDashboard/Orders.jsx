@@ -28,10 +28,10 @@ const Orders = () => {
 
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
-   
+
     setUser_id(localStorage.getItem('user_id'));
-  
-  }, []); 
+
+  }, []);
 
   const [productData, setproductData] = useState([]);
 
@@ -41,9 +41,9 @@ const Orders = () => {
         const response = await fetch(`http://localhost:5000/order/get/${user_id}`);
 
         const data = await response.json();
-          console.log(data)
+        console.log(data)
         setproductData(data.rows);
-        
+
 
       } catch (error) {
         console.error('Error fetching product data:', error);
@@ -125,9 +125,9 @@ const Orders = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
 
         </ol>
       </aside>
@@ -140,31 +140,48 @@ const Orders = () => {
         </div>
 
 
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg md:mt-8">
+          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="px-6 py-3">
+                  Customer name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Order Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Order date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                  Change Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
 
-        <table class="border-separate border border-slate-400 m-auto  md:mt-8">
-          <thead>
-            <tr>
-              <th class="border border-slate-300 p-3 md:px-12">Customer name</th>
-              <th class="border border-slate-300 p-3 md:px-12">Order Price</th>
-              <th class="border border-slate-300 p-3 md:px-12">Order date</th>
-              <th class="border border-slate-300 p-3 md:px-12">Product name</th>
-              <th class="border border-slate-300 p-3 md:px-12">Change Status</th>
-            </tr>
-          </thead>
-          <tbody>
+              {productData.map((product, index) => (
 
-
-            {productData.map((product, index) => (
-
-              <tr key={index} >
-                <td class="border border-slate-300 p-3 md:px-12">{product.customer_name}</td>
-                <td class="border border-slate-300 p-3 md:px-12">{product.order_amount}</td>
-                <td class="border border-slate-300 p-3 md:px-12">{product.order_date}</td>
-                <td class="border border-slate-300 p-3 md:px-12">{product.product_name}</td>
-                <td class="border border-slate-300 p-3 md:px-12">
+              <tr key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {product.customer_name}
+                </th>
+                <td class="px-6 py-4">
+                  {product.order_amount}
+                </td>
+                <td class="px-6 py-4">
+                  {product.order_date}
+                </td>
+                <td class="px-6 py-4">
+                  {product.product_name}
+                </td>
+                <td class="px-6 py-4">
                   <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '
                     onChange={(e) => handleStatusChange(index, e.target.value)}
-                    >
+                  >
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
                     <option value="cancel">Cancel</option>
@@ -172,11 +189,10 @@ const Orders = () => {
                 </td>
               </tr>
 
-            ))}
-
-          </tbody>
-        </table>
-
+))}
+            </tbody>
+          </table>
+        </div>
 
 
 
