@@ -45,7 +45,7 @@ const Yournurcery = () => {
   const handleImageChange = (e) => {
     setImages([...e.target.files]);
   };
-
+ 
   const formik = useFormik({
     initialValues: {
       seller_id: localStorage.getItem('user_id'),
@@ -55,6 +55,9 @@ const Yournurcery = () => {
     onSubmit: (values) => {
       // Here, you handle your form submission
       const formData = new FormData();
+
+     
+      
       images.forEach(image => {
         formData.append('images', image);
       });
@@ -74,7 +77,7 @@ const Yournurcery = () => {
         method: 'POST',
         body: formData
       })
-        .then(response => response.json())
+        .then(response => response.json())   
         .then(data => {
           console.log('Success:', data);
           toast.success("Successfully added Your details", {

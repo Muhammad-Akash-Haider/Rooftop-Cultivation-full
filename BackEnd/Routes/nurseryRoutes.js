@@ -27,13 +27,14 @@ router.post('/post/nursery', upload.array('images', 5), (req, res) => {
     try {
 
         
-   
+    
         let seller_id = req.body.seller_id;
         let business_name = req.body.business_name;
         let address = req.body.address;
         let description = req.body.description;
         let images = req.files.map(file => file.filename).join(', ');
         
+        console.log('triggered');
         // Check for missing data before running any queries
         if (!seller_id || !business_name || !address || !description || !images) {
             return res.json({
