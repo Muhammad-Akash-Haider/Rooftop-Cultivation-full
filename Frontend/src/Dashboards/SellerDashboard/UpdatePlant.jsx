@@ -264,6 +264,7 @@ const UpdatePlant = () => {
               type="file"
               multiple
               // defaultValue={fetchData.images}
+              accept=".png, .jpg, .jpeg"
               name="images"
               onChange={handleImageChange}
               className="p-2 mb-2 border border-gray-300 rounded-md"
