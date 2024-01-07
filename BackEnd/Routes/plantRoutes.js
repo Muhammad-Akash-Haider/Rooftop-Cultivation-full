@@ -99,9 +99,6 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
 
   const mergedImagesString = mergedImages.join(', ');
 
-   console.log(mergedImagesString) 
-
-
     
     if ( name != null && price != null && stock != null && category != null && description != null && mergedImagesString != null) {
 
