@@ -87,13 +87,22 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
     let stock = req.body.stock;
     let category = req.body.category;
     let description = req.body.description;
-    let images = req.files.map(file => file.filename).join(', ');
+    // let images = req.files.map(file => file.filename).join(', ');
+    // let imagesold =req.body.imagesold;
 
-    console.log(name , price , stock , category , description , images,'majid')
+    const fileNamesFromFiles = req.files.map(file => file.filename);
 
-    if ( name != null && price != null && stock != null && category != null && description != null && images != null) {
+  // Get image names from req.body.imagesold (assuming it's a comma-separated string)
+  const imageNamesFromOldImages = req.body.imagesold.split(',').map(image => image.trim());
 
-      connection.query(updateQuery, [ name, price, stock, category, description, images, id], (err, rows) => {
+  const mergedImages = [...fileNamesFromFiles, ...imageNamesFromOldImages];
+
+  const mergedImagesString = mergedImages.join(', ');
+
+    
+    if ( name != null && price != null && stock != null && category != null && description != null && mergedImagesString != null) {
+
+      connection.query(updateQuery, [ name, price, stock, category, description, mergedImagesString, id], (err, rows) => {
         if (!err) {
 
           if (rows.affectedRows > 0) {

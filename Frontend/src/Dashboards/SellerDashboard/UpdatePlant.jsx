@@ -39,6 +39,7 @@ const UpdatePlant = () => {
 
   const [content, setContent] = useState('');
   const [images, setImages] = useState([]);
+  const [imagesold, setImagesold] = useState('');
 
   const handleEditorChange = (value) => {
     setContent(value);
@@ -59,12 +60,15 @@ const UpdatePlant = () => {
 
     },
     onSubmit: (values) => {
-      // Here, you handle your form submission
+      // Here, you handle your form submImagesoldission
       const formData = new FormData();
+     
 
-      images.forEach(image => {
+     images.forEach(image => {
         formData.append('images', image);
       });
+      
+      formData.append('imagesold', imagesold);
 
       // Append other form data
       Object.keys(values).forEach(key => {
@@ -107,7 +111,7 @@ const UpdatePlant = () => {
       try {
         const response = await fetch(`http://localhost:5000/plant/getplant/${id}`);
         const data = await response.json();
-        console.log(data)
+
         // Assuming your response data structure is like { name, price, stock, category, description }
         formik.setValues({
           seller_id: localStorage.getItem('user_id') || '',
@@ -117,7 +121,8 @@ const UpdatePlant = () => {
           category: data.rows[0].category || '',
           // Add other fields as needed
         });
-        setImages(data.rows[0].image)
+        console.log(data.rows[0].images)
+        setImagesold(data.rows[0].images)
         setContent(data.rows[0].description)
         setfetchData(data.rows[0]);
 
@@ -129,7 +134,25 @@ const UpdatePlant = () => {
     fetchData();
   }, []);
 
+  const handleDeleteImage = (imageName) => {
 
+    // Trim the imageName to handle potential leading or trailing spaces
+    const trimmedImageName = imageName.trim();
+
+    // Filter out the image from the imagesold array
+    const updatedImages = imagesold
+      .split(', ')
+      .filter(image => {
+        const trimmedImage = image.trim();
+
+        return trimmedImage !== trimmedImageName;
+      })
+      .join(', ');
+
+
+
+    setImagesold(updatedImages);
+  };
 
 
 
@@ -221,13 +244,14 @@ const UpdatePlant = () => {
 
             {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
 
+
             <div className='flex flex-row p-2'>
-              {fetchData.images && fetchData.images.split(',').map((image, index) => (
+              {imagesold && imagesold.split(',').map((image, index) => (
                 <div key={index} >
 
                   <img className='w-40 h-40 m-1 rounded'
                     src={`http://localhost:5000/uploads/${image.trim()}`} alt={"not fouud"} />
-
+                  <button type='button' onClick={() => handleDeleteImage(image)}>Delete</button>
                 </div>
               ))}
 
@@ -240,6 +264,7 @@ const UpdatePlant = () => {
               type="file"
               multiple
               // defaultValue={fetchData.images}
+              accept=".png, .jpg, .jpeg"
               name="images"
               onChange={handleImageChange}
               className="p-2 mb-2 border border-gray-300 rounded-md"
@@ -247,7 +272,7 @@ const UpdatePlant = () => {
             <br />
 
             <button type='submit' class="bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-2 px-4 rounded">
-              Save PlantactiveImg
+              Save Plant
             </button>
 
           </form>

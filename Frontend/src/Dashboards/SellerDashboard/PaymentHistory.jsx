@@ -112,39 +112,51 @@ const PaymentHistory = () => {
 
 
 
-        <table class="border-separate border border-slate-400 m-auto  md:mt-8">
-          <thead>
-            <tr  >
 
-              <th class="border border-slate-300 p-2 md:px-9">Sender name</th>
-              <th class="border border-slate-300 p-2 md:px-9">Payment date</th>
-              <th class="border border-slate-300 p-2 md:px-9">Payment method</th>
-              <th class="border border-slate-300 p-2 md:px-9">Order Date</th>
-              <th class="border border-slate-300 p-2 md:px-9">Payment</th>
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg md:mt-8">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                Sender name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Payment Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Payment Method
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Order Date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Payment
+                </th>
             </tr>
-          </thead>
-          <tbody>
-
-            {paymentData.map((payment, index) => (
-
-              <tr key={index} > 
-
-                <td class="border border-slate-300 p-2 md:px-9">{payment.sender_name}</td>
-                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_date}</td>
-                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_method}</td>
-                <td class="border border-slate-300 p-2 md:px-9">{payment.order_date}</td>
-                <td class="border border-slate-300 p-2 md:px-9">{payment.payment_amount}</td>
-              </tr>
-
-
+        </thead>
+        <tbody>
+        {paymentData.map((payment, index) => (
+            <tr key={index}  class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {payment.sender_name}
+                </th>
+                <td class="px-6 py-4">
+                {payment.payment_date}
+                </td>
+                <td class="px-6 py-4">
+                {payment.payment_method}
+                </td>
+                <td class="px-6 py-4">
+                {payment.order_date}
+                </td>
+                <td class="px-6 py-4">
+                {payment.payment_amount}
+                </td>
+            </tr>  
             ))}
-
-
-
-          </tbody>
-        </table>
-
-
+        </tbody>
+    </table>
+</div>
 
 
       </div>
