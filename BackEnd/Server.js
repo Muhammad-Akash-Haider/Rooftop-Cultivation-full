@@ -36,6 +36,7 @@ app.use('/payment', payment)
 app.use('/plant',plant)
 app.use('/dashboard',Dasboard)
 app.use('/cart',Cart)
+app.use('/admin',admin)
 
 app.use('/user',user)
 

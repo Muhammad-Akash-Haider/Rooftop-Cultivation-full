@@ -1,10 +1,13 @@
-// const express= require('express')
-// const router = express.Router()
+const express= require('express')
+const router = express.Router()
 
-// const{ getBuyers , deleteByuerById, blockBuyer, getAllNurseries, deleteNurseryById, getAllPlants, deletePlantsById}=require('../Controllers/adminController')
+const {login ,getAllUsers} =require('../Controllers/adminController') ;
 
-// //Get Request All and By ID
-// // router.route('/get/Users').get(getUsers)
+//Get Request All and By ID
+// router.route('/get/Users').get(getUsers)
 
-// router.route('/get/nurseries').get(getAllNursery)
-// module.exports= router;
+router.route('/get/users').get(getAllUsers)
+
+router.route('/login').post(login)
+
+module.exports= router;
