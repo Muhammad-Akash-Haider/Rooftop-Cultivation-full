@@ -108,7 +108,14 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
   const mergedImagesString = mergedImages.join(', ');
 
     
-    if ( name != null && price != null && stock != null && category != null && description != null && mergedImagesString != null) {
+    if ( !name  || !price || !stock  || !category  || !description  || !mergedImagesString ) {
+
+      res.status(200).json({
+        status: false,
+        message: "please provide all details",
+      });
+
+    }else{
 
       connection.query(updateQuery, [ name, price, stock, category, description, mergedImagesString, id], (err, rows) => {
         if (!err) {
@@ -133,11 +140,6 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
 
       });
 
-    }else{
-      res.status(200).json({
-        status: false,
-        message: "product not found",
-      });
     }
 
   } catch (error) {

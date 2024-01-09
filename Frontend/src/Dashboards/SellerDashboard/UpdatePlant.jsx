@@ -90,7 +90,7 @@ const UpdatePlant = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
-          toast.success("Successfully updated a plant", {
+          toast.success(data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         })
