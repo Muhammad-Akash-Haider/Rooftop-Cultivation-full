@@ -62,12 +62,12 @@ const UpdatePlant = () => {
     onSubmit: (values) => {
       // Here, you handle your form submImagesoldission
       const formData = new FormData();
-     
 
-     images.forEach(image => {
+
+      images.forEach(image => {
         formData.append('images', image);
       });
-      
+
       formData.append('imagesold', imagesold);
 
       // Append other form data
@@ -224,8 +224,18 @@ const UpdatePlant = () => {
             <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product price' name='price' onChange={formik.handleChange} value={formik.values.price} />
 
             <h1 className='pt-3 text-xl md:p-2'>Enter Stock</h1>
-            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="number" placeholder='Total inventory of this product'
-              name='stock' onChange={formik.handleChange} value={formik.values.stock} />
+            <input
+              className='inline p-2 border-2 rounded-xl w-[100%]'
+              type="number"
+              placeholder='Total inventory of this product'
+              name='stock'
+              onChange={(e) => {
+                const newValue = Math.max(0, parseInt(e.target.value, 10));
+                formik.handleChange(e);
+                formik.setFieldValue('stock', newValue);
+              }}
+              value={formik.values.stock}
+            />
 
             <h1 className='pt-3 text-xl md:p-2'>Choose category</h1>
             <select className='inline p-2 border-2 rounded-xl w-[100%]'

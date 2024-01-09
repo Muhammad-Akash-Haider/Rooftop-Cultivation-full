@@ -51,7 +51,7 @@ const Addplant = () => {
       price: '',
       stock: '',
       category: '',
-     
+
     },
     onSubmit: (values) => {
       // Here, you handle your form submission
@@ -137,9 +137,9 @@ const Addplant = () => {
             <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-green-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
               Returns</li></Link>
 
-              <Link to="/" >
-          <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
-            </Link>
+          <Link to="/" >
+            <li className='pt-4 pb-2 pl-12 rounded-md hover:bg-green-500'> <img className='fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2" viewBox="0 0 24 24"' src={logo} alt="" /> Rooftop</li>
+          </Link>
 
         </ol>
       </aside>
@@ -154,52 +154,62 @@ const Addplant = () => {
 
         <div className='content-center md:p-3 mt-7' >
 
-        <form onSubmit={formik.handleSubmit}>
-          
-          <h1 className='pt-3 text-xl md:p-2'>Enter Name</h1>
-          <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product name'  name='name' onChange={formik.handleChange} value={formik.values.name}
+          <form onSubmit={formik.handleSubmit}>
+
+            <h1 className='pt-3 text-xl md:p-2'>Enter Name</h1>
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product name' name='name' onChange={formik.handleChange} value={formik.values.name}
             />
 
-          <h1 className='pt-3 text-xl md:p-2'>Enter Price</h1>
-          <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product price' name='price' onChange={formik.handleChange} value={formik.values.price} />
+            <h1 className='pt-3 text-xl md:p-2'>Enter Price</h1>
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product price' name='price' onChange={formik.handleChange} value={formik.values.price} />
 
-          <h1 className='pt-3 text-xl md:p-2'>Enter Stock</h1>
-          <input className='inline p-2 border-2 rounded-xl w-[100%]' type="number" placeholder='Total inventory of this product'
-            name='stock'  onChange={formik.handleChange} value={formik.values.stock} />
+            <h1 className='pt-3 text-xl md:p-2'>Enter Stock</h1>
+            <input
+              className='inline p-2 border-2 rounded-xl w-[100%]'
+              type="number"
+              placeholder='Total inventory of this product'
+              name='stock'
+              onChange={(e) => {
+                const newValue = Math.max(0, parseInt(e.target.value, 10));
+                formik.handleChange(e);
+                formik.setFieldValue('stock', newValue);
+              }}
+              value={formik.values.stock}
+            />
 
-          <h1 className='pt-3 text-xl md:p-2'>Choose category</h1>
-          <select className='inline p-2 border-2 rounded-xl w-[100%]'
-            name='category'  onChange={formik.handleChange} value={formik.values.category}>
-            <option value="someOption" default >select</option>
-            <option value="seeds">seeds</option>
-            <option value="fruits">Fruits</option>
-            <option value="flowers">flowers</option>
-            <option value="vegetables">Vegetables</option>
-          </select>
+            <h1 className='pt-3 text-xl md:p-2'>Choose category</h1>
+            <select className='inline p-2 border-2 rounded-xl w-[100%]'
+              name='category' onChange={formik.handleChange} value={formik.values.category}>
+              <option value="someOption" default >select</option>
+              <option value="seeds">seeds</option>
+              <option value="fruits">Fruits</option>
+              <option value="flowers">flowers</option>
+              <option value="vegetables">Vegetables</option>
+            </select>
 
-          <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
-          <ReactQuill theme="snow"
-         
-            onChange={handleEditorChange}
-          />
-          {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
+            <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
+            <ReactQuill theme="snow"
 
-          <h1 className='pt-3 text-xl md:p-4'>Upload your gallery</h1>
-          <input
-            type="file"
-            multiple
-            name="images"
-            accept=".png, .jpg, .jpeg"
-            onChange={handleImageChange}
-            className="p-2 mb-2 border border-gray-300 rounded-md"
-          />
-          <br />
+              onChange={handleEditorChange}
+            />
+            {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
 
-          <button type='submit'  class="bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-2 px-4 rounded">
-            Save Plant
-          </button>
+            <h1 className='pt-3 text-xl md:p-4'>Upload your gallery</h1>
+            <input
+              type="file"
+              multiple
+              name="images"
+              accept=".png, .jpg, .jpeg"
+              onChange={handleImageChange}
+              className="p-2 mb-2 border border-gray-300 rounded-md"
+            />
+            <br />
 
-         </form>
+            <button type='submit' class="bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-2 px-4 rounded">
+              Save Plant
+            </button>
+
+          </form>
 
 
         </div>
