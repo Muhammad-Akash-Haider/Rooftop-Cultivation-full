@@ -78,7 +78,7 @@ const Addplant = () => {
         .then(response => response.json())
         .then(data => {
           console.log('Success:', data);
-          toast.success("Successfully added a plant", {
+          toast.success(data.message, {
             position: toast.POSITION.TOP_RIGHT,
           });
         })
@@ -189,6 +189,7 @@ const Addplant = () => {
             type="file"
             multiple
             name="images"
+            accept=".png, .jpg, .jpeg"
             onChange={handleImageChange}
             className="p-2 mb-2 border border-gray-300 rounded-md"
           />

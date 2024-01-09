@@ -42,31 +42,39 @@ router.post('/post', upload.array('images', 5), (req, res) => {
     let category = req.body.category;
     let description = req.body.description;
     let images = req.files.map(file => file.filename).join(', ');
+    
     // Creating queries 
-    if (seller_id != null && name != null && price != null && stock != null && category != null && description != null && images != null) {
+    if (!seller_id || !name || !price || !stock || !category || !description || !images) {
 
+     return res.json({
+        status: false,
+        message: "please input all fields",
+      });
 
+    }else{
+      
       connection.query(query, [seller_id, name, price, stock, category, description, images], (err, rows) => {
         if (!err) {
           res.json({
             status: true,
-            message: "Data inserted into the Plants table",
+            message: "Plant added sucessfully",
           });
         } else {
           console.error(err);
           res.status(500).json({
             status: false,
-            message: "Internal Server Error",
+            message: "some issue",
           });
         }
       });
 
     }
+
   } catch (error) {
     console.error(error);
     res.status(500).json({
       status: false,
-      message: "Internal Server Error",
+      message: "please input all details",
     });
   }
 })
