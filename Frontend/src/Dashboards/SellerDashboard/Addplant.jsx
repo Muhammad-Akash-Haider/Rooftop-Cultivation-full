@@ -158,15 +158,16 @@ const Addplant = () => {
 
             <h1 className='pt-3 text-xl md:p-2'>Enter Name</h1>
             <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product name' name='name' onChange={formik.handleChange} value={formik.values.name}
-            />
+            required/>
 
             <h1 className='pt-3 text-xl md:p-2'>Enter Price</h1>
-            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product price' name='price' onChange={formik.handleChange} value={formik.values.price} />
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Product price' name='price' onChange={formik.handleChange} value={formik.values.price} required />
 
             <h1 className='pt-3 text-xl md:p-2'>Enter Stock</h1>
             <input
               className='inline p-2 border-2 rounded-xl w-[100%]'
               type="number"
+              required
               placeholder='Total inventory of this product'
               name='stock'
               onChange={(e) => {
@@ -179,7 +180,7 @@ const Addplant = () => {
 
             <h1 className='pt-3 text-xl md:p-2'>Choose category</h1>
             <select className='inline p-2 border-2 rounded-xl w-[100%]'
-              name='category' onChange={formik.handleChange} value={formik.values.category}>
+              name='category' onChange={formik.handleChange} value={formik.values.category} required>
               <option value="someOption" default >select</option>
               <option value="seeds">seeds</option>
               <option value="fruits">Fruits</option>
@@ -189,7 +190,7 @@ const Addplant = () => {
 
             <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
             <ReactQuill theme="snow"
-
+              required
               onChange={handleEditorChange}
             />
             {/* https://github.com/zenoamaro/react-quill  // how to use see here */}
@@ -198,6 +199,7 @@ const Addplant = () => {
             <input
               type="file"
               multiple
+              required
               name="images"
               accept=".png, .jpg, .jpeg"
               onChange={handleImageChange}
