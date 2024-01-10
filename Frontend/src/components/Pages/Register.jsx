@@ -40,7 +40,7 @@ export default function Register() {
         userData.user_type &&
         userData.city &&
         userData.phone) {
-        const emailRegex = /@/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (emailRegex.test(userData.email)) {
 
           if (userData.phone.length == 11) {
