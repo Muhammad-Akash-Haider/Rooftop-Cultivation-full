@@ -46,30 +46,42 @@ export default function Register() {
           if (userData.phone.length == 11) {
 
             if(userData.password.length > 7){
-              const backendEndpoint = 'http://localhost:5000/user/signup';
 
-              fetch(backendEndpoint, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-              })
-                .then(response => response.json())
-                .then(data => {
-                  console.log('Success:', data);
-                  toast.success(data.message, {
-                    position: toast.POSITION.TOP_RIGHT,
-                  });
-                  // navigate('/login');
+              const containsNumbers = /\d/;
+
+              if (containsNumbers.test(userData.First_name) || containsNumbers.test(userData.last_name) ) {
+                toast.warning("Name should contain only alphabets", {
+                  position: toast.POSITION.TOP_RIGHT,
+                });
+              } else {
+                const backendEndpoint = 'http://localhost:5000/user/signup';
+
+                fetch(backendEndpoint, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userData),
                 })
-                .catch((error) => {
-                  console.error('Error:', error);
-                  toast.warning("Please fill all fields", {
-                    position: toast.POSITION.TOP_RIGHT,
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Success:', data);
+                    toast.success(data.message, {
+                      position: toast.POSITION.TOP_RIGHT,
+                    });
+                    navigate('/login');
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                    toast.warning("Please fill all fields", {
+                      position: toast.POSITION.TOP_RIGHT,
+                    });
+    
                   });
   
-                });
+              }
+              
+                
             }else{
               toast.warning("password must contain 8 digits", {
                 position: toast.POSITION.TOP_RIGHT,
