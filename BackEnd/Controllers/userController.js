@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
   // Value to be inserted 
 
   // Creating queries 
-  if (First_name != null && last_name != null && email != null && password != null && user_type != null && city != null && phone != null) {
+  if (First_name  && last_name  && email  && password  && user_type  && city && phone ) {
 
     const query = 'SELECT * FROM users WHERE email = ?';
     connection.query(query, [email], async (error, results, fields) => {

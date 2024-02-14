@@ -16,7 +16,7 @@ function App() {
       <PrimeReactProvider>
 
         <Routes>
-        <Route path="/AdminLogin" element={<Login/>}></Route>
+        <Route path="/" element={<Login/>}></Route>
         <Route path="/Allusers" element={<Allusers/>}></Route>
         <Route path="/Admindashboard" element={<Admindashboard/>}></Route>
         </Routes>

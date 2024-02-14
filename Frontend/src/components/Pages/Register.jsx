@@ -29,48 +29,90 @@ export default function Register() {
   const navigate = useNavigate();
 
   const submit = () => {
-   
+
     if (userData.password === userData.confirm_password) {
 
-      if( userData.First_name!== '',
-      userData.last_name !== '',
-      userData.email !== '',
-      userData.password !==  '',
-      userData.confirm_password !== '',
-      userData.user_type !==  '',
-      userData.city !== '',
-      userData.phone !==  '')
-      {
-        const backendEndpoint = 'http://localhost:5000/user/signup';
+      if (userData.First_name &&
+        userData.last_name &&
+        userData.email &&
+        userData.password &&
+        userData.confirm_password &&
+        userData.user_type &&
+        userData.city &&
+        userData.phone) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(userData.email)) {
 
-        fetch(backendEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Success:', data);
-            toast.success(data.message, {
+          if (userData.phone.length == 11) {
+
+            if(userData.password.length > 7){
+
+              const containsNumbers = /\d/;
+
+              if (containsNumbers.test(userData.First_name) || containsNumbers.test(userData.last_name) ) {
+                toast.warning("Name should contain only alphabets", {
+                  position: toast.POSITION.TOP_RIGHT,
+                });
+              } else {
+                const backendEndpoint = 'http://localhost:5000/user/signup';
+
+                fetch(backendEndpoint, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userData),
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Success:', data);
+                    toast.success(data.message, {
+                      position: toast.POSITION.TOP_RIGHT,
+                    });
+                    navigate('/login');
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                    toast.warning("Please fill all fields", {
+                      position: toast.POSITION.TOP_RIGHT,
+                    });
+    
+                  });
+  
+              }
+              
+                
+            }else{
+              toast.warning("password must contain 8 digits", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            }
+           
+
+          } else {
+            toast.warning("please input a valid 11 digit phone number", {
               position: toast.POSITION.TOP_RIGHT,
             });
-            // navigate('/login');
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-            toast.warning("Please fill all fields", {
-              position: toast.POSITION.TOP_RIGHT,
-            });
-            
+          }
+
+
+        } else {
+          toast.warning("Please input valid email", {
+            position: toast.POSITION.TOP_RIGHT,
           });
-      }else{
+        }
+
+
+
+
+
+
+      } else {
         toast.warning("missing input fields", {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
-     
+
 
     } else {
 

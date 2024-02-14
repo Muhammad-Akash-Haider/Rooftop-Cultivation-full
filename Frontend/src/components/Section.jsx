@@ -12,7 +12,7 @@ const Section=()=>{
       <br />
       <div class="hidden lg:inline-block">Buy the plants</div>
       </div>
-      <p class="mb-8 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora ullam eveniet commodi deserunt qui ad nisi, ratione voluptas architecto molestiae eaque eius ut tenetur mollitia totam porro odio, velit molestias!</p>
+      <p class="mb-8 leading-relaxed">Discover joy in plants! Our site sells happy greens – colorful flowers, cute succulents, and more. Each plant is cared for with love. Bring nature home! Shop now for your new green friend.</p>
       <div class="flex justify-center">
         
       

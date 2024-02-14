@@ -56,8 +56,6 @@ const Yournurcery = () => {
       // Here, you handle your form submission
       const formData = new FormData();
 
-     
-      
       images.forEach(image => {
         formData.append('images', image);
       });
@@ -192,17 +190,18 @@ const Yournurcery = () => {
           <form onSubmit={formik.handleSubmit}>
 
             <h1 className='pt-3 text-xl md:p-2'>Business Name</h1>
-            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Enter Business name' name='business_name' onChange={formik.handleChange} value={formik.values.business_name}
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Enter Business name' name='business_name' onChange={formik.handleChange} value={formik.values.business_name} required
             />
 
             <h1 className='pt-3 text-xl md:p-2'>Business Address</h1>
-            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Provide your address' name='address' onChange={formik.handleChange} value={formik.values.address} />
+            <input className='inline p-2 border-2 rounded-xl w-[100%]' type="text" placeholder='Provide your address' name='address' onChange={formik.handleChange} value={formik.values.address}  required/>
 
 
             <h1 className='pt-3 text-xl md:p-2'>Business Details</h1>
             <ReactQuill theme="snow"
               value={content}
               onChange={handleEditorChange}
+              required
             />
 
 
@@ -227,6 +226,7 @@ const Yournurcery = () => {
 
             <input
               type="file"
+              required
               multiple
               accept=".png, .jpg, .jpeg"
               name="images"
