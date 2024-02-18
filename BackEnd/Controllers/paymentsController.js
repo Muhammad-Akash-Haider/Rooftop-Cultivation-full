@@ -60,18 +60,15 @@ exports.Makepayment = async (req, res) => {
 
 
 exports.handleWebhook = async (req, res) => {
-  console.log(req.params, 'I have gotten the session id and all work done in payment');
+  console.log(req.params,'i have goten the session id and all work doen in payment')
   
   const sessionId = req.params.session_id;
   const session = await stripe.checkout.sessions.retrieve(sessionId);
-  
-  // Extract the latest charge ID from the session
-  const chargeId = session.payment_intent.charges.data[0].id;
-  
-  // Now you have the charge ID
-  console.log('Charge ID:', chargeId);
-  
-  res.send('Payment successful! Charge ID: ' + chargeId);
+  const paymentId = session.payment_intent;
+  // Now you can store the payment ID in your database
+  console.log('Payment ID:', paymentId);
+  // You can write code here to store the payment ID in your database
+  res.send('Payment successful! Payment ID: ' + paymentId);
 };
 
 
@@ -79,8 +76,8 @@ exports.refundPayment = async (req, res) => {
   
   try {
     const refund = await stripe.refunds.create({
-      charge: "ch_3Okni7DLpC8Qo70I2GCb7wwK",
-      // amount: '200' // specify the amount to refund, in cents or smallest currency unit
+      payment_intent : "pi_3Ol5zZDLpC8Qo70I24vzhi2C",
+      amount: '200' 
     });
     // const refund = await stripe.refunds.create({
     //   charge: req.body.charge,
