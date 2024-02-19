@@ -66,7 +66,6 @@ exports.getPantToEdit = async (req, res) => {
 //  Get All Nursey
 exports.getAllPlants = async (req, res) => {
 
-
     connection.query('SELECT * FROM `plant`LIMIT 16 ', (err, rows, fields) => {
         if (!err) {
             res.json({

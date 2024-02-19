@@ -74,20 +74,18 @@ exports.handleWebhook = async (req, res) => {
 
 exports.refundPayment = async (req, res) => {
   
-  try {
-    const refund = await stripe.refunds.create({
-      payment_intent : "pi_3Ol5zZDLpC8Qo70I24vzhi2C",
-      amount: '200' 
-    });
-    // const refund = await stripe.refunds.create({
-    //   charge: req.body.charge,
-    //   amount: req.body.amount // specify the amount to refund, in cents or smallest currency unit
-    // });
-    console.log('Refund successful:', refund);
-    res.status(200).json({ success: true, refund });
-  } catch (error) {
-    console.error('Refund error:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+  res.send( req.session.user)
+  // try {
+  //   const refund = await stripe.refunds.create({
+  //     payment_intent : res.body.payment_id,
+  //     amount: res.body.amount
+  //   });
+
+  //   console.log('Refund successful:', refund);
+  //   res.status(200).json({ success: true, refund });
+  // } catch (error) {
+  //   console.error('Refund error:', error);
+  //   res.status(500).json({ success: false, error: error.message });
+  // }
 };
 
