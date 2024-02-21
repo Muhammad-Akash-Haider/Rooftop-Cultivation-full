@@ -7,6 +7,7 @@ import { GrSubtractCircle } from "react-icons/gr";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import {loadStripe} from '@stripe/stripe-js';
 
 function Checkout() {
   const param = useParams();
@@ -124,6 +125,37 @@ function Checkout() {
   }, [id]); // Include id in the dependency array
 
 
+   // payment integration
+   const makePayment = async()=>{
+    
+    const stripe = await loadStripe("pk_test_51OjdVEDLpC8Qo70IVmrn9xp7fa7RdrqIaACe9hBZF7MnFFHPjGE60paFnFR2hmSaEvYu4pnMf5Vvvix3kXtrMbHe00nTi6bTjs");
+
+    const body = {
+        products:cartData
+    }
+
+    const headers = {
+        "Content-Type":"application/json"
+    }
+    const response = await fetch("http://localhost:5000/payment/Makepayment",{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify(body)
+    });
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+        sessionId:session.id
+    });
+    
+    if(result.error){
+        console.log(result.error);
+    }
+}
+
+  
+
     return (
         <>
 
@@ -187,7 +219,7 @@ function Checkout() {
             </div>
           </div>
           <div className="mt-4">
-            <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]">
+            <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>
               Proceed to Checkout
             </button>
           </div>

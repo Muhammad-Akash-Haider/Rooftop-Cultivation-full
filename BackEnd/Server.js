@@ -4,11 +4,19 @@ const port= 5000
 const ConnetDB= require('./Config/db')
 const bodyparser =require('body-parser')
 var cors = require('cors')
+const session = require('express-session');
 
 app.use(cors())
 //Configuring Express Server
 
 app.use(bodyparser.json());
+app.use(session({
+  secret: 'Majid',
+  resave: false,
+  saveUninitialized: true
+}));
+
+
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use("/uploads",express.static('uploads'));
 

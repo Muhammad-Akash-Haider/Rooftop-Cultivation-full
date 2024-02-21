@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2023 at 04:52 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.1.17
+-- Generation Time: Feb 19, 2024 at 06:05 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `rooftop-cultivation`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `password` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `password`) VALUES
+(1, 'admin@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa');
 
 -- --------------------------------------------------------
 
@@ -40,7 +59,9 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
 (5, '25', 31, 2),
-(7, '26', 31, 4);
+(7, '26', 31, 4),
+(12, '26', 30, 3),
+(17, '61', 30, 4);
 
 -- --------------------------------------------------------
 
@@ -95,7 +116,7 @@ CREATE TABLE `nursery` (
 --
 
 INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`) VALUES
-(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593342454-kissan-nnl1o120i.png, images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1701593342456-2-8.jpg, images-1701593342460-image-pepper-nursery-new.jpg');
+(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622766027-asdasdasd.jpeg, images-1704622766028-images-1701593342454-kissan-nnl1o120i.png, images-1704622766031-images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1704622766049-images-1701593342460-image-pepper-nursery-new.jpg');
 
 -- --------------------------------------------------------
 
@@ -105,23 +126,21 @@ INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, 
 
 CREATE TABLE `orders` (
   `id` int(64) NOT NULL,
-  `customer_name` varchar(128) NOT NULL,
-  `seller_id` int(100) NOT NULL,
   `buyer_id` int(50) NOT NULL,
   `order_date` varchar(200) DEFAULT NULL,
-  `product_name` varchar(128) NOT NULL,
+  `product_id` varchar(128) NOT NULL,
   `status` varchar(100) NOT NULL,
-  `order_amount` int(16) NOT NULL
+  `orderd-stock` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `buyer_id`, `order_date`, `product_name`, `status`, `order_amount`) VALUES
-(1, 'ali', 0, 0, '12/7/2023', 'alevora plant', 'Completed', 2000),
-(2, 'zahra', 25, 0, '12/9/2023', 'virginica plant', 'cancel', 4000),
-(3, 'danyal', 25, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
+INSERT INTO `orders` (`id`, `buyer_id`, `order_date`, `product_id`, `status`, `orderd-stock`) VALUES
+(1, 0, '12/7/2023', 'alevora plant', 'Completed', 2000),
+(2, 0, '12/9/2023', 'virginica plant', 'Completed', 4000),
+(3, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
 
 -- --------------------------------------------------------
 
@@ -131,12 +150,10 @@ INSERT INTO `orders` (`id`, `customer_name`, `seller_id`, `buyer_id`, `order_dat
 
 CREATE TABLE `payments_history` (
   `id` int(64) NOT NULL,
-  `seller_id` int(11) NOT NULL,
   `buyer_id` int(50) NOT NULL,
-  `sender_name` varchar(128) NOT NULL,
   `payment_date` int(64) NOT NULL,
   `payment_method` char(128) NOT NULL,
-  `order_date` date NOT NULL,
+  `order_ids` varchar(500) NOT NULL,
   `payment_amount` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -144,9 +161,9 @@ CREATE TABLE `payments_history` (
 -- Dumping data for table `payments_history`
 --
 
-INSERT INTO `payments_history` (`id`, `seller_id`, `buyer_id`, `sender_name`, `payment_date`, `payment_method`, `order_date`, `payment_amount`) VALUES
-(1, 0, 0, 'sehar', 20230312, 'jazzcash', '2023-02-12', 2000),
-(2, 25, 0, 'maya', 20230812, 'jazzcash', '2023-08-12', 2500);
+INSERT INTO `payments_history` (`id`, `buyer_id`, `payment_date`, `payment_method`, `order_ids`, `payment_amount`) VALUES
+(1, 0, 20230312, 'jazzcash', '2023-02-12', 2000),
+(2, 0, 20230812, 'jazzcash', '2023-08-12', 2500);
 
 -- --------------------------------------------------------
 
@@ -170,9 +187,10 @@ CREATE TABLE `plant` (
 --
 
 INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `description`, `images`) VALUES
-(30, '25', 'Iris virginica', 2500, 7, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1701592866157-images.jpeg, images-1701592866158-download (1).jpeg, images-1701592866158-1.jpeg'),
-(31, '25', 'Setosa', 1400, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg, images-1701593799952-satosa1).jpeg'),
-(32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg');
+(30, '25', 'Iris virginica ', 2500, 7, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1704622464852-images-1701595984146-satosa3).jpeg, images-1704622464852-images-1701596015936-satosa1).jpeg, images-1704622464853-images-1701596015936-satosa3).jpeg'),
+(31, '25', 'Setosa', 1400, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622593085-images-1701596015936-satosa3).jpeg, images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg'),
+(32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg'),
+(34, '25', 'Red Rose ', 1000, 8, 'flowers', '<p>This is my collection of rose have multiple  bariants</p>', 'images-1704882669750-adelaide-hoodless-rose.jpg, images-1704882669750-04.-Rose-Flower-zoom-view-image.jpg');
 
 -- --------------------------------------------------------
 
@@ -222,9 +240,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `phone`) VALUES
-(23, 'Majid', 'ali', 'majidali37406@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03110794433'),
 (25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854'),
-(26, 'muhammad ', 'ashba', 'ashba@gmail.com', '$2b$10$0aYB9LjezbOBHMkaDFxNsunRQxIypIo2i3Zqr7pYR9/eRDwEypnF6', '0', 'Rawalpindi', '03110794433');
+(26, 'muhammad ', 'ashba', 'ashba@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433'),
+(34, 'zahid', 'ali', 'testproject@gmail.com', '$2b$10$ReaxTlslYCYIonzfg9wVcecIEq2lUiejmMfl19zPqzbwQ.OzoKxX6', '1', 'Rawalpindi', '03110794433'),
+(61, 'majid', 'hassan', 'usermaji@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433');
 
 -- --------------------------------------------------------
 
@@ -241,6 +260,12 @@ CREATE TABLE `verified_users` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cart`
@@ -308,10 +333,16 @@ ALTER TABLE `verified_users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `Notifications`
@@ -341,7 +372,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`
@@ -353,7 +384,7 @@ ALTER TABLE `return/cancels`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
