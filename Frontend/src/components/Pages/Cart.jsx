@@ -137,7 +137,7 @@ function Checkout() {
     const headers = {
         "Content-Type":"application/json"
     }
-    const response = await fetch("http://localhost:5000/payment/Makepayment",{
+    const response = await fetch(`http://localhost:5000/payment/Makepayment/${id}`,{
         method:"POST",
         headers:headers,
         body:JSON.stringify(body)

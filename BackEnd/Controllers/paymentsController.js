@@ -31,50 +31,103 @@ exports.getpaymentsbyId = async (req, res) => {
 };
 
 exports.Makepayment = async (req, res) => {
-//   console.log(req.body);
+  console.log(req.params);
+  const id = req.params.id;
+  console.log(id)
+  const { products } = req.body;
 
-  const {products} = req.body;
 
+  const lineItems = products.map((product) => ({
+    price_data: {
+      currency: "pkr",
+      product_data: {
+        name: product.name
+      },
+      unit_amount: product.price * 100,
+    },
+    quantity: product.stock
+  }));
 
-    const lineItems = products.map((product)=>({
-        price_data:{
-            currency:"pkr",
-            product_data:{
-                name:product.name
-            },
-            unit_amount:product.price  * 100 ,
-        },
-        quantity:product.stock
-    }));
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: `http://localhost:5000/payment/saveorder/{CHECKOUT_SESSION_ID}/${id}`,
+    cancel_url: "http://localhost:3000",
+  });
 
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types:["card"],
-        line_items:lineItems,
-        mode:"payment",
-        success_url:"http://localhost:5000/payment/saveorder/{CHECKOUT_SESSION_ID}",
-        cancel_url:"http://localhost:3000",
-    });
-
-    res.json({ id: session.id, url: session.url });
+  res.json({ id: session.id, url: session.url });
 };
 
 
 exports.handleWebhook = async (req, res) => {
-  console.log(req.params,'i have goten the session id and all work doen in payment')
-  
+
+
   const sessionId = req.params.session_id;
+  const userId = req.params.id;
+
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const paymentId = session.payment_intent;
-  // Now you can store the payment ID in your database
-  console.log('Payment ID:', paymentId);
-  // You can write code here to store the payment ID in your database
-  res.send('Payment successful! Payment ID: ' + paymentId);
+  var orderId ;
+  const cartItemsQuery = `SELECT * FROM cart WHERE buyer_id = ${userId}`;
+
+  connection.query(cartItemsQuery, async (err, cartItems) => {
+    if (err) {
+      console.error("Error retrieving cart items:", err);
+      return res.status(500).json({ error: "Error retrieving cart items" });
+    }
+
+    // Assuming you have a table named 'orders' to store orders
+    const createOrderQuery = `INSERT INTO orders (buyer_id) VALUES (${userId})`;
+    connection.query(createOrderQuery, async (err, result) => {
+      if (err) {
+        console.error("Error creating order:", err);
+        return res.status(500).json({ error: "Error creating order" });
+      }
+
+     orderId = result.insertId;
+
+      // Store each cart item as an order item
+      for (const cartItem of cartItems) {
+        const { product_id, stock } = cartItem;
+        // Assuming you have a table named 'order_items' to link orders with items
+        const createOrderItemQuery = `INSERT INTO order_items (order_id, product_id, quantity) VALUES (${orderId}, ${product_id}, ${stock})`;
+        connection.query(createOrderItemQuery, (err, result) => {
+          if (err) {
+            console.error("Error creating order item:", err);
+            return res.status(500).json({ error: "Error creating order item" });
+          }
+        });
+      }
+
+      // Clear the user's cart (assuming you have a table named 'cart')
+      const clearCartQuery = `DELETE FROM cart WHERE user_id = ${userId}`;
+      connection.query(clearCartQuery, (err, result) => {
+        if (err) {
+          console.error("Error clearing cart:", err);
+          return res.status(500).json({ error: "Error clearing cart" });
+        }
+
+        // Return success response
+        res.json({ success: true, orderId });
+      });
+    });
+
+    
+
+
+  });
+
+
+
+
+
 };
 
 
 exports.refundPayment = async (req, res) => {
-  
-  res.send( req.session.user)
+
+  res.send(req.session.user)
   // try {
   //   const refund = await stripe.refunds.create({
   //     payment_intent : res.body.payment_id,
