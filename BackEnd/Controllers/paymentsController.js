@@ -60,8 +60,7 @@ exports.Makepayment = async (req, res) => {
 };
 
 
-exports.handleWebhook = async (req, res) => {
-
+exports.saveorder = async (req, res) => {
 
   const sessionId = req.params.session_id;
   const userId = req.params.id;
@@ -78,7 +77,8 @@ exports.handleWebhook = async (req, res) => {
     }
 
     // Assuming you have a table named 'orders' to store orders
-    const createOrderQuery = `INSERT INTO orders (buyer_id) VALUES (${userId})`;
+    const createOrderQuery = `INSERT INTO orders (buyer_id, status, order_date) VALUES (${userId}, 'Pending', NOW())`;
+
     connection.query(createOrderQuery, async (err, result) => {
       if (err) {
         console.error("Error creating order:", err);
@@ -101,7 +101,7 @@ exports.handleWebhook = async (req, res) => {
       }
 
       // Clear the user's cart (assuming you have a table named 'cart')
-      const clearCartQuery = `DELETE FROM cart WHERE user_id = ${userId}`;
+      const clearCartQuery = `DELETE FROM cart WHERE buyer_id = ${userId}`;
       connection.query(clearCartQuery, (err, result) => {
         if (err) {
           console.error("Error clearing cart:", err);
@@ -109,17 +109,15 @@ exports.handleWebhook = async (req, res) => {
         }
 
         // Return success response
-        res.json({ success: true, orderId });
+        res.redirect('http://localhost:3000');
+
       });
     });
 
-    
+
 
 
   });
-
-
-
 
 
 };
