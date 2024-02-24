@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 19, 2024 at 06:05 AM
+-- Host: 127.0.0.1
+-- Generation Time: Feb 24, 2024 at 05:16 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -58,10 +58,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
-(5, '25', 31, 2),
-(7, '26', 31, 4),
-(12, '26', 30, 3),
-(17, '61', 30, 4);
+(5, '25', 31, 2);
 
 -- --------------------------------------------------------
 
@@ -79,10 +76,10 @@ CREATE TABLE `chat` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Notifications`
+-- Table structure for table `notifications`
 --
 
-CREATE TABLE `Notifications` (
+CREATE TABLE `notifications` (
   `id` int(200) NOT NULL,
   `user_id` int(100) NOT NULL,
   `reason` varchar(300) NOT NULL,
@@ -90,10 +87,10 @@ CREATE TABLE `Notifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Notifications`
+-- Dumping data for table `notifications`
 --
 
-INSERT INTO `Notifications` (`id`, `user_id`, `reason`, `time`) VALUES
+INSERT INTO `notifications` (`id`, `user_id`, `reason`, `time`) VALUES
 (1, 25, 'order', '2 25');
 
 -- --------------------------------------------------------
@@ -127,20 +124,46 @@ INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, 
 CREATE TABLE `orders` (
   `id` int(64) NOT NULL,
   `buyer_id` int(50) NOT NULL,
-  `order_date` varchar(200) DEFAULT NULL,
-  `product_id` varchar(128) NOT NULL,
-  `status` varchar(100) NOT NULL,
-  `orderd-stock` int(100) NOT NULL
+  `order_date` datetime DEFAULT NULL,
+  `payment_id` varchar(1000) NOT NULL,
+  `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `buyer_id`, `order_date`, `product_id`, `status`, `orderd-stock`) VALUES
-(1, 0, '12/7/2023', 'alevora plant', 'Completed', 2000),
-(2, 0, '12/9/2023', 'virginica plant', 'Completed', 4000),
-(3, 0, '11/8/2023', 'rose dragon plant', 'Pending', 2500);
+INSERT INTO `orders` (`id`, `buyer_id`, `order_date`, `payment_id`, `status`) VALUES
+(6, 26, '2024-02-21 20:56:52', 'pi_3OmWydDLpC8Qo70I0iQFD2oW', 'Pending'),
+(7, 26, '2024-02-22 12:56:22', '', 'Pending'),
+(8, 26, '2024-02-22 12:57:27', '', 'Pending'),
+(9, 26, '2024-02-22 13:12:34', '', 'Pending');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(200) NOT NULL,
+  `order_id` int(200) NOT NULL,
+  `product_id` int(200) NOT NULL,
+  `quantity` int(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
+(1, 4, 31, 2),
+(2, 5, 31, 2),
+(3, 5, 30, 2),
+(4, 6, 31, 1),
+(5, 7, 34, 2),
+(6, 8, 31, 2),
+(7, 9, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -280,9 +303,9 @@ ALTER TABLE `chat`
   ADD UNIQUE KEY `id` (`id`);
 
 --
--- Indexes for table `Notifications`
+-- Indexes for table `notifications`
 --
-ALTER TABLE `Notifications`
+ALTER TABLE `notifications`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -296,6 +319,12 @@ ALTER TABLE `nursery`
 --
 ALTER TABLE `orders`
   ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `payments_history`
@@ -342,12 +371,12 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `Notifications`
+-- AUTO_INCREMENT for table `notifications`
 --
-ALTER TABLE `Notifications`
+ALTER TABLE `notifications`
   MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -360,7 +389,13 @@ ALTER TABLE `nursery`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payments_history`
