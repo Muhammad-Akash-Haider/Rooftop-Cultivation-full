@@ -1,4 +1,4 @@
-import React,{useState ,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from "../Header";
 import Nav from "../Nav";
 import { useParams } from 'react-router-dom';
@@ -7,20 +7,20 @@ import { GrSubtractCircle } from "react-icons/gr";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 function Checkout() {
   const param = useParams();
-  
+
   const [id, setid] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
 
     setid(localStorage.getItem('user_id'));
-  }, [id ]);
-  
-  
+  }, [id]);
+
+
   const [cartData, setCartData] = useState([]);
-  const [carttotal ,setcarttotal] =useState()
+  const [carttotal, setcarttotal] = useState()
 
   const handleDelete = async (cartId) => {
     try {
@@ -31,7 +31,7 @@ function Checkout() {
         return;
       }
       // Make an API call to delete the plant with the given plantId
-    
+
       const response = await fetch(`http://localhost:5000/cart/deletecartitem/${cartId}`, {
         method: 'DELETE',
         // You may need to include headers or credentials based on your API setup
@@ -44,7 +44,7 @@ function Checkout() {
           position: toast.POSITION.TOP_RIGHT,
         });
         fetchData();
-        cartTotal(); 
+        cartTotal();
       } else {
         console.error('Failed to delete cart item');
       }
@@ -52,7 +52,7 @@ function Checkout() {
       console.error('Error deleting cartitem:', error);
     }
   };
-  
+
 
   // Define the updateStock function
   const updateStock = async (productId) => {
@@ -70,7 +70,7 @@ function Checkout() {
 
       // After updating stock, trigger re-fetch of cart data
       fetchData();
-      cartTotal(); 
+      cartTotal();
     } catch (error) {
       console.error('Error updating stock:', error);
     }
@@ -90,12 +90,12 @@ function Checkout() {
 
       // After updating stock, trigger re-fetch of cart data
       fetchData();
-      cartTotal(); 
+      cartTotal();
     } catch (error) {
       console.error('Error updating stock:', error);
     }
   };
- 
+
 
   const cartTotal = async () => {
     try {
@@ -106,7 +106,7 @@ function Checkout() {
       console.error('Error fetching cart data:', error);
     }
   };
-  
+
   const fetchData = async () => {
     try {
       const response = await fetch(`http://localhost:5000/cart/CartItems/${id}`);
@@ -116,53 +116,53 @@ function Checkout() {
       console.error('Error fetching cart data:', error);
     }
   };
-  
+
   // Fetch cart data useEffect
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchData();  // Call fetchData immediately after defining it
-    cartTotal();  
+    cartTotal();
   }, [id]); // Include id in the dependency array
 
 
-   // payment integration
-   const makePayment = async()=>{
-    
+  // payment integration
+  const makePayment = async () => {
+
     const stripe = await loadStripe("pk_test_51OjdVEDLpC8Qo70IVmrn9xp7fa7RdrqIaACe9hBZF7MnFFHPjGE60paFnFR2hmSaEvYu4pnMf5Vvvix3kXtrMbHe00nTi6bTjs");
 
     const body = {
-        products:cartData
+      products: cartData
     }
 
     const headers = {
-        "Content-Type":"application/json"
+      "Content-Type": "application/json"
     }
-    const response = await fetch(`http://localhost:5000/payment/Makepayment/${id}`,{
-        method:"POST",
-        headers:headers,
-        body:JSON.stringify(body)
+    const response = await fetch(`http://localhost:5000/payment/Makepayment/${id}`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body)
     });
 
     const session = await response.json();
 
     const result = stripe.redirectToCheckout({
-        sessionId:session.id
+      sessionId: session.id
     });
-    
-    if(result.error){
-        console.log(result.error);
+
+    if (result.error) {
+      console.log(result.error);
     }
-}
+  }
 
-  
 
-    return (
-        <>
 
-            <Header />
-            <Nav />
+  return (
+    <>
 
-            
+      <Header />
+      <Nav />
+
+
       <div className="container p-8 mx-auto mt-12">
         <div className="w-full overflow-x-auto">
           <div className="my-2">
@@ -180,53 +180,55 @@ function Checkout() {
             </thead>
             <tbody>
 
-         {cartData.map((cart, index) => (
-              <tr key={index}>
-                <td>
-                  <div className="flex justify-center">
-                    <img src={`http://localhost:5000/uploads/${cart.images.split(',')[0]}`}className="object-cover h-28 w-28 rounded-2xl" alt="image" />
-                  </div>
-                </td>
-                <td className="p-4 px-6 text-center whitespace-nowrap">
-                  <div className="flex flex-col items-center justify-center">
-                    <h3>{cart.name}</h3>
-                  </div>
-                </td>
-                <td className="p-4 px-6 text-center whitespace-nowrap">
-                <div className="flex flex-row items-center justify-center">
-                  <GrSubtractCircle onClick={()=>downgradeStock(cart.id)}  className='mr-2 text-xl text-red-800'/>
-                  {cart.stock}
-                    <IoAddCircleOutline  onClick={()=>updateStock(cart.id)} className='ml-2 text-2xl text-green-800 '/>
-                 </div>
-                </td>
-                <td className="p-4 px-6 text-center whitespace-nowrap">PKR {cart.price}</td>
-                <td className="p-4 px-6 text-center whitespace-nowrap">
-                < RiDeleteBin6Line    onClick={() => handleDelete(cart.id)}  className="inline text-xl text-red-600" /> 
-                </td>
-              </tr>
-              
-            ))}   
+              {cartData.map((cart, index) => (
+                <tr key={index}>
+                  <td>
+                    <div className="flex justify-center">
+                      <img src={`http://localhost:5000/uploads/${cart.images.split(',')[0]}`} className="object-cover h-28 w-28 rounded-2xl" alt="image" />
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                    <div className="flex flex-col items-center justify-center">
+                      <h3>{cart.name}</h3>
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                    <div className="flex flex-row items-center justify-center">
+                      <GrSubtractCircle onClick={() => downgradeStock(cart.id)} className='mr-2 text-xl text-red-800' />
+                      {cart.stock}
+                      <IoAddCircleOutline onClick={() => updateStock(cart.id)} className='ml-2 text-2xl text-green-800 ' />
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">PKR {cart.price}</td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                    < RiDeleteBin6Line onClick={() => handleDelete(cart.id)} className="inline text-xl text-red-600" />
+                  </td>
+                </tr>
+
+              ))}
             </tbody>
           </table>
-         
+
           <div className="mt-4">
             <div className="py-4 rounded-md shadow">
-             
+
               <div className="flex items-center justify-between px-4 py-2 mt-3 border-t-2 ">
                 <span className="text-xl font-bold">Total</span>
                 <span className="text-2xl font-bold">PKR {carttotal}</span>
               </div>
             </div>
           </div>
-          <div className="mt-4">
-            <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>
-              Proceed to Checkout
-            </button>
-          </div>
+         
+            <div className="mt-4">
+              <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>
+                Proceed to Checkout
+              </button>
+            </div>
+         
         </div>
       </div>
-        </>
-    )
+    </>
+  )
 }
 
 export default Checkout

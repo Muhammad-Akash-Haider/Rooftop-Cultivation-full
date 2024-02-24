@@ -9,15 +9,17 @@ const connection = require('../Config/db')
 
 exports.getOrderbyId = async (req, res) => {
     console.log(req.params.id)
-
-
-    connection.query('SELECT * FROM orders WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
+    connection.query('SELECT * FROM orders \
+    INNER JOIN order_items ON orders.id = order_items.order_id \
+    INNER JOIN plant ON plant.id = order_items.product_id \
+    WHERE orders.buyer_id = ' + req.params.id, (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
                 status: true,
                 Message: "Get Plant by id"
             })
+            
         }
 
         else

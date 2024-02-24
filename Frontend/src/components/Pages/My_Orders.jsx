@@ -1,9 +1,35 @@
-import React from 'react'
+import React , { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import LOGO from './images2/LOGO.png';
 import Nav from "./../Nav";
 
 function My_Orders() {
+  const [id, setid] = useState(localStorage.getItem('user_id'));
+  useEffect(() => {
+
+    setid(localStorage.getItem('user_id'));
+   
+  }, [id]);
+
+  
+  const [OrderData, setOrderData] = useState([]);
+  
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/order/get/${id}`);
+      const data = await response.json();
+      setOrderData(data.rows);
+      
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); 
+  
+ 
   return (
 <div>
 
@@ -15,105 +41,45 @@ function My_Orders() {
   <span class="text-3xl font-semibold mb-6 ">My Orders</span>
 
   <div class="bg-white text-sm overflow-hidden mt-10 shadow-md rounded-lg">
-    <table class="min-w-full divide-y divide-gray-200">
-      <div class="bg-[#00967C]">
-        <tr>
-          <th  class=" px-20 text-left text-xs font-medium text-white uppercase tracking-wider">Order ID</th>
-          <th  class="px-12 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Product</th>
-          <th  class="px-12 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Quantity</th>
-          <th  class="px-12 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Total</th>
-          <th  class="px-12 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Status</th>
-          <th  class="px-12 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Action</th>
-          
-        </tr>
-      </div>
-      <div class=" bg-white divide-y divide-gray-200">
-        <tr className='flex '>
-          <input placeholder='0000000' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='ABC' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='0' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='Rs. 00' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='Delivered' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
+  <table className="w-full shadow-inner">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-6 py-3 font-bold whitespace-nowrap">order No</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Product</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Qty</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Item Price</th>
+                <th className="px-6 py-3 font-bold whitespace-nowrap">Status</th>
+              </tr>
+            </thead>
+            <tbody>
 
-        <tr className='flex '>
-          <input placeholder='---' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='---' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
+       
+              {OrderData.map((order, index) => (
+                <tr key={index}>
+                  <td>
+                  <div className="flex flex-col items-center justify-center">
+                      <h3>{order.order_id}</h3>
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                    <div className="flex flex-col items-center justify-center">
+                      <h3>{order.name}</h3>
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                  <div className="flex flex-col items-center justify-center">
+                      <h3>{order.stock}</h3>
+                    </div>
+                  </td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap"> {order.price}</td>
+                  <td className="p-4 px-6 text-center whitespace-nowrap">
+                  {order.status}
+                  </td>
+                </tr>
 
-        <tr className='flex '>
-          <input placeholder='---' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='---' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
-
-        <tr className='flex '>
-          <input placeholder='---' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='---' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
-
-        <tr className='flex '>
-          <input placeholder='---' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='---' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
-
-        <tr className='flex '>
-          <input placeholder='---' className='px-12 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='text-sm text-center outline-none px-9' type="text" size="12" />
-          <input placeholder='---' className='px-3 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-6 py-4 text-sm text-center outline-none ' type="text" size="12" />
-          <input placeholder='---' className='px-2 text-sm text-center outline-none ' type="text" size="12" />
-          <select id="countries" class=" ml-8 cursor-pointer text-sm block w-24 p-2.5 bg-white outline-none text-gray-700 py-1 px-2 leading-8 transition-colors  duration-200 ease-in-out">
-          <option className='text-center ' selected>---</option>
-          <option className='text-center ' value="">Delivered Succesfully</option>
-          <option className='text-center ' value="">Pending</option>
-          <option className='text-center ' value="">Cancelled</option>
-          </select>
-        </tr>
-
-      </div>
-    </table>
+              ))}
+            </tbody>
+          </table>
     
   </div>
 
