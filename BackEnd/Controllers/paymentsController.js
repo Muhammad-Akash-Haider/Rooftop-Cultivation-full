@@ -30,6 +30,37 @@ exports.getpaymentsbyId = async (req, res) => {
   );
 };
 
+exports.SellerPaymentMethod = async (req, res) => {
+  console.log(req.params);
+  const id = req.params.id;
+  console.log(id)
+  const { amount } = req.body;
+
+  const lineItems = [{
+    price_data: {
+      currency: "pkr",
+      product_data: {
+        name: "test charge"
+      },
+      unit_amount: amount * 400,
+    },
+    quantity: 1 ,
+  }];
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: `http://localhost:5000/payment/savemethod/{CHECKOUT_SESSION_ID}/${id}`,
+    cancel_url: "http://localhost:3000",
+  });
+
+  res.json({ id: session.id, url: session.url });
+}
+
+
+
+
 exports.Makepayment = async (req, res) => {
   console.log(req.params);
   const id = req.params.id;
@@ -59,7 +90,12 @@ exports.Makepayment = async (req, res) => {
   res.json({ id: session.id, url: session.url });
 };
 
-
+exports.savebank = async (req, res) => {
+  const sessionId = req.params.session_id;
+  const userId = req.params.id;
+ 
+  res.send(req.params)
+}
 exports.saveorder = async (req, res) => {
 
   const sessionId = req.params.session_id;
