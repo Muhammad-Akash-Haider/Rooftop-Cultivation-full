@@ -3,6 +3,7 @@ const stripe = require("stripe")("sk_test_51OjdVEDLpC8Qo70I0YrtXllKMfOrMKoLhlYZm
 const url = require('url');
 const connection = require("../Config/db");
 const { log } = require("console");
+const { sendEmail } = require('../utils/EmailSender');
 
 //  Get All payment history
 exports.paymenthistory = async (req, res) => {
@@ -30,6 +31,7 @@ exports.getpaymentsbyId = async (req, res) => {
   );
 };
 
+///// payments work for seller  
 exports.SellerPaymentMethod = async (req, res) => {
   console.log(req.params);
   const id = req.params.id;
@@ -58,8 +60,34 @@ exports.SellerPaymentMethod = async (req, res) => {
   res.json({ id: session.id, url: session.url });
 }
 
+exports.savebank = async (req, res) => {
+  const sessionId = req.params.session_id;
+  const userId = req.params.id;
+ 
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+    
+  // Extract customer email from Payment Intent
+  const customerEmail = session.customer_details.email
+  
 
+  res.redirect('http://localhost:3000');
 
+}
+
+exports.Testapi=async (req,res) =>{
+  try {
+    const recipientEmail = 'ma5788678@gmail.com';
+    const subject = 'Payment Method Added to system';
+    const text = 'This is a confirmation email tahta your payment method is added in teh system and you can just get your payments in this account of your sells';
+    await sendEmail(recipientEmail, subject, text);
+    console.log("Email sent successfully!");
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
+
+}
+
+/////payments work for order 
 
 exports.Makepayment = async (req, res) => {
   console.log(req.params);
@@ -90,12 +118,7 @@ exports.Makepayment = async (req, res) => {
   res.json({ id: session.id, url: session.url });
 };
 
-exports.savebank = async (req, res) => {
-  const sessionId = req.params.session_id;
-  const userId = req.params.id;
- 
-  res.send(req.params)
-}
+
 exports.saveorder = async (req, res) => {
 
   const sessionId = req.params.session_id;
