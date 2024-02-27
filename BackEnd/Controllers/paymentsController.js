@@ -46,7 +46,7 @@ exports.SellerPaymentMethod = async (req, res) => {
       },
       unit_amount: amount * 400,
     },
-    quantity: 1 ,
+    quantity: 1,
   }];
 
   const session = await stripe.checkout.sessions.create({
@@ -62,28 +62,43 @@ exports.SellerPaymentMethod = async (req, res) => {
 
 exports.savebank = async (req, res) => {
   const sessionId = req.params.session_id;
-  const userId = req.params.id;
- 
+  const sellerId = req.params.id;
+
   const session = await stripe.checkout.sessions.retrieve(sessionId);
-    
+  const paymentId = session.payment_intent;
   // Extract customer email from Payment Intent
   const customerEmail = session.customer_details.email
-  
+
+  try {
+    
+    const subject = 'Payment Method Added to system';
+    const text = 'This is a confirmation email tahta your payment method is added in teh system and you can just get your payments in this account of your sells';
+    await sendEmail(customerEmail, subject, text);
+    console.log("Email sent successfully!");
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
+
+  const insertQuery = `INSERT INTO bankaccounts (seller_id, payment_id) 
+  VALUES (${sellerId}, ${paymentId})
+  ON DUPLICATE KEY UPDATE  payment_id = ${paymentId}`;
+
+  // Execute the INSERT ... ON DUPLICATE KEY UPDATE query
+  connection.query(insertQuery, (err, result) => {
+    if (err) {
+      console.error('Error executing query:', err);
+      return;
+    }
+    console.log('Rows affected:', result.affectedRows);
+  });
+
 
   res.redirect('http://localhost:3000');
 
 }
 
-exports.Testapi=async (req,res) =>{
-  try {
-    const recipientEmail = 'ma5788678@gmail.com';
-    const subject = 'Payment Method Added to system';
-    const text = 'This is a confirmation email tahta your payment method is added in teh system and you can just get your payments in this account of your sells';
-    await sendEmail(recipientEmail, subject, text);
-    console.log("Email sent successfully!");
-  } catch (error) {
-    console.error("Failed to send email:", error);
-  }
+exports.Testapi = async (req, res) => {
+  
 
 }
 
@@ -126,7 +141,7 @@ exports.saveorder = async (req, res) => {
 
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const paymentId = session.payment_intent;
-  var orderId ;
+  var orderId;
   const cartItemsQuery = `SELECT * FROM cart WHERE buyer_id = ${userId}`;
 
   connection.query(cartItemsQuery, async (err, cartItems) => {
@@ -144,7 +159,7 @@ exports.saveorder = async (req, res) => {
         return res.status(500).json({ error: "Error creating order" });
       }
 
-     orderId = result.insertId;
+      orderId = result.insertId;
 
       // Store each cart item as an order item
       for (const cartItem of cartItems) {
