@@ -80,8 +80,8 @@ exports.savebank = async (req, res) => {
   }
 
   const insertQuery = `INSERT INTO bankaccounts (seller_id, payment_id) 
-  VALUES (${sellerId}, ${paymentId})
-  ON DUPLICATE KEY UPDATE  payment_id = ${paymentId}`;
+  VALUES (${sellerId}, '${paymentId}')
+  ON DUPLICATE KEY UPDATE  payment_id = '${paymentId}'`;
 
   // Execute the INSERT ... ON DUPLICATE KEY UPDATE query
   connection.query(insertQuery, (err, result) => {
@@ -151,7 +151,7 @@ exports.saveorder = async (req, res) => {
     }
 
     // Assuming you have a table named 'orders' to store orders
-    const createOrderQuery = `INSERT INTO orders (buyer_id, status, order_date) VALUES (${userId}, 'Pending', NOW())`;
+    const createOrderQuery = `INSERT INTO orders (buyer_id, status , order_date , payment_id ) VALUES (${userId}, 'Pending', NOW() , '${paymentId}' )`;
 
     connection.query(createOrderQuery, async (err, result) => {
       if (err) {
