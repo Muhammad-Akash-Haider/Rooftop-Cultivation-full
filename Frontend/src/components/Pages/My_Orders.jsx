@@ -73,7 +73,13 @@ function My_Orders() {
                   </td>
                   <td className="p-4 px-6 text-center whitespace-nowrap"> {order.price}</td>
                   <td className="p-4 px-6 text-center whitespace-nowrap">
-                  {order.status}
+                 
+                  <select value={order.status} className='inline p-1 border-2 rounded-2xl '
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="cancel">Cancel</option>
+                  </select>
                   </td>
                 </tr>
 

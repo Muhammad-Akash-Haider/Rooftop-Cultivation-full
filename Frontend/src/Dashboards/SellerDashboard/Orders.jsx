@@ -50,7 +50,7 @@ const Orders = () => {
     updatedProductData[index].status = newStatus;
 
     // Update the state with the modified array
-    setproductData(updatedProductData);
+    setproductData(updatedProductData); 
 
     // Make an API call to update the status on the backend
     try {

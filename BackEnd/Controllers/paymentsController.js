@@ -141,6 +141,31 @@ exports.saveorder = async (req, res) => {
 
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const paymentId = session.payment_intent;
+  const customerEmail = session.customer_details.email
+
+  try {
+    const subject = 'Order Placed ';
+    const customerEmail = session.customer_details.email;
+    const amountTotal = session.amount_total;
+    const truncatedAmount = Math.floor(amountTotal / 100); 
+    
+    console.log(truncatedAmount); 
+    try {
+      const subject = 'Order Confirmation';
+      const text = `Dear ${session.customer_details.name},\n\n  You placed Order of amount ${truncatedAmount} on our business rooftopcultivation . We are pleased to confirm that your payment has been successfully processed with your card \n\n Best regards,\nThe [RoofTop Cultivation] Team`;
+      
+      await sendEmail(customerEmail, subject, text);
+      console.log("Email sent successfully!");
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    }
+    
+    await sendEmail(customerEmail, subject, text);
+    console.log("Email sent successfully!");
+  } catch (error) {
+    console.error("Failed to send email:", error);
+  }
+
   var orderId;
   const cartItemsQuery = `SELECT * FROM cart WHERE buyer_id = ${userId}`;
 
