@@ -27,12 +27,12 @@ const Orders = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/order/get/${user_id}`);
+        const response = await fetch(`http://localhost:5000/order/sellerorders/${user_id}`);
 
         const data = await response.json();
-        console.log(data)
+      
         setproductData(data.rows);
-
+         console.log(data)
 
       } catch (error) {
         console.error('Error fetching product data:', error);
@@ -54,7 +54,7 @@ const Orders = () => {
 
     // Make an API call to update the status on the backend
     try {
-      const response = await fetch(`http://localhost:5000/order/updateStatus/${updatedProductData[index].id}`, {
+      const response = await fetch(`http://localhost:5000/order/updateStatus/${updatedProductData[index].order_id}`, {
         method: 'PUT', // Use the appropriate HTTP method (PUT, PATCH, etc.)
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const Orders = () => {
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
-                  Customer name
+                  Order ID
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Order Price
@@ -118,16 +118,23 @@ const Orders = () => {
 
               <tr key={index} class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {product.customer_name}
+                  {product.order_id}
                 </th>
                 <td class="px-6 py-4">
-                  {product.order_amount}
+                  {product.price}
                 </td>
                 <td class="px-6 py-4">
-                  {product.order_date}
+                {new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+       
+      }).format(new Date(product.order_date))}
                 </td>
                 <td class="px-6 py-4">
-                  {product.product_name}
+                  {product.name}
                 </td>
                 <td class="px-6 py-4">
                   <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '

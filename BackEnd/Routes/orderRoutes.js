@@ -1,11 +1,12 @@
 const express= require('express')
 const router = express.Router()
 
-const{ getOrderbyId,getAllOrder,addNewOrder, deleteOrderById,getAllreturnsByid,updteOrderStatus }=require('../Controllers/orderController')
+const{ getOrderbyId,getAllOrder,addNewOrder, deleteOrderById,getAllreturnsByid,updteOrderStatus, getOrderbyIdseller }=require('../Controllers/orderController')
 
 //Get Request All and By ID
 // router.route('/get/Users').get(getUsers)
 
+router.route('/sellerorders/:id').get(getOrderbyIdseller)
 router.route('/get/:id').get(getOrderbyId)
 router.route('/get').get(getAllOrder)
 router.route('/returns/:id').get(getAllreturnsByid)

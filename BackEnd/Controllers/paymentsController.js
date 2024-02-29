@@ -141,7 +141,7 @@ exports.saveorder = async (req, res) => {
 
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const paymentId = session.payment_intent;
-  const customerEmail = session.customer_details.email
+ 
 
   try {
     const subject = 'Order Placed ';

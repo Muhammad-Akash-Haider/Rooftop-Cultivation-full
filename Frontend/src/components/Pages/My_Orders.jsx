@@ -39,7 +39,7 @@ function My_Orders() {
 
 <div class="container mx-auto mt-16 text-center">
   <span class="text-3xl font-semibold mb-6 ">My Orders</span>
-
+ 
   <div class="bg-white text-sm overflow-hidden mt-10 shadow-md rounded-lg">
   <table className="w-full shadow-inner">
             <thead>
