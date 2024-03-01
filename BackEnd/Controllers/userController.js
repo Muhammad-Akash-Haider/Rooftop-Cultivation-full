@@ -126,29 +126,64 @@ exports.profileverify = async (req, res) => {
     });
   }
 
-  const sql = `
-    INSERT INTO verification_documents (user_id, id_documents, address_prove) 
-    VALUES (?, ?, ?) 
-    ON DUPLICATE KEY UPDATE 
-      id_documents = VALUES(id_documents), 
-      address_prove = VALUES(address_prove)
-  `;
-  
-  const values = [userid, iddocument, addresprove];
-  
-  // Execute the insert query
-  connection.query(sql, values, (error, results, fields) => {
+  const checkExistingRowQuery = `SELECT * FROM verification_documents WHERE user_id = ?`;
+
+  // Check if a row with the provided user_id already exists
+  connection.query(checkExistingRowQuery, [userid], (error, existingResults, fields) => {
     if (error) {
-      console.error('Error inserting data:', error);
+      console.error('Error checking existing row:', error);
       return res.status(500).json({
         status: false,
         message: "Internal server error",
       });
     }
-    
-    res.status(200).json({
-      status: true,
-      message: "Documents uploaded. The admin will review them",
-    });
+  
+    if (existingResults && existingResults.length > 0) {
+      // If a row with the user_id already exists, update the existing row
+      const updateQuery = `
+        UPDATE verification_documents 
+        SET id_documents = ?, address_prove = ? 
+        WHERE user_id = ?
+      `;
+      
+      connection.query(updateQuery, [iddocument, addresprove, userid], (updateError, updateResults) => {
+        if (updateError) {
+          console.error('Error updating data:', updateError);
+          return res.status(500).json({
+            status: false,
+            message: "Internal server error",
+          });
+        }
+        
+        res.status(200).json({
+          status: true,
+          message: "Row updated",
+        });
+      });
+    } else {
+      // If no row with the user_id exists, insert a new row
+      const insertQuery = `
+        INSERT INTO verification_documents (user_id, id_documents, address_prove) 
+        VALUES (?, ?, ?)
+      `;
+      
+      connection.query(insertQuery, [userid, iddocument, addresprove], (insertError, insertResults) => {
+        if (insertError) {
+          console.error('Error inserting data:', insertError);
+          return res.status(500).json({
+            status: false,
+            message: "Internal server error",
+          });
+        }
+  
+        res.status(200).json({
+          status: true,
+          message: "New row inserted",
+        });
+      });
+    }
   });
+ 
+
+
 };
