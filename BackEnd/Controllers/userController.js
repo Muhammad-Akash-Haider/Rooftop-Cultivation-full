@@ -120,6 +120,7 @@ exports.profileverify = async (req, res) => {
   const addresprove = req.files.addressProof[0].filename;
   const userid = req.body.user_id;
 
+  // console.log(iddocument , addresprove , userid)
   if (!iddocument || !addresprove || !userid) {
     res.status(500).json({
       status: false,
