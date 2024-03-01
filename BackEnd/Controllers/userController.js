@@ -115,20 +115,18 @@ exports.login = async (req, res) => {
 
 
 exports.profileverify = async (req, res) => {
-
   const iddocument = req.files.idDocument[0].filename;
   const addresprove = req.files.addressProof[0].filename;
   const userid = req.body.user_id;
 
-  // console.log(iddocument , addresprove , userid)
   if (!iddocument || !addresprove || !userid) {
-    res.status(500).json({
+    return res.status(400).json({
       status: false,
       message: "Any of File missing",
     });
-  } else {
+  }
 
-    const sql = `
+  const sql = `
     INSERT INTO verification_documents (user_id, id_documents, address_prove) 
     VALUES (?, ?, ?) 
     ON DUPLICATE KEY UPDATE 
@@ -138,16 +136,19 @@ exports.profileverify = async (req, res) => {
   
   const values = [userid, iddocument, addresprove];
   
-    // Execute the insert query
-    connection.query(sql, values, (error, results, fields) => {
-      if (error) {
-        console.error('Error inserting data:', error);
-        return;
-      }
-      res.status(500).json({
+  // Execute the insert query
+  connection.query(sql, values, (error, results, fields) => {
+    if (error) {
+      console.error('Error inserting data:', error);
+      return res.status(500).json({
         status: false,
-        message: "Documents uploaded the admin will review them",
+        message: "Internal server error",
       });
+    }
+    
+    res.status(200).json({
+      status: true,
+      message: "Documents uploaded. The admin will review them",
     });
-  }
+  });
 };
