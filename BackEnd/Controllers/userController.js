@@ -114,3 +114,8 @@ exports.login = async (req, res) => {
 };
 
 
+exports.profileverify =async (req, res) => {
+  console.log(req.files); // Access uploaded files using req.files
+  console.log(req.body); // req.body will be empty for files uploaded using multer
+  res.send('Files uploaded successfully');
+};
