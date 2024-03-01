@@ -1,21 +1,50 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaBars } from 'react-icons/fa';
 
-import { MdSpaceDashboard } from 'react-icons/md';
-import { GiPlantRoots } from 'react-icons/gi';
-
-import { FaAccusoft } from 'react-icons/fa';
-import { MdOutlinePayments } from 'react-icons/md';
-import { BsShopWindow } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { MdOutlineDomainVerification } from 'react-icons/md';
-import { TbTruckReturn } from 'react-icons/tb';
-import {Link}  from 'react-router-dom';
-import logo from '../../images/LOGO.png';
 import Sidebar from "./Sidebar";
 
 const Profileverify = () => {
+  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+  const formData = new FormData();
+  
+  useEffect(() => {
+
+    setUser_id(localStorage.getItem('user_id'));
+
+  }, [user_id]);
+
+  const [images, setImages] = useState({ idDocument: null, addressProof: null });
+
+  const handleImageChange = (e, imageName) => {
+    setImages({ ...images, [imageName]: e.target.files[0] });
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('user_id', user_id);
+    formData.append('idDocument', images.idDocument);
+    formData.append('addressProof', images.addressProof);
+   
+    try {
+      const response = await fetch('http://localhost:5000/user/verifyprofile', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload images');
+      }
+
+      console.log('Images uploaded successfully');
+      // Reset state or show success message
+    } catch (error) {
+      console.error('Error uploading images:', error.message);
+      // Handle error
+    }
+  };
 
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -31,35 +60,43 @@ const Profileverify = () => {
         className={`pt-[30px] w-[243px] rounded lg:pt-0 bg-green-600 text-white h-screen fixed top-0 left-0 overflow-y-auto transition-transform transform ${isSidebarOpen ? 'w-[300px]' : '-translate-x-full '
           } lg:translate-x-0`}
       >
-        <Sidebar/>
+        <Sidebar />
       </aside>
 
       {/*Routing*/}
       <div className={`md:p-4 lg:ml-64 lg:md-64 lg:pl-0 w-65 sm:w-[100vw] mt-10 lg:mt-0 lg:w-[cal(100vw-243px)] m-auto `}>
 
-      <div className='w-full bg-green-100  rounded-2xl h-[5%] md:p-5 p-5 sm:pb-8 md:h-[35%] shadow-md'>
-        <h2 className='order-first text-2xl font-semibold tracking-tight text-center text-gray-900 sm:text-2xl md:pt-4 '>Please verify your profile</h2>
-      </div>
+        <div className='w-full bg-green-100  rounded-2xl h-[5%] md:p-5 p-5 sm:pb-8 md:h-[35%] shadow-md'>
+          <h2 className='order-first text-2xl font-semibold tracking-tight text-center text-gray-900 sm:text-2xl md:pt-4 '>Please verify your profile</h2>
+        </div>
 
-      <p className='w-full mt-3 text-red-600 md:text-xl rounded-2xl md:p-5 p-7 sm:pb-8'>Upload Your documents so that admin can verify you .When Admin verifies ,You will get verfied badge</p>
-    
-     
-     <div className='flex flex-row justify-around w-full p-8 m-auto mt-8'>
-      <div>
-      <span className="p-10 text-lg">Upload your Id document</span>
-              <input type="file" className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 "/>
-      </div>
-      <div className="">
-      <span className="p-10 text-lg bg-"  >Upload your Address prove</span>
-              <input type="file" className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 "/>
-      </div>
-     </div>
+        <p className='w-full mt-3 text-red-600 md:text-xl rounded-2xl md:p-5 p-7 sm:pb-8'>Upload Your documents so that admin can verify you .When Admin verifies ,You will get verfied badge</p>
 
-     <button class= "ml-5 bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-4 px-4 rounded text-lg">
+
+        <div className='flex flex-row justify-around w-full p-8 m-auto mt-8'>
+          <div>
+            <span className="p-10 text-lg">Upload your Id document</span>
+            <input type="file"
+            id="idDocument"
+            accept="image/*"
+            onChange={(e) => handleImageChange(e, 'idDocument')}
+              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 " />
+          </div>
+          <div className="">
+            <span className="p-10 text-lg bg-"  >Upload your Address prove</span>
+            <input type="file"
+              id="addressProof"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, 'addressProof')}
+              className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 " />
+          </div>
+        </div>
+
+        <button onClick={handleSubmit} class="ml-5 bg-green-500 hover:bg-green-700 md:mt-7  text-white font-bold py-4 px-4 rounded text-lg">
           Send verify request
         </button>
-   
-    
+
+
 
       </div>
 
