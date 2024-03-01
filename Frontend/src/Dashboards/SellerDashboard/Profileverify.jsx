@@ -17,7 +17,9 @@ const Profileverify = () => {
   }, [user_id]);
 
   const [images, setImages] = useState({ idDocument: null, addressProof: null });
-
+  const idDocumentInputRef = useRef(null);
+  const addressProofInputRef = useRef(null);
+  
   const handleImageChange = (e, imageName) => {
     setImages({ ...images, [imageName]: e.target.files[0] });
   };
@@ -28,6 +30,12 @@ const Profileverify = () => {
     formData.append('idDocument', images.idDocument);
     formData.append('addressProof', images.addressProof);
    
+    if(!images.idDocument || !images.addressProof || !user_id){
+      toast.warning("Please fill all fields", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }else{
+    
     try {
       const response = await fetch('http://localhost:5000/user/verifyprofile', {
         method: 'POST',
@@ -37,13 +45,18 @@ const Profileverify = () => {
       if (!response.ok) {
         throw new Error('Failed to upload images');
       }
-
-      console.log('Images uploaded successfully');
-      // Reset state or show success message
+      toast.success("Documents Uploaded sucessfully admin will review them", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setImages({ idDocument: null, addressProof: null });
+      idDocumentInputRef.current.value = '';
+      addressProofInputRef.current.value = '';
+      
     } catch (error) {
       console.error('Error uploading images:', error.message);
       // Handle error
     }
+  }
   };
 
 
@@ -78,7 +91,8 @@ const Profileverify = () => {
             <span className="p-10 text-lg">Upload your Id document</span>
             <input type="file"
             id="idDocument"
-            accept="image/*"
+            ref={idDocumentInputRef}
+            accept=".png, .jpg, .jpeg"
             onChange={(e) => handleImageChange(e, 'idDocument')}
               className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 " />
           </div>
@@ -86,7 +100,8 @@ const Profileverify = () => {
             <span className="p-10 text-lg bg-"  >Upload your Address prove</span>
             <input type="file"
               id="addressProof"
-              accept="image/*"
+              accept=".png, .jpg, .jpeg"
+              ref={addressProofInputRef}
               onChange={(e) => handleImageChange(e, 'addressProof')}
               className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-green-700 hover:file:bg-violet-100 " />
           </div>
