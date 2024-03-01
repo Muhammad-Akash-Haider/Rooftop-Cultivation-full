@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
   // Value to be inserted 
 
   // Creating queries 
-  if (First_name  && last_name  && email  && password  && user_type  && city && phone ) {
+  if (First_name && last_name && email && password && user_type && city && phone) {
 
     const query = 'SELECT * FROM users WHERE email = ?';
     connection.query(query, [email], async (error, results, fields) => {
@@ -51,7 +51,7 @@ exports.signup = async (req, res) => {
             })
 
 
-          }else {
+          } else {
             console.log(err);
 
           }
@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
       if (results.length > 0) {
         const match = await bcrypt.compare(password, results[0].password);
         if (match) {
-      
+
           req.session.user = results[0].id
 
           return res.json({
@@ -114,8 +114,39 @@ exports.login = async (req, res) => {
 };
 
 
-exports.profileverify =async (req, res) => {
-  console.log(req.files); // Access uploaded files using req.files
-  console.log(req.body); // req.body will be empty for files uploaded using multer
-  res.send('Files uploaded successfully');
+exports.profileverify = async (req, res) => {
+
+  const iddocument = req.files.idDocument[0].filename;
+  const addresprove = req.files.addressProof[0].filename;
+  const userid = req.body.user_id;
+
+  if (!iddocument || !addresprove || !userid) {
+    res.status(500).json({
+      status: false,
+      message: "Any of File missing",
+    });
+  } else {
+
+    const sql = `
+    INSERT INTO verification_documents (user_id, id_documents, address_prove) 
+    VALUES (?, ?, ?) 
+    ON DUPLICATE KEY UPDATE 
+      id_documents = VALUES(id_documents), 
+      address_prove = VALUES(address_prove)
+  `;
+  
+  const values = [userid, iddocument, addresprove];
+  
+    // Execute the insert query
+    connection.query(sql, values, (error, results, fields) => {
+      if (error) {
+        console.error('Error inserting data:', error);
+        return;
+      }
+      res.status(500).json({
+        status: false,
+        message: "Documents uploaded the admin will review them",
+      });
+    });
+  }
 };
