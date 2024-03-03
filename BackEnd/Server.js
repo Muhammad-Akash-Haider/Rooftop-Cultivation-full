@@ -31,6 +31,7 @@ const plant=require('./Routes/plantRoutes')
 const user=require('./Routes/userRoutes')
 const Dasboard=require('./Controllers/DashboardController')
 const Cart =require('./Routes/Cart')
+const UserVerify = require('./Routes/adminverifyUsersRoutes')
 
 
 
@@ -45,6 +46,7 @@ app.use('/plant',plant)
 app.use('/dashboard',Dasboard)
 app.use('/cart',Cart)
 app.use('/admin',admin)
+app.use('/UsersVerify',UserVerify)
 
 app.use('/user',user)
 

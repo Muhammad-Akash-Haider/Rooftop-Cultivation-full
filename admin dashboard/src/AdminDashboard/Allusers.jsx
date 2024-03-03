@@ -3,16 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 
-import { MdSpaceDashboard } from 'react-icons/md';
-import { GiPlantRoots } from 'react-icons/gi';
-
-import { FaAccusoft } from 'react-icons/fa';
-import { MdOutlinePayments } from 'react-icons/md';
-import { BsShopWindow } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { MdOutlineDomainVerification } from 'react-icons/md';
-import { TbTruckReturn } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 
 
@@ -61,20 +52,7 @@ const Allusers = () => {
         className={`pt-[30px] w-[243px] rounded lg:pt-0 bg-red-600 text-white h-screen fixed top-0 left-0 overflow-y-auto transition-transform transform ${isSidebarOpen ? 'w-[300px]' : '-translate-x-full '
           } lg:translate-x-0`}
       >
-        <h1 className='pt-8 text-2xl font-bold text-center '>Admin Dashboard</h1>
-
-        <ol className='pt-5 text-lg cursor-pointer'>
-          <Link to="/Admindashboard">
-            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< MdSpaceDashboard className="inline text-white" />
-              &nbsp; Dashboard
-            </li>
-          </Link>
-          <Link to="/Allusers">
-            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< CgProfile className="inline text-white" />
-              &nbsp; All Users</li>
-          </Link>
-
-        </ol>
+       <Sidebar/> 
       </aside>
 
 
@@ -93,19 +71,19 @@ const Allusers = () => {
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
-                  Sender name
+                  User name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Payment Date
+                  User Email
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Payment Method
+                  City
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Order Date
+                  Phone
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Payment
+                  Type
                 </th>
               </tr>
             </thead>
