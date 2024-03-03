@@ -16,13 +16,6 @@ const Allusers = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
-  useEffect(() => {
-
-    setUser_id(localStorage.getItem('user_id'));
-
-  }, []);
-
 
   const [usersData, setusersData] = useState([]);
 
