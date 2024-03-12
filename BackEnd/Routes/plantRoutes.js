@@ -31,7 +31,7 @@ const upload = multer({ storage: storage });
 
 router.post('/post', upload.array('images', 5), (req, res) => {
   try {
-    const query = 'INSERT INTO `plant`( `seller_id`,`name`, `price`, `stock`, `category`, `description`, `images`) VALUES (?,?,?,?,?,?,?);';
+    const query = 'INSERT INTO `plant`( `seller_id`,`name`, `price`, `stock`, `category`, `description`, `images`,`size`,`sensitivity`,`inoutdoor`) VALUES (?,?,?,?,?,?,?,?,?,?);';
 
     // Value to be inserted 
 
@@ -40,20 +40,24 @@ router.post('/post', upload.array('images', 5), (req, res) => {
     let price = req.body.price;
     let stock = req.body.stock;
     let category = req.body.category;
+    let inoutdoor = req.body.inoutdoor;
+    let sensitivity = req.body.sensitivity;
+    let size = req.body.size;
     let description = req.body.description;
     let images = req.files.map(file => file.filename).join(', ');
     
+   
     // Creating queries 
-    if (!seller_id || !name || !price || !stock || !category || !description || !images) {
+    if (!seller_id || !name || !price || !stock || !category || !description || !images || !inoutdoor || !size || !sensitivity) {
 
-     return res.json({
+     return  res.status(500).json({
         status: false,
         message: "please input all fields",
       });
 
     }else{
       
-      connection.query(query, [seller_id, name, price, stock, category, description, images], (err, rows) => {
+      connection.query(query, [seller_id, name, price, stock, category, description, images ,size,sensitivity,inoutdoor ], (err, rows) => {
         if (!err) {
           res.json({
             status: true,
