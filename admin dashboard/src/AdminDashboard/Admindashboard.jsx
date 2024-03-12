@@ -1,22 +1,7 @@
-
-
 import { FaBars } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
-import { Chart } from 'primereact/chart'
 
-
-import { MdSpaceDashboard } from 'react-icons/md';
-import { GiPlantRoots } from 'react-icons/gi';
-
-import { FaAccusoft } from 'react-icons/fa';
-import { MdOutlinePayments } from 'react-icons/md';
-import { BsShopWindow } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { MdOutlineDomainVerification } from 'react-icons/md';
-
-import {Link}  from 'react-router-dom';
-
-
+import Sidebar from './Sidebar';
 
 
 const Admindashboard = () => {
@@ -50,7 +35,6 @@ const Admindashboard = () => {
        
         SetDashboardData(data);
         
-   
       } catch (error) {
         console.error('Error fetching plant data:', error);
       }
@@ -102,21 +86,8 @@ const Admindashboard = () => {
         className={`pt-[30px] w-[243px] rounded lg:pt-0 bg-red-600 text-white h-screen fixed top-0 left-0 overflow-y-auto transition-transform transform ${isSidebarOpen ? 'w-[300px]' : '-translate-x-full '
           } lg:translate-x-0`}
       >
-        <h1 className='pt-8 text-2xl font-bold text-center '>Admin Dashboard</h1>
-
-        <ol className='pt-5 text-lg cursor-pointer'>
-          <Link to="/Admindashboard">
-            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< MdSpaceDashboard className="inline text-white" />
-              &nbsp; Dashboard
-            </li>
-          </Link>
-          <Link to="/Allusers">
-          <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< CgProfile className="inline text-white" />
-            &nbsp; All Users</li>
-            </Link>
        
-
-        </ol>
+       <Sidebar/>
       </aside>
 
 
