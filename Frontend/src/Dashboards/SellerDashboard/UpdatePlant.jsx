@@ -47,6 +47,9 @@ const UpdatePlant = () => {
       price: '',
       stock: '',
       category: '',
+      inoutdoor: '',
+      sensitivity: '',
+      size: '',
 
     },
     onSubmit: (values) => {
@@ -109,6 +112,9 @@ const UpdatePlant = () => {
           price: data.rows[0].price || '',
           stock: data.rows[0].stock || '',
           category: data.rows[0].category || '',
+          inoutdoor: data.rows[0].inoutdoor || '',
+          sensitivity: data.rows[0].sensitivity || '',
+          size: data.rows[0].size || '',
           // Add other fields as needed
         });
         console.log(data.rows[0].images)
@@ -197,6 +203,34 @@ const UpdatePlant = () => {
               <option value="plants">plants</option>
               <option value="flowers">flowers</option>
             </select>
+            
+            <h1 className='pt-3 text-lg md:p-2'>In door / Out door Plant</h1>
+            <select className='inline p-2 border-2 rounded-xl w-[100%]'
+              name='inoutdoor' onChange={formik.handleChange} value={formik.values.inoutdoor} required>
+              <option value="someOption" default >select</option>
+              <option value="indoor">Indoor</option>
+              <option value="outdoor">Outdoor</option>
+              <option value="both">Both</option>
+            </select>
+
+            <h1 className='pt-3 text-lg md:p-2'>Please specify size</h1>
+            <select className='inline p-2 border-2 rounded-xl w-[100%]'
+              name='size' onChange={formik.handleChange} value={formik.values.size} required>
+              <option value="someOption" default >select</option>
+              <option  value="small">Small plant</option>
+              <option value="medium">Medium size palnt</option>
+              <option value="big">Big Plant</option>
+            </select>
+
+            <h1 className='pt-3 text-lg md:p-2'>Please specify Sensitivity</h1>
+            <select className='inline p-2 border-2 rounded-xl w-[100%]'
+              name='sensitivity' onChange={formik.handleChange} value={formik.values.sensitivity} required>
+              <option value="someOption" default >select</option>
+              <option  value="high">Plats need a lot of care</option>
+              <option value="medium">Plats need some care</option>
+              <option value="low">Plats need little care</option>
+            </select>
+
 
             <h1 className='pt-3 text-xl md:p-2'>Product Description</h1>
             <ReactQuill theme="snow"

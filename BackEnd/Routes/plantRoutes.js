@@ -48,7 +48,7 @@ router.post('/post', upload.array('images', 5), (req, res) => {
     
    
     // Creating queries 
-    if (!seller_id || !name || !price || !stock || !category || !description || !images || !inoutdoor || !size || !sensitivity) {
+    if (!seller_id || !name || !price || !stock || !category || !description || !images || !inoutdoor || !size || !sensitivity ) {
 
      return  res.status(500).json({
         status: false,
@@ -57,7 +57,7 @@ router.post('/post', upload.array('images', 5), (req, res) => {
 
     }else{
       
-      connection.query(query, [seller_id, name, price, stock, category, description, images ,size,sensitivity,inoutdoor ], (err, rows) => {
+      connection.query(query, [seller_id, name, price, stock, category, description, images ,size,sensitivity,inoutdoor], (err, rows) => {
         if (!err) {
           res.json({
             status: true,
@@ -90,7 +90,7 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
 
   try {
 
-    const updateQuery = 'UPDATE `plant` SET  `name`=?, `price`=?, `stock`=?, `category`=?, `description`=?, `images`=? WHERE `id`=?';
+    const updateQuery = 'UPDATE `plant` SET  `name`=?, `price`=?, `stock`=?, `category`=?, `description`=?, `images`=? ,`size`=? ,`sensitivity`=?,`inoutdoor`=? WHERE `id`=?';
 
     id=req.params.id
      
@@ -99,6 +99,9 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
     let stock = req.body.stock;
     let category = req.body.category;
     let description = req.body.description;
+    let inoutdoor = req.body.inoutdoor;
+    let sensitivity = req.body.sensitivity;
+    let size = req.body.size;
     // let images = req.files.map(file => file.filename).join(', ');
     // let imagesold =req.body.imagesold;
 
@@ -112,7 +115,7 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
   const mergedImagesString = mergedImages.join(', ');
 
     
-    if ( !name  || !price || !stock  || !category  || !description  || !mergedImagesString ) {
+    if ( !name  || !price || !stock  || !category  || !description  || !mergedImagesString || !inoutdoor || !size || !sensitivity ) {
 
       res.status(200).json({
         status: false,
@@ -121,7 +124,7 @@ router.put('/updatepalnt/:id', upload.array('images', 5), (req, res) => {
 
     }else{
 
-      connection.query(updateQuery, [ name, price, stock, category, description, mergedImagesString, id], (err, rows) => {
+      connection.query(updateQuery, [ name, price, stock, category, description, mergedImagesString ,size,sensitivity,inoutdoor, id], (err, rows) => {
         if (!err) {
 
           if (rows.affectedRows > 0) {
