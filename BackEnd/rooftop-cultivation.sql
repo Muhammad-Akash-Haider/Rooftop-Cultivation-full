@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 05:16 AM
+-- Generation Time: Mar 14, 2024 at 03:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,6 +43,26 @@ INSERT INTO `admin` (`id`, `email`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bankaccounts`
+--
+
+CREATE TABLE `bankaccounts` (
+  `id` int(200) NOT NULL,
+  `seller_id` int(200) NOT NULL,
+  `payment_id` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bankaccounts`
+--
+
+INSERT INTO `bankaccounts` (`id`, `seller_id`, `payment_id`) VALUES
+(1, 25, 'pi_3OolkjDLpC8Qo70I2ZznAz5i'),
+(2, 25, 'pi_3OqtWuDLpC8Qo70I2kScDPk2');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cart`
 --
 
@@ -58,7 +78,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
-(5, '25', 31, 2);
+(5, '25', 31, 2),
+(24, '26', 32, 2);
 
 -- --------------------------------------------------------
 
@@ -134,10 +155,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `buyer_id`, `order_date`, `payment_id`, `status`) VALUES
-(6, 26, '2024-02-21 20:56:52', 'pi_3OmWydDLpC8Qo70I0iQFD2oW', 'Pending'),
-(7, 26, '2024-02-22 12:56:22', '', 'Pending'),
-(8, 26, '2024-02-22 12:57:27', '', 'Pending'),
-(9, 26, '2024-02-22 13:12:34', '', 'Pending');
+(6, 25, '2024-02-21 20:56:52', 'pi_3OmWydDLpC8Qo70I0iQFD2oW', 'Completed'),
+(10, 26, '2024-02-28 18:09:43', 'pi_3OomtCDLpC8Qo70I1f3KTNbT', 'Pending'),
+(32, 26, '2024-03-05 13:37:56', 'pi_3OqtVODLpC8Qo70I1W6iZdqB', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -163,7 +183,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
 (4, 6, 31, 1),
 (5, 7, 34, 2),
 (6, 8, 31, 2),
-(7, 9, 31, 1);
+(7, 9, 31, 1),
+(8, 10, 32, 1),
+(9, 32, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -177,16 +199,17 @@ CREATE TABLE `payments_history` (
   `payment_date` int(64) NOT NULL,
   `payment_method` char(128) NOT NULL,
   `order_ids` varchar(500) NOT NULL,
-  `payment_amount` int(6) NOT NULL
+  `payment_amount` int(6) NOT NULL,
+  `seller_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `payments_history`
 --
 
-INSERT INTO `payments_history` (`id`, `buyer_id`, `payment_date`, `payment_method`, `order_ids`, `payment_amount`) VALUES
-(1, 0, 20230312, 'jazzcash', '2023-02-12', 2000),
-(2, 0, 20230812, 'jazzcash', '2023-08-12', 2500);
+INSERT INTO `payments_history` (`id`, `buyer_id`, `payment_date`, `payment_method`, `order_ids`, `payment_amount`, `seller_id`) VALUES
+(1, 0, 20230312, 'jazzcash', '2023-02-12', 2000, 25),
+(2, 0, 20230812, 'jazzcash', '2023-08-12', 2500, 25);
 
 -- --------------------------------------------------------
 
@@ -202,18 +225,21 @@ CREATE TABLE `plant` (
   `stock` int(5) NOT NULL,
   `category` char(15) NOT NULL,
   `description` varchar(15000) NOT NULL,
-  `images` mediumtext NOT NULL
+  `images` mediumtext NOT NULL,
+  `size` varchar(1000) NOT NULL,
+  `sensitivity` text NOT NULL,
+  `inoutdoor` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `plant`
 --
 
-INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `description`, `images`) VALUES
-(30, '25', 'Iris virginica ', 2500, 7, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1704622464852-images-1701595984146-satosa3).jpeg, images-1704622464852-images-1701596015936-satosa1).jpeg, images-1704622464853-images-1701596015936-satosa3).jpeg'),
-(31, '25', 'Setosa', 1400, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622593085-images-1701596015936-satosa3).jpeg, images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg'),
-(32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg'),
-(34, '25', 'Red Rose ', 1000, 8, 'flowers', '<p>This is my collection of rose have multiple  bariants</p>', 'images-1704882669750-adelaide-hoodless-rose.jpg, images-1704882669750-04.-Rose-Flower-zoom-view-image.jpg');
+INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `description`, `images`, `size`, `sensitivity`, `inoutdoor`) VALUES
+(30, '25', 'Iris virginica ', 2500, 7, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1704622464852-images-1701595984146-satosa3).jpeg, images-1704622464852-images-1701596015936-satosa1).jpeg, images-1704622464853-images-1701596015936-satosa3).jpeg', 'medium', 'medium', 'outdoor'),
+(31, '25', 'Setosa', 1400, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622593085-images-1701596015936-satosa3).jpeg, images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg', 'medium', 'medium', 'indoor'),
+(32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg', 'small', 'medium', 'both'),
+(34, '25', 'Red Rose ', 1000, 8, 'flowers', '<p>This is my collection of rose have multiple bariants</p>', 'images-1704882669750-adelaide-hoodless-rose.jpg, images-1704882669750-04.-Rose-Flower-zoom-view-image.jpg', 'medium', 'high', 'outdoor');
 
 -- --------------------------------------------------------
 
@@ -255,30 +281,39 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `user_type` varchar(20) NOT NULL,
   `city` varchar(100) NOT NULL,
-  `phone` varchar(1000) NOT NULL
+  `phone` varchar(1000) NOT NULL,
+  `status` int(100) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `phone`) VALUES
-(25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854'),
-(26, 'muhammad ', 'ashba', 'ashba@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433'),
-(34, 'zahid', 'ali', 'testproject@gmail.com', '$2b$10$ReaxTlslYCYIonzfg9wVcecIEq2lUiejmMfl19zPqzbwQ.OzoKxX6', '1', 'Rawalpindi', '03110794433'),
-(61, 'majid', 'hassan', 'usermaji@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433');
+INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `phone`, `status`) VALUES
+(25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', '03185402854', 0),
+(26, 'muhammad ', 'ashba', 'ashba@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433', 0),
+(34, 'zahid', 'ali', 'testproject@gmail.com', '$2b$10$ReaxTlslYCYIonzfg9wVcecIEq2lUiejmMfl19zPqzbwQ.OzoKxX6', '1', 'Rawalpindi', '03110794433', 0),
+(61, 'majid', 'hassan', 'usermaji@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', '03110794433', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `verified_users`
+-- Table structure for table `verification_documents`
 --
 
-CREATE TABLE `verified_users` (
-  `id` int(64) NOT NULL,
-  `nursery_id` int(64) NOT NULL,
-  `status` tinyint(1) NOT NULL
+CREATE TABLE `verification_documents` (
+  `id` int(100) NOT NULL,
+  `user_id` int(100) NOT NULL,
+  `id_documents` varchar(500) NOT NULL,
+  `address_prove` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_documents`
+--
+
+INSERT INTO `verification_documents` (`id`, `user_id`, `id_documents`, `address_prove`) VALUES
+(12, 25, 'idDocument-1709628011513-Add nursery system sequence diagram.drawio.png', 'addressProof-1709628011522-Manage Product system sequence diagram.drawio.png');
 
 --
 -- Indexes for dumped tables
@@ -288,6 +323,12 @@ CREATE TABLE `verified_users` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bankaccounts`
+--
+ALTER TABLE `bankaccounts`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -352,10 +393,10 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `verified_users`
+-- Indexes for table `verification_documents`
 --
-ALTER TABLE `verified_users`
-  ADD UNIQUE KEY `id` (`id`);
+ALTER TABLE `verification_documents`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -368,10 +409,16 @@ ALTER TABLE `admin`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `bankaccounts`
+--
+ALTER TABLE `bankaccounts`
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -389,13 +436,13 @@ ALTER TABLE `nursery`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `payments_history`
@@ -407,7 +454,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`
@@ -420,6 +467,12 @@ ALTER TABLE `return/cancels`
 --
 ALTER TABLE `users`
   MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `verification_documents`
+--
+ALTER TABLE `verification_documents`
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
