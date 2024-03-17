@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { MdSpaceDashboard } from 'react-icons/md';
-
+import { FaAccusoft } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { MdOutlineDomainVerification } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -26,6 +26,9 @@ function Sidebar() {
                 <Link to="/Profileverify" ><li className='pt-4 pb-2 pl-6 rounded-md hover:bg-red-500'>< MdOutlineDomainVerification className="inline text-white" /> &nbsp;
                     Verify Profile</li>
                      </Link>
+                <Link to="/myorders">
+            <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< FaAccusoft className="inline text-white" /> &nbsp;
+                Orders</li></Link>
 
             </ol>
         </>

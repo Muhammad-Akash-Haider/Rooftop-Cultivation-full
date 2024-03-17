@@ -7,6 +7,7 @@ import Login from "./AdminDashboard/Login";
 import Allusers from "./AdminDashboard/Allusers";
 import Admindashboard from "./AdminDashboard/Admindashboard";
 import Profileverify from "./AdminDashboard/ProfileVerify";
+import Orders from "./AdminDashboard/Orders";
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Profileverify" element={<Profileverify />}></Route>
         <Route path="/Allusers" element={<Allusers/>}></Route>
         <Route path="/Admindashboard" element={<Admindashboard/>}></Route>
+        <Route path="/myorders" element={<Orders />}></Route>
         </Routes>
 
       </PrimeReactProvider>
