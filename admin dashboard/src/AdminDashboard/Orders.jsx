@@ -132,8 +132,10 @@ const Orders = () => {
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
                       <option value="Pending">Pending</option>
+                      <option value="collectd">Collected from Seller</option>
+                      <option value="Delievered">Delieverd To Customer</option>
                       <option value="Completed">Completed</option>
-                      <option value="cancel">Cancel</option>
+                      <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
                 </tr>
