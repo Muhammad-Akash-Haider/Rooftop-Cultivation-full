@@ -50,11 +50,11 @@ const Nav = () => {
                   </div>
                 </Link>
                 
-                <Link to="/My_Orders_Buyer">
+                {/* <Link to="/My_Orders_Buyer">
                   <div className="w-15">
                   <TbTruckReturn className='text-2xl ' />   
                   </div>
-                </Link>
+                </Link> */}
             
           
                 <Link to={`/cart`}>
