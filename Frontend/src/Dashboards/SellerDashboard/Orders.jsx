@@ -134,13 +134,14 @@ const Orders = () => {
                     {product.name}
                   </td>
                   <td class="px-6 py-4">
-                    <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '
+                    {/* <select value={product.status} className='inline p-2 bg-green-100 border-2 rounded-2xl '
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
                       <option value="Pending">Pending</option>
                       <option value="Completed">Completed</option>
                       <option value="cancel">Cancel</option>
-                    </select>
+                    </select> */}
+                    {product.status}
                   </td>
                 </tr>
 
