@@ -87,6 +87,15 @@ const Orders = () => {
           <h2 className='order-first text-2xl font-semibold tracking-tight text-center text-gray-900 sm:text-2xl md:pt-4 '>Your Orders</h2>
         </div>
 
+        <div className='w-full  h-[5%] md:p-5 p-7 sm:pb-8 md:h-[35%] mt-10 shadow-md'>
+              <ol>
+                <li>Pending   Means Your order will be processed</li>
+                <li>Colledted Means That the order is collectd from you</li>
+                <li>Delieverd Means That the order is Delievered To cutomer</li>
+                <li>Cancelled Means That the order is Cancelled by cutomer</li>
+              </ol>
+        </div>
+
 
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg md:mt-8">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
