@@ -5,8 +5,7 @@ import { FaAccusoft } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { MdOutlineDomainVerification } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-
-
+import { TbTruckReturn } from 'react-icons/tb';
 
 function Sidebar() {
     return (
@@ -29,6 +28,9 @@ function Sidebar() {
                 <Link to="/myorders">
             <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-red-500'>< FaAccusoft className="inline text-white" /> &nbsp;
                 Orders</li></Link>
+                <Link to="/returns" >
+                    <li className='pt-4 pb-2 pl-6 rounded-md hover:bg-red-500'>< TbTruckReturn className="inline text-white" /> &nbsp;
+                        Returns</li></Link>
 
             </ol>
         </>
