@@ -42,8 +42,8 @@ const Returns = () => {
         const response = await fetch(`http://localhost:5000/order/returns/${user_id}`);
 
         const data = await response.json();
-
         setreturnData(data.rows);
+        console.log(data.rows);
 
 
       } catch (error) {
@@ -82,13 +82,13 @@ const Returns = () => {
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
-                  Customer name
+                  Procuct name
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Order date
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Cancel/Return date
+                  Order amount
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Status
@@ -101,10 +101,17 @@ const Returns = () => {
 
                 <tr key={index} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {returns.customer_name}
+                    {returns.name}
                   </th>
                   <td class="px-6 py-4">
-                    {returns.order_date}
+                  {new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+
+                    }).format(new Date(returns.order_date))}
                   </td>
                   <td class="px-6 py-4">
                     {returns.price}

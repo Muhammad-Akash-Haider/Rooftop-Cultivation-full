@@ -122,7 +122,7 @@ exports.getAllOrder = async (req, res) => {
 
 exports.getAllreturnsByid = async (req, res) => {
   console.log(req.params.id)
-    connection.query('SELECT * FROM `return/cancels` WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
+  connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE users.id = ? AND orders.status = "Return" OR  orders.status = "Cancelled"' , [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,

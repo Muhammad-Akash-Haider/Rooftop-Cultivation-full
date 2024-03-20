@@ -33,7 +33,7 @@ exports.updateUserStatus = async (req, res) => {
         return res.status(400).json({ error: 'Invalid input' });
     }
 
-    const updateQuery = 'UPDATE `users` SET status = ? WHERE id = ?';
+    const updateQuery = 'UPDATE `users` SET user_status = ? WHERE id = ?';
 
     connection.query(updateQuery, [newStatus, userId], (updateErr, updateResults) => {
 
