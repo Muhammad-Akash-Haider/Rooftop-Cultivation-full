@@ -175,7 +175,7 @@ exports.saveorder = async (req, res) => {
     }
 
     // Assuming you have a table named 'orders' to store orders
-    const createOrderQuery = `INSERT INTO orders (buyer_id, status , order_date , payment_id ) VALUES (${userId}, 'Pending', NOW() , '${paymentId}' )`;
+    const createOrderQuery = `INSERT INTO orders (buyer_id, order_date , payment_id ) VALUES (${userId}, NOW() , '${paymentId}' )`;
 
     connection.query(createOrderQuery, async (err, result) => {
       if (err) {
