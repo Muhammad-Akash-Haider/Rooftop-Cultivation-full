@@ -98,7 +98,8 @@ exports.savebank = async (req, res) => {
 }
 
 exports.Testapi = async (req, res) => {
-  
+ 
+ 
 
 }
 
@@ -159,9 +160,7 @@ exports.saveorder = async (req, res) => {
     } catch (error) {
       console.error("Failed to send email:", error);
     }
-    
-    await sendEmail(customerEmail, subject, text);
-    console.log("Email sent successfully!");
+ 
   } catch (error) {
     console.error("Failed to send email:", error);
   }
@@ -190,6 +189,16 @@ exports.saveorder = async (req, res) => {
       for (const cartItem of cartItems) {
         const { product_id, stock } = cartItem;
         // Assuming you have a table named 'order_items' to link orders with items
+       
+        const createstockItemQuery = "UPDATE plant SET stock = stock - 1 WHERE id = ?";
+        connection.query(createstockItemQuery, [product_id], (err, result) => {
+          if (err) {
+            console.error("Error decrementing stock:", err);
+            return res.status(500).json({ error: "Error decrementing stock" });
+          }
+          // Handle successful update
+        });
+
         const createOrderItemQuery = `INSERT INTO order_items (order_id, product_id, quantity) VALUES (${orderId}, ${product_id}, ${stock})`;
         connection.query(createOrderItemQuery, (err, result) => {
           if (err) {
