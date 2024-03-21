@@ -104,6 +104,15 @@ const Returns = () => {
                   </td>
                   <td class="px-6 py-4">
                     {returns.status}
+                    <br/>
+                    {new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+
+                    }).format(new Date(returns.change_date))}
                   </td>
                 </tr>
 

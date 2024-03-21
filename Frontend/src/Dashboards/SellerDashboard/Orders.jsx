@@ -27,7 +27,6 @@ const Orders = () => {
         const response = await fetch(`http://localhost:5000/order/sellerorders/${user_id}`);
 
         const data = await response.json();
-
         setproductData(data.rows);
         console.log(data)
 

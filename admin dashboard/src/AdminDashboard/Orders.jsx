@@ -45,7 +45,7 @@ const Orders = () => {
 
     // Make an API call to update the status on the backend
     try {
-      const response = await fetch(`http://localhost:5000/order/updateStatus/${updatedProductData[index].order_id}`, {
+      const response = await fetch(`http://localhost:5000/order/updateStatus/${updatedProductData[index].items_id}`, {
         method: 'PUT', // Use the appropriate HTTP method (PUT, PATCH, etc.)
         headers: {
           'Content-Type': 'application/json',
