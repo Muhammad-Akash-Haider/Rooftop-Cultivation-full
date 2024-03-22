@@ -99,7 +99,45 @@ exports.savebank = async (req, res) => {
 
 exports.Testapi = async (req, res) => {
  
- 
+  connection.query('SELECT * FROM orders \
+    INNER JOIN order_items ON orders.id = order_items.order_id \
+    INNER JOIN plant ON plant.id = order_items.product_id \
+    WHERE order_items.status NOT IN ("return", "cancelled")'
+    , (err, rows, fields) => {
+        if (!err) {
+            // Filter orders placed 7 days ago and whose payment status is still pending
+            console.log(rows)
+            const currentDate = new Date();
+            const sevenDaysAgo = new Date(currentDate.getTime() - (7 * 24 * 60 * 60 * 1000)); // Calculate 7 days ago
+            const eligibleOrders = rows.filter(order => new Date(order.change_date) <= sevenDaysAgo && order.payment_status === 'Delievered');
+            
+            // Process each eligible order and transfer funds
+            eligibleOrders.forEach(order => {
+                // Here you would implement the actual fund transfer process using your payment gateway integration
+                console.log(`Transferring funds for order ${order.id} to seller ${order.seller_id}`);
+                
+                // Update payment status to mark it as completed
+                connection.query('UPDATE orders SET payment_status = ? WHERE id = ?', ['completed', order.id], (updateErr, updateResult) => {
+                    if (updateErr) {
+                        console.error(`Error updating payment status for order ${order.id}:`, updateErr);
+                    } else {
+                        console.log(`Payment status updated for order ${order.id}`);
+                    }
+                });
+            });
+
+            res.json({
+                status: true,
+                Message: "Funds transferred successfully"
+            });
+        } else {
+            console.error(err);
+            res.json({
+                status: false,
+                Message: "Error fetching orders"
+            });
+        }
+    });
 
 }
 
@@ -221,12 +259,7 @@ exports.saveorder = async (req, res) => {
 
       });
     });
-
-
-
-
   });
-
 
 };
 

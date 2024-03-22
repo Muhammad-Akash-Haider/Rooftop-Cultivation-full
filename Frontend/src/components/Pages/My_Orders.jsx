@@ -119,6 +119,24 @@ function My_Orders() {
                     <td className="p-4 px-6 text-center whitespace-nowrap"> {order.status}</td>
                     <td className="p-4 px-6 text-center whitespace-nowrap">
                       {
+                        order.status === "Pending" ? (
+                          <select
+                            value={order.status}
+                            className='inline p-2 border-2 rounded-2xl'
+                            onChange={(e) => handleStatusChange(index, e.target.value)}
+                          >
+                            <option value="">Select</option>
+                            <option value="Cancelled">Cancel Order</option>
+                          </select>
+                        ) : (
+                          <div className="text-center text-slate-300 whitespace-nowrap">
+                            {order.status}
+                          </div>
+                        )
+                      }
+                    </td>
+                    {/* <td className="p-4 px-6 text-center whitespace-nowrap">
+                      {
                         order.status === "Delievered" ? (
                           <select
                             value={order.status}
@@ -143,7 +161,7 @@ function My_Orders() {
                           </div>
                         )
                       }
-                    </td>
+                    </td> */}
 
                   </tr>
 

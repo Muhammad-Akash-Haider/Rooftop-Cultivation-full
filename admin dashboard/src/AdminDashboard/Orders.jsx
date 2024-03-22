@@ -34,7 +34,14 @@ const Orders = () => {
   }, []);
 
   const handleStatusChange = async (index, newStatus) => {
-    // Create a copy of the productData array to modify
+   
+    const isConfirmed = window.confirm(`Are you sure you want to change the order state?`);
+
+    if (!isConfirmed) {
+      // If the user cancels the deletion, do nothing
+      return;
+    }
+    
     const updatedProductData = [...productData];
 
     // Update the status of the selected product

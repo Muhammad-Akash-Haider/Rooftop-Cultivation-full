@@ -7,7 +7,7 @@ exports.getOrderforadmin = async (req, res) => {
    
     connection.query('SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
-    INNER JOIN plant ON plant.id = order_items.product_id '
+    INNER JOIN plant ON plant.id = order_items.product_id  WHERE order_items.status NOT IN ("return" ,"cancelled") '
    , (err, rows, fields) => {
         if (!err) {
             res.json({
@@ -26,10 +26,10 @@ exports.getOrderforadmin = async (req, res) => {
 // Get Nursery by Id
 exports.getOrderbyIdseller = async (req, res) => {
    
-    connection.query('SELECT * FROM orders \
+    connection.query("SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE seller_id = ' + req.params.id, (err, rows, fields) => {
+    WHERE order_items.status NOT IN ('return', 'cancelled') AND seller_id = '" + req.params.id + "'", (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -54,7 +54,7 @@ exports.getOrderbyId = async (req, res) => {
             res.json({
                 rows,
                 status: true,
-                Message: "Get Plant by id"
+                Message: "Get orders for Buyer"
             })
             
         }
