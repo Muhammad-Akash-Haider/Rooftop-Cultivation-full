@@ -70,7 +70,7 @@ exports.savebank = async (req, res) => {
   const customerEmail = session.customer_details.email
 
   try {
-    
+
     const subject = 'Payment Method Added to system';
     const text = 'This is a confirmation email tahta your payment method is added in teh system and you can just get your payments in this account of your sells';
     await sendEmail(customerEmail, subject, text);
@@ -81,7 +81,7 @@ exports.savebank = async (req, res) => {
 
   const insertQuery = `INSERT INTO bankaccounts (seller_id, payment_id) 
   VALUES (${sellerId}, '${paymentId}')
-  ON DUPLICATE KEY UPDATE  payment_id = '${paymentId}'`;
+  ON DUPLICATE KEY UPDATE payment_id = '${paymentId}'`;
 
   // Execute the INSERT ... ON DUPLICATE KEY UPDATE query
   connection.query(insertQuery, (err, result) => {
@@ -98,47 +98,8 @@ exports.savebank = async (req, res) => {
 }
 
 exports.Testapi = async (req, res) => {
- 
-  connection.query('SELECT * FROM orders \
-    INNER JOIN order_items ON orders.id = order_items.order_id \
-    INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE order_items.status NOT IN ("return", "cancelled")'
-    , (err, rows, fields) => {
-        if (!err) {
-            // Filter orders placed 7 days ago and whose payment status is still pending
-            console.log(rows)
-            const currentDate = new Date();
-            const sevenDaysAgo = new Date(currentDate.getTime() - (7 * 24 * 60 * 60 * 1000)); // Calculate 7 days ago
-            const eligibleOrders = rows.filter(order => new Date(order.change_date) <= sevenDaysAgo && order.payment_status === 'Delievered');
-            
-            // Process each eligible order and transfer funds
-            eligibleOrders.forEach(order => {
-                // Here you would implement the actual fund transfer process using your payment gateway integration
-                console.log(`Transferring funds for order ${order.id} to seller ${order.seller_id}`);
-                
-                // Update payment status to mark it as completed
-                connection.query('UPDATE orders SET payment_status = ? WHERE id = ?', ['completed', order.id], (updateErr, updateResult) => {
-                    if (updateErr) {
-                        console.error(`Error updating payment status for order ${order.id}:`, updateErr);
-                    } else {
-                        console.log(`Payment status updated for order ${order.id}`);
-                    }
-                });
-            });
 
-            res.json({
-                status: true,
-                Message: "Funds transferred successfully"
-            });
-        } else {
-            console.error(err);
-            res.json({
-                status: false,
-                Message: "Error fetching orders"
-            });
-        }
-    });
-
+  
 }
 
 /////payments work for order 
@@ -180,25 +141,25 @@ exports.saveorder = async (req, res) => {
 
   const session = await stripe.checkout.sessions.retrieve(sessionId);
   const paymentId = session.payment_intent;
- 
+
 
   try {
     const subject = 'Order Placed ';
     const customerEmail = session.customer_details.email;
     const amountTotal = session.amount_total;
-    const truncatedAmount = Math.floor(amountTotal / 100); 
-    
-    console.log(truncatedAmount); 
+    const truncatedAmount = Math.floor(amountTotal / 100);
+
+    console.log(truncatedAmount);
     try {
       const subject = 'Order Confirmation';
       const text = `Dear ${session.customer_details.name},\n\n  You placed Order of amount ${truncatedAmount} on our business rooftopcultivation . We are pleased to confirm that your payment has been successfully processed with your card \n\n Best regards,\nThe [RoofTop Cultivation] Team`;
-      
+
       await sendEmail(customerEmail, subject, text);
       console.log("Email sent successfully!");
     } catch (error) {
       console.error("Failed to send email:", error);
     }
- 
+
   } catch (error) {
     console.error("Failed to send email:", error);
   }
@@ -227,7 +188,7 @@ exports.saveorder = async (req, res) => {
       for (const cartItem of cartItems) {
         const { product_id, stock } = cartItem;
         // Assuming you have a table named 'order_items' to link orders with items
-       
+
         const createstockItemQuery = "UPDATE plant SET stock = stock - 1 WHERE id = ?";
         connection.query(createstockItemQuery, [product_id], (err, result) => {
           if (err) {
@@ -266,7 +227,7 @@ exports.saveorder = async (req, res) => {
 
 exports.refundPayment = async (req, res) => {
 
-  res.send(req.session.user)
+
   // try {
   //   const refund = await stripe.refunds.create({
   //     payment_intent : res.body.payment_id,
