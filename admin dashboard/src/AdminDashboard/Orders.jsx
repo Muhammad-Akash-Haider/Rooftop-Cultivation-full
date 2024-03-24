@@ -34,14 +34,14 @@ const Orders = () => {
   }, []);
 
   const handleStatusChange = async (index, newStatus) => {
-   
+
     const isConfirmed = window.confirm(`Are you sure you want to change the order state?`);
 
     if (!isConfirmed) {
       // If the user cancels the deletion, do nothing
       return;
     }
-    
+
     const updatedProductData = [...productData];
 
     // Update the status of the selected product
@@ -135,15 +135,27 @@ const Orders = () => {
                     {product.name}
                   </td>
                   <td class="px-6 py-4">
-                    <select value={product.status} className='inline p-2 bg-red-100 border-2 rounded-2xl '
+                    {
+                      product.status == "Completed" ?
+                      (
+                        <div> {product.status}</div>
+                      ):
+                      (
+                        <select
+                      value={product.status}
+                      className='inline p-2 bg-red-100 border-2 rounded-2xl'
                       onChange={(e) => handleStatusChange(index, e.target.value)}
                     >
                       <option value="Pending">Pending</option>
-                      <option value="collectd">Collected from Seller</option>
-                      <option value="Delievered">Delieverd To Customer</option>
+                      <option value="Collected">Collected from Seller</option>
+                      <option value="delivered">Delivered To Customer</option>
                       <option value="Completed">Completed</option>
-                      <option value="Cancelled">Cancelled</option>
+                      <option value="Return">Return</option>
                     </select>
+                      )
+                       
+                    }
+                    
                   </td>
                 </tr>
 

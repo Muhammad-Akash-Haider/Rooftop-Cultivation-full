@@ -30,7 +30,7 @@ const job = schedule.scheduleJob('0 */12 * * *', function () {
   connection.query('SELECT * FROM orders \
 INNER JOIN order_items ON orders.id = order_items.order_id \
 INNER JOIN plant ON plant.id = order_items.product_id \
-INNER JOIN users ON plant.seller_id = users.id WHERE order_items.status NOT IN ("return", "cancelled")'
+INNER JOIN users ON plant.seller_id = users.id WHERE order_items.status NOT IN ("return", "Cancelled")'
     , (err, rows, fields) => {
       if (!err) {
         // Filter orders placed 7 days ago and whose payment status is still pending

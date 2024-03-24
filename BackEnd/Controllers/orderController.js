@@ -8,7 +8,7 @@ exports.getOrderforadmin = async (req, res) => {
 
     connection.query('SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
-    INNER JOIN plant ON plant.id = order_items.product_id  WHERE order_items.status NOT IN ("return" ,"cancelled") '
+    INNER JOIN plant ON plant.id = order_items.product_id  WHERE order_items.status NOT IN ("return" ,"Cancelled") '
         , (err, rows, fields) => {
             if (!err) {
                 res.json({
@@ -30,7 +30,7 @@ exports.getOrderbyIdseller = async (req, res) => {
     connection.query("SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE order_items.status NOT IN ('return', 'cancelled') AND seller_id = '" + req.params.id + "'", (err, rows, fields) => {
+    WHERE order_items.status NOT IN ('return', 'Cancelled') AND seller_id = '" + req.params.id + "'", (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -86,7 +86,6 @@ exports.updteOrderStatus = async (req, res) => {
     const productId = req.params.id;
     const newStatus = req.body.status;
 
-    console.log(req.body, newStatus, req.params.id);
     // Validate input
     if (!productId || !newStatus) {
         return res.status(400).json({ error: 'Invalid input' }); 0
@@ -122,7 +121,12 @@ exports.updteOrderStatus = async (req, res) => {
                 const orderDetails = rows[0];
                 const amount =orderDetails.quantity * orderDetails.price;
                 const paymentid =orderDetails.payment_id;
-                Refund(amount,paymentid);
+                if(newStatus == "Return" || newStatus == "Cancelled" ){
+                    console.log(newStatus);
+                    Refund(amount,paymentid);
+                }
+
+                
                 
             }
         })
