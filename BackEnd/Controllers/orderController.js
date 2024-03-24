@@ -1,31 +1,32 @@
 const express = require('express')
+const stripe = require("stripe")("sk_test_51OjdVEDLpC8Qo70I0YrtXllKMfOrMKoLhlYZmTRzHD5kMdFjvcQkXgrE9Rj22j9v0CyP1EzDv42tWxUEDUqk9h2P00QTkncruY");
 
 const connection = require('../Config/db')
 
 
 exports.getOrderforadmin = async (req, res) => {
-   
+
     connection.query('SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id  WHERE order_items.status NOT IN ("return" ,"cancelled") '
-   , (err, rows, fields) => {
-        if (!err) {
-            res.json({
-                rows,
-                status: true,
-                Message: "Get Plant by id"
-            })
-            
-        }
+        , (err, rows, fields) => {
+            if (!err) {
+                res.json({
+                    rows,
+                    status: true,
+                    Message: "Get Plant by id"
+                })
 
-        else
-            console.log(err);
-    })
+            }
+
+            else
+                console.log(err);
+        })
 }
 
 // Get Nursery by Id
 exports.getOrderbyIdseller = async (req, res) => {
-   
+
     connection.query("SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
@@ -36,7 +37,7 @@ exports.getOrderbyIdseller = async (req, res) => {
                 status: true,
                 Message: "Get Plant by id"
             })
-            
+
         }
 
         else
@@ -45,7 +46,7 @@ exports.getOrderbyIdseller = async (req, res) => {
 }
 
 exports.getOrderbyId = async (req, res) => {
-    console.log(req.params.id )
+    console.log(req.params.id)
     connection.query('SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
@@ -56,31 +57,46 @@ exports.getOrderbyId = async (req, res) => {
                 status: true,
                 Message: "Get orders for Buyer"
             })
-            
+
         }
 
         else
             console.log(err);
     })
 }
- 
+
+const Refund = async (amount ,paymentid) => {
+    try {
+        const refund = await stripe.refunds.create({
+            payment_intent: paymentid,
+            amount: amount * 100
+        });
+
+        console.log('Refund successful:', refund);
+     
+    } catch (error) {
+        console.error('Refund error:', error);
+       
+    }
+
+}
 
 exports.updteOrderStatus = async (req, res) => {
 
     const productId = req.params.id;
     const newStatus = req.body.status;
 
-    console.log( req.body  , newStatus,  req.params.id);
+    console.log(req.body, newStatus, req.params.id);
     // Validate input
     if (!productId || !newStatus) {
-        return res.status(400).json({ error: 'Invalid input' });0
+        return res.status(400).json({ error: 'Invalid input' }); 0
     }
 
 
     const updateQuery = 'UPDATE `order_items` SET change_date = NOW(), status = ? WHERE items_id = ?';
 
     connection.query(updateQuery, [newStatus, productId], (updateErr, updateResults) => {
-    
+
 
         if (updateErr) {
             console.error('Error updating status:', updateErr);
@@ -92,13 +108,30 @@ exports.updteOrderStatus = async (req, res) => {
             return res.status(404).json({ error: 'Product not found' });
         }
 
+        const selectQuery = 'SELECT * FROM `order_items` INNER JOIN orders ON orders.id = order_items.order_id INNER JOIN plant ON plant.id = order_items.product_id WHERE items_id = ?';
+
+        connection.query(selectQuery, [productId], (selectErr, rows) => {
+            if (selectErr) {
+                console.error('Error retrieving data:', selectErr);
+                connection.end(); // Close the connection in case of error
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
+
+            if (rows.length > 0) {
+
+                const orderDetails = rows[0];
+                const amount =orderDetails.quantity * orderDetails.price;
+                const paymentid =orderDetails.payment_id;
+                Refund(amount,paymentid);
+                
+            }
+        })
+
         // Successful update
         res.json({ message: 'Status updated successfully' });
     });
 
 }
-
-
 
 
 
@@ -121,8 +154,8 @@ exports.getAllOrder = async (req, res) => {
 }
 
 exports.getAllreturnsByid = async (req, res) => {
-  console.log(req.params.id)
-  connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE users.id = ? AND order_items.status = "Return" OR  order_items.status = "Cancelled"' , [req.params.id], (err, rows, fields) => {
+    console.log(req.params.id)
+    connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE users.id = ? AND order_items.status = "Return" OR  order_items.status = "Cancelled"', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -136,8 +169,8 @@ exports.getAllreturnsByid = async (req, res) => {
 }
 
 exports.getAllreturns = async (req, res) => {
-  console.log(req.params.id)
-  connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE order_items.status = "Return" OR  order_items.status = "Cancelled"' , (err, rows, fields) => {
+    console.log(req.params.id)
+    connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE order_items.status = "Return" OR  order_items.status = "Cancelled"', (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,

@@ -112,14 +112,14 @@ function My_Orders() {
                     </td>
                     <td className="p-4 px-6 text-center whitespace-nowrap">
                       <div className="flex flex-col items-center justify-center">
-                        <h3>{order.stock}</h3>
+                        <h3>{order.quantity}</h3>
                       </div>
                     </td>
                     <td className="p-4 px-6 text-center whitespace-nowrap"> {order.price}</td>
                     <td className="p-4 px-6 text-center whitespace-nowrap"> {order.status}</td>
                     <td className="p-4 px-6 text-center whitespace-nowrap">
                       {
-                        order.status === "Pending" ? (
+                        order.status === "pending" ? (
                           <select
                             value={order.status}
                             className='inline p-2 border-2 rounded-2xl'
