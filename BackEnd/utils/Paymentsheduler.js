@@ -53,14 +53,14 @@ const job = schedule.scheduleJob('0 */12 * * *', function () {
                 const paymentId = results[0].payment_id;
                 const amount = order.price;
                 
-                transferPayment(paymentId, amount)
-                .then(refund => {
-                    console.log('Payment transfer successful:', refund);
+                // transferPayment(paymentId, amount)
+                // .then(refund => {
+                //     console.log('Payment transfer successful:', refund);
                     
-                })
-                .catch(error => {
-                    res.status(500).json({ success: false, error: error.message });
-                });
+                // })
+                // .catch(error => {
+                //     res.status(500).json({ success: false, error: error.message });
+                // });
                 // connection.query('UPDATE order_items SET status = ? WHERE items_id = ?', ['completed', order.items_id], (updateErr, updateResult) => {
                 //   if (updateErr) {
                 //     console.error(`Error updating payment status for order ${order.items_id}:`, updateErr);
