@@ -91,6 +91,8 @@ exports.login = async (req, res) => {
         const match = await bcrypt.compare(password, results[0].password);
         if (match) {
 
+         
+
           req.session.user = results[0].id
 
           return res.json({
