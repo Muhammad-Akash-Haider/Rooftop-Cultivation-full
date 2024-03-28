@@ -119,7 +119,7 @@ function My_Orders() {
                     <td className="p-4 px-6 text-center whitespace-nowrap"> {order.status}</td>
                     <td className="p-4 px-6 text-center whitespace-nowrap">
                       {
-                        order.status === "pending" ? (
+                        order.status === "Pending" ? (
                           <select
                             value={order.status}
                             className='inline p-2 border-2 rounded-2xl'
