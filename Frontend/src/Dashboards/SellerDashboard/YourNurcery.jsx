@@ -1,25 +1,10 @@
 
 import React, { useState } from 'react';
 import { FaBars } from 'react-icons/fa';
-
-import { MdSpaceDashboard } from 'react-icons/md';
-import { GiPlantRoots } from 'react-icons/gi';
-
-import { FaAccusoft } from 'react-icons/fa';
-import { MdOutlinePayments } from 'react-icons/md';
-import { BsShopWindow } from 'react-icons/bs';
-import { CgProfile } from 'react-icons/cg';
-import { MdOutlineDomainVerification } from 'react-icons/md';
-import { TbTruckReturn } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import logo from '../../images/LOGO.png';
-
 import { useEffect } from 'react';
-
 import { useFormik } from 'formik';
-
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 

@@ -26,6 +26,7 @@ import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 import My_Orders from "./components/Pages/My_Orders";
 import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
 import CategoryPlants from "./components/Pages/CategoryPlants"
+import Verifyemail from "./components/Pages/Verifyemail";
 
 
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/Products" element={<AllProducts />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/emailverify" element={<Verifyemail/>}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/product/:id" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
