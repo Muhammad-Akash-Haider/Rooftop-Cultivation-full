@@ -69,7 +69,10 @@ export default function Register() {
                     toast.success(data.message, {
                       position: toast.POSITION.TOP_RIGHT,
                     });
-                    navigate('/login');
+                    if(data.status == true){
+                      localStorage.setItem('register_email',data.email);
+                      navigate('/emailverify');
+                    }
                   })
                   .catch((error) => {
                     console.error('Error:', error);

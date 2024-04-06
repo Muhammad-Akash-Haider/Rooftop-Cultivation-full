@@ -1,5 +1,5 @@
 const express = require('express')
-
+const { emailverify } = require('../utils/EmailSender');
 
 const connection = require('../Config/db')
 const bcrypt = require('bcrypt');
@@ -40,16 +40,26 @@ exports.signup = async (req, res) => {
       }
 
       if (results.length > 0) {
-        return res.json({ status: true, message: 'Email already registered.' });
+        return res.json({ status: false, message: 'Email already registered.' });
       } else {
 
         connection.query(signUpquery, [First_name, last_name, email, password, user_type, city, phone], (err, rows) => {
           if (!err) {
+
+            try {
+
+              emailverify(email);
+              console.log("Email sent successfully!");
+            } catch (error) {
+              console.error("Failed to send email:", error);
+            }
+
             return res.json({
               status: true,
-              message: "Wellcome!!!........Your Successsfully signUp"
+              email:email,
+              message: "Wellcome!!!.... please verify you email"
             })
-
+            
 
           } else {
             console.log(err);
@@ -69,6 +79,23 @@ exports.signup = async (req, res) => {
   }
 
 }
+
+exports.verifyotp = async (req, res) => {
+  const { email, otp } = req.body;
+  try {
+      // Check if OTP exists and matches
+      if (otpCache[email] && otpCache[email] == otp) {
+          // OTP is valid, you can mark email as verified or perform any other action
+          delete otpCache[email]; // Remove OTP from cache after verification
+          res.status(200).send({ message: 'OTP verified successfully.' });
+      } else {
+          res.status(400).send({ error: 'Invalid OTP.' });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: 'Internal Server Error' });
+  }
+};
 
 
 
