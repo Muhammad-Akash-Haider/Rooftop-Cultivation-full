@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Verifyemail = () => {
   const [otp, setOTP] = useState('');
   const [registeremail, setRegisterEmail] = useState('');
-  
+  const navigate = useNavigate();
   useEffect(() => {
       const emailFromLocalStorage = localStorage.getItem("register_email");
       setRegisterEmail(emailFromLocalStorage);
@@ -38,6 +38,7 @@ const Verifyemail = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
         localStorage.clear();
+        navigate('/login');
       }
     } catch (error) {
       console.error('Error:', error.message);

@@ -83,7 +83,7 @@ exports.signup = async (req, res) => {
 exports.verifyotp = async (req, res) => {
   const { registeremail, otp } = req.body;
   if (!registeremail || !otp){
-    return res.status(500).json({status:false, message: 'email not found' });
+    return res.status(200).json({status:false, message: 'Please login again to verify email' });
   }
   try {
     const sql = 'SELECT otp FROM `users` WHERE email = ?';
@@ -127,7 +127,7 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ status: false, message: 'Please provide both email and password.' });
+    return res.status(200).json({ status: false, message: 'Please provide both email and password.' });
   }
 
   try {
@@ -142,8 +142,7 @@ exports.login = async (req, res) => {
         const match = await bcrypt.compare(password, results[0].password);
         if (match) {
 
-         
-
+         if(results[0].email_verified == 1){
           req.session.user = results[0].id
 
           return res.json({
@@ -153,6 +152,22 @@ exports.login = async (req, res) => {
             user_type: results[0].user_type,
             user_name: results[0].First_name + ' ' + results[0].last_name,
           });
+         }else{
+
+          try {
+            emailverify(results[0].email);
+            console.log("Email sent successfully!");
+          } catch (error) {
+            console.error("Failed to send email:", error);
+          }
+
+          return res.json({
+            status: false,
+            message: 'Please verify your email we send an otp to your email',
+            email: results[0].email
+          });
+         }
+
         } else {
           return res.status(400).json({ status: false, message: 'Incorrect password.' });
         }

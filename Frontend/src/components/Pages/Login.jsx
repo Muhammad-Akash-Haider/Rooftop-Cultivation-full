@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,19 +40,30 @@ function Login() {
         }
   
         const data = await response.json();
-  
+        if(data.status == true){
+          
+          localStorage.setItem('user_id', data.user_id);
+          localStorage.setItem('user_type', data.user_type);
+          localStorage.setItem('user_name', data.user_name);
+    
+          toast.success('Successfully Logged in', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+    
+          navigate('/');
+        }else{
+          toast.warning(data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          localStorage.setItem('register_email',data.email);
+          navigate('/emailverify');
+        }
+        
+        
         // Use dispatch here with the action
         // dispatch(setUser({ user_type: data.user_type, user_id: data.user_id }));
   
-        localStorage.setItem('user_id', data.user_id);
-        localStorage.setItem('user_type', data.user_type);
-        localStorage.setItem('user_name', data.user_name);
-  
-        toast.success('Successfully Logged in', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-  
-        navigate('/');
+       
       } catch (error) {
         console.error('Error:', error);
         toast.warning('Incorrect email or password', {
