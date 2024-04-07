@@ -81,21 +81,45 @@ exports.signup = async (req, res) => {
 }
 
 exports.verifyotp = async (req, res) => {
-  const { email, otp } = req.body;
+  const { registeremail, otp } = req.body;
+  if (!registeremail || !otp){
+    return res.status(500).json({status:false, message: 'email not found' });
+  }
   try {
-      // Check if OTP exists and matches
-      if (otpCache[email] && otpCache[email] == otp) {
-          // OTP is valid, you can mark email as verified or perform any other action
-          delete otpCache[email]; // Remove OTP from cache after verification
-          res.status(200).send({ message: 'OTP verified successfully.' });
-      } else {
-          res.status(400).send({ error: 'Invalid OTP.' });
+    const sql = 'SELECT otp FROM `users` WHERE email = ?';
+    connection.query(sql, [registeremail], (err, result) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({status:false, message: 'Internal Server Error' });
       }
+      if (result.length === 0) {
+        return res.status(200).json({status:false, message: 'You are not registered' });
+      }
+      const userotp = result[0].otp;
+      if (userotp != otp) {
+        console.error(userotp ,otp);
+        return res.status(200).json({status:false , message: 'wrong otp please try again' });
+      }
+
+      const updateSql = 'UPDATE `users` SET email_verified = 1 WHERE email = ?';
+      connection.query(updateSql, [registeremail], (updateErr, updateResult) => {
+        if (updateErr) {
+          console.error(updateErr);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        
+        return res.json({
+          status: true,
+          message: 'Your email is verified. You can now log in.'
+        });
+      });
+    });
   } catch (error) {
-      console.error(error);
-      res.status(500).send({ error: 'Internal Server Error' });
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 
@@ -108,7 +132,7 @@ exports.login = async (req, res) => {
 
   try {
     const query = 'SELECT * FROM users WHERE email = ?';
-    connection.query(query, [email], async (error, results, fields) => {
+    connection.query(query, [email], async (error, results) => {
       if (error) {
         console.error(error);
         return res.status(500).json({ status: false, message: 'Internal server error.' });
