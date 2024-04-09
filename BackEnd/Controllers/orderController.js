@@ -250,7 +250,35 @@ exports.deleteOrderById = async (req, res) => {
 }
 
 
+exports.userorderstatics = async (req,res) =>{
+    const userId = req.params.id;
 
+    // SQL query to fetch the total items in the cart and the count of latest orders
+    const sqlQuery = `SELECT
+    (SELECT COUNT(*) FROM cart WHERE buyer_id = ?) AS total_cart,
+    (SELECT COUNT(*) FROM orders WHERE buyer_id = ? AND order_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)) AS total_order_count;
+    `;
+    
+    // Execute the query
+    connection.query(sqlQuery, [userId, userId], (error, results, fields) => {
+      if (error) {
+        console.error('Error executing SQL query:', error);
+        return;
+      }
+    
+      // Display the results
+      console.log('Total items in cart:', results[0].total_cart);
+      console.log('Latest orders count:', results[0].total_order_count);
+
+      res.json({
+        status: true,
+        Message: "Total items in cart:",
+        total_cart: results[0].total_cart,
+        total_order_count: results[0].total_order_count,
+      });
+    
+    });    
+}
 
 
 
