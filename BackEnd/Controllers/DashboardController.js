@@ -23,8 +23,9 @@ router.get('/dashboardDetails/:id', async (req, res) => {
 
     try {
         // Fetch data from the first table
-        const query1 = 'SELECT COUNT(order_amount) AS order_count, SUM(order_amount) AS total_order_amount FROM orders WHERE seller_id = ?';
+        const query1 = 'SELECT COUNT(order_items.items_id) AS order_count , SUM(plant.price * order_items.quantity) AS total_order_amount  FROM orders INNER JOIN order_items ON orders.id = order_items.order_id INNER JOIN plant ON order_items.product_id = plant.id INNER JOIN users ON plant.seller_id = users.id WHERE users.id = ? AND  order_items.status NOT IN ("return" ,"Cancelled") ';
         const results1 = await queryAsync(query1, [req.params.id]);
+        
         const orders = results1[0].order_count;
         const total_amount = results1[0].total_order_amount;
 
