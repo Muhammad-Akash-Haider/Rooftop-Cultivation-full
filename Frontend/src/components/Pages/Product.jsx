@@ -156,7 +156,6 @@ function Product() {
                 </div>
               </div>
               <div class=" flex gap-2 text-center py-2 px-8 w-full outline-none">
-                {/* <button class="ml-auto text text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Buy Now</button> */}
                 <button onClick={()=> AddProductToCart(stock , fetchData.id )} class="ml-auto text-sm text-white bg-[#128C7E] border-0 w-full py-2 px-6 focus:outline-none hover:bg-[#1B4636] rounded">Add to Cart</button>
               </div>
             </div> 
