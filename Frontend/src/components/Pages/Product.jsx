@@ -82,7 +82,7 @@ function Product() {
     };
     
     fetchData();
-  }, []);
+  } );
 
   const [plantData, setPlantData] = useState([]);
 
