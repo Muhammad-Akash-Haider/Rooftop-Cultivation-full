@@ -266,10 +266,6 @@ exports.userorderstatics = async (req,res) =>{
         return;
       }
     
-      // Display the results
-      console.log('Total items in cart:', results[0].total_cart);
-      console.log('Latest orders count:', results[0].total_order_count);
-
       res.json({
         status: true,
         Message: "Total items in cart:",
