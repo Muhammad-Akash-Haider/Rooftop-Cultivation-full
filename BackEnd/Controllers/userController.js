@@ -120,7 +120,18 @@ exports.verifyotp = async (req, res) => {
   }
 };
 
+exports.isverified =async (req, res) => {
 
+  const query ="SELECT * FROM users WHERE id = ?";
+  connection.query(query,[req.params.id],async(error, result)=>{
+     if(!error) {
+      res.send({
+        status : true,
+        data: result
+      })
+     }
+  }) 
+}
 
 
 exports.login = async (req, res) => {
