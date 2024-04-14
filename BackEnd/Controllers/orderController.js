@@ -1,6 +1,6 @@
 const express = require('express')
 const stripe = require("stripe")("sk_test_51OjdVEDLpC8Qo70I0YrtXllKMfOrMKoLhlYZmTRzHD5kMdFjvcQkXgrE9Rj22j9v0CyP1EzDv42tWxUEDUqk9h2P00QTkncruY");
-
+const { sendEmail } = require('../utils/EmailSender');
 const connection = require('../Config/db')
 
 
@@ -47,25 +47,29 @@ exports.getOrderbyIdseller = async (req, res) => {
 
 exports.getOrderbyId = async (req, res) => {
     console.log(req.params.id)
-    connection.query('SELECT * FROM orders \
-    INNER JOIN order_items ON orders.id = order_items.order_id \
-    INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE orders.buyer_id = ' + req.params.id, (err, rows, fields) => {
-        if (!err) {
-            res.json({
-                rows,
-                status: true,
-                Message: "Get orders for Buyer"
-            })
+    connection.query(
+        'SELECT * FROM orders ' +
+        'INNER JOIN order_items ON orders.id = order_items.order_id ' +
+        'INNER JOIN plant ON plant.id = order_items.product_id ' +
+        'WHERE orders.buyer_id = ? ' +
+        'ORDER BY orders.id DESC',
+        [req.params.id],
+        (err, rows, fields) => {
+            if (!err) {
+                res.json({
+                    rows,
+                    status: true,
+                    Message: "Get orders for Buyer"
+                })
 
-        }
+            }
 
-        else
-            console.log(err);
-    })
+            else
+                console.log(err);
+        })
 }
 
-const Refund = async (amount ,paymentid) => {
+const Refund = async (amount, paymentid) => {
     try {
         const refund = await stripe.refunds.create({
             payment_intent: paymentid,
@@ -73,10 +77,10 @@ const Refund = async (amount ,paymentid) => {
         });
 
         console.log('Refund successful:', refund);
-     
+
     } catch (error) {
         console.error('Refund error:', error);
-       
+
     }
 
 }
@@ -107,9 +111,9 @@ exports.updteOrderStatus = async (req, res) => {
             return res.status(404).json({ error: 'Product not found' });
         }
 
-        const selectQuery = 'SELECT * FROM `order_items` INNER JOIN orders ON orders.id = order_items.order_id INNER JOIN plant ON plant.id = order_items.product_id WHERE items_id = ?';
+        const selectQuery = 'SELECT * FROM `order_items` INNER JOIN orders ON orders.id = order_items.order_id INNER JOIN plant ON plant.id = order_items.product_id INNER JOIN users ON  orders.buyer_id = users.id  WHERE items_id = ?';
 
-        connection.query(selectQuery, [productId], (selectErr, rows) => {
+        connection.query(selectQuery, [productId], async (selectErr, rows) => {
             if (selectErr) {
                 console.error('Error retrieving data:', selectErr);
                 connection.end(); // Close the connection in case of error
@@ -117,17 +121,38 @@ exports.updteOrderStatus = async (req, res) => {
             }
 
             if (rows.length > 0) {
-
                 const orderDetails = rows[0];
-                const amount =orderDetails.quantity * orderDetails.price;
-                const paymentid =orderDetails.payment_id;
-                if(newStatus == "Return" || newStatus == "Cancelled" ){
+                console.log(orderDetails)
+                const amount = orderDetails.quantity * orderDetails.price;
+                const paymentid = orderDetails.payment_id;
+                if (newStatus == "Return" || newStatus == "Cancelled") {
                     console.log(newStatus);
-                    Refund(amount,paymentid);
+                    Refund(amount, paymentid);
                 }
 
-                
-                
+
+                try {
+                    const customerEmail = orderDetails.email;
+                    const subject = 'Order Processing';
+                    var text = '';
+                    if (newStatus == "Return") {
+                         text = `Dear ${orderDetails.First_name + " " + orderDetails.last_name} your order with order ID ${orderDetails.order_id} is Returned and your amount is sended back to your account \n\nBest regards,\nThe [RoofTop Cultivation] Team`;
+                    } else if (newStatus == "Cancelled") {
+                         text = `Dear ${orderDetails.First_name + " " + orderDetails.last_name} your order with order ID ${orderDetails.order_id} is Cancelled and your amount is sended back to your account \n\nBest regards,\nThe [RoofTop Cultivation] Team`;
+                    } else if (newStatus == "Collected") {
+                        text = `Dear ${orderDetails.First_name + " " + orderDetails.last_name} your order with order ID ${orderDetails.order_id} is  collected from Seller and will be sended to your with in 2 to 3 working days \n\n Best regards,\nThe [RoofTop Cultivation] Team`;
+                    }else if (newStatus == "delivered") {
+                         text = `Dear ${orderDetails.First_name + " " + orderDetails.last_name} your order with order ID ${orderDetails.order_id} is Delievered to you if you want to return this you have 1 week \n\n Best regards,\nThe [RoofTop Cultivation] Team`;
+                    }else if (newStatus == "Pending") {
+                         text = `Dear ${orderDetails.First_name + " " + orderDetails.last_name} your order with order ID ${orderDetails.order_id} is Pending this will be processed as soon as soon possible \n\n Best regards,\nThe [RoofTop Cultivation] Team`;
+                    }
+
+                    await sendEmail(customerEmail, subject, text);
+                    console.log("Email sent successfully!");
+                } catch (error) {
+                    console.error("Failed to send email:", error);
+                }
+
             }
         })
 
@@ -250,7 +275,7 @@ exports.deleteOrderById = async (req, res) => {
 }
 
 
-exports.userorderstatics = async (req,res) =>{
+exports.userorderstatics = async (req, res) => {
     const userId = req.params.id;
 
     // SQL query to fetch the total items in the cart and the count of latest orders
@@ -258,22 +283,22 @@ exports.userorderstatics = async (req,res) =>{
     (SELECT COUNT(*) FROM cart WHERE buyer_id = ?) AS total_cart,
     (SELECT COUNT(*) FROM orders WHERE buyer_id = ? AND order_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)) AS total_order_count;
     `;
-    
+
     // Execute the query
     connection.query(sqlQuery, [userId, userId], (error, results, fields) => {
-      if (error) {
-        console.error('Error executing SQL query:', error);
-        return;
-      }
-    
-      res.json({
-        status: true,
-        Message: "Total items in cart:",
-        total_cart: results[0].total_cart,
-        total_order_count: results[0].total_order_count,
-      });
-    
-    });    
+        if (error) {
+            console.error('Error executing SQL query:', error);
+            return;
+        }
+
+        res.json({
+            status: true,
+            Message: "Total items in cart:",
+            total_cart: results[0].total_cart,
+            total_order_count: results[0].total_order_count,
+        });
+
+    });
 }
 
 
