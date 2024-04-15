@@ -64,8 +64,21 @@ function Checkout() {
   };
 
   const saveaddress = async () =>{
-    if(!address){
-      toast.warning("Please enter delievery addess", {
+    if (!address) {
+      toast.warning("Please enter delivery address", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (address.length < 18 || address.length > 100) {
+      toast.error("Please give detailed address", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else if (/^\d+$/.test(address)) {
+      toast.warning("Address cannot contain only numbers", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } 
+    else if (/[^a-zA-Z0-9\s]/.test(address)) {
+      toast.error("Address cannot contain special characters", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }else{
@@ -262,12 +275,19 @@ function Checkout() {
            
             </div>
 
-         
+            {address ?
             <div className="mt-4">
               <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>
                 Proceed to Checkout
               </button>
             </div>
+             :
+            <div className="mt-4">
+            <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" >
+              Enter address to checkout
+            </button>
+          </div> }
+            
          
         </div>
       </div>
