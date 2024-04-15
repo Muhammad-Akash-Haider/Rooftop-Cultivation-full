@@ -56,10 +56,10 @@ exports.signup = async (req, res) => {
 
             return res.json({
               status: true,
-              email:email,
+              email: email,
               message: "Wellcome!!!.... please verify you email"
             })
-            
+
 
           } else {
             console.log(err);
@@ -82,23 +82,23 @@ exports.signup = async (req, res) => {
 
 exports.verifyotp = async (req, res) => {
   const { registeremail, otp } = req.body;
-  if (!registeremail || !otp){
-    return res.status(200).json({status:false, message: 'Please login again to verify email' });
+  if (!registeremail || !otp) {
+    return res.status(200).json({ status: false, message: 'Please login again to verify email' });
   }
   try {
     const sql = 'SELECT otp FROM `users` WHERE email = ?';
     connection.query(sql, [registeremail], (err, result) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({status:false, message: 'Internal Server Error' });
+        return res.status(500).json({ status: false, message: 'Internal Server Error' });
       }
       if (result.length === 0) {
-        return res.status(200).json({status:false, message: 'You are not registered' });
+        return res.status(200).json({ status: false, message: 'You are not registered' });
       }
       const userotp = result[0].otp;
       if (userotp != otp) {
-        console.error(userotp ,otp);
-        return res.status(200).json({status:false , message: 'wrong otp please try again' });
+        console.error(userotp, otp);
+        return res.status(200).json({ status: false, message: 'wrong otp please try again' });
       }
 
       const updateSql = 'UPDATE `users` SET email_verified = 1 WHERE email = ?';
@@ -107,7 +107,7 @@ exports.verifyotp = async (req, res) => {
           console.error(updateErr);
           return res.status(500).json({ error: 'Internal Server Error' });
         }
-        
+
         return res.json({
           status: true,
           message: 'Your email is verified. You can now log in.'
@@ -120,19 +120,46 @@ exports.verifyotp = async (req, res) => {
   }
 };
 
-exports.isverified =async (req, res) => {
+exports.isverified = async (req, res) => {
 
-  const query ="SELECT * FROM users WHERE id = ?";
-  connection.query(query,[req.params.id],async(error, result)=>{
-     if(!error) {
+  const query = "SELECT * FROM users WHERE id = ?";
+  connection.query(query, [req.params.id], async (error, result) => {
+    if (!error) {
       res.send({
-        status : true,
+        status: true,
         data: result
       })
-     }
-  }) 
+    }
+  })
 }
 
+exports.getaddress =async (req, res) => {
+  const query = "SELECT delievery_address FROM users WHERE id = ?";
+  if ( req.params.id) {
+    connection.query(query, [req.params.id], async (error, result) => {
+      if (!error) {
+        res.send({
+          status: true,
+          address: result
+        })
+      }
+    })
+  }
+}
+
+exports.saveaddress = async (req, res) => {
+  const query = "UPDATE users SET delievery_address = ? WHERE id = ?";
+  if (req.body.address && req.params.id) {
+    connection.query(query, [req.body.address, req.params.id], async (error, result) => {
+      if (!error) {
+        res.send({
+          status: true,
+          data: result
+        })
+      }
+    })
+  }
+}
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -153,31 +180,31 @@ exports.login = async (req, res) => {
         const match = await bcrypt.compare(password, results[0].password);
         if (match) {
 
-         if(results[0].email_verified == 1){
-          req.session.user = results[0].id
+          if (results[0].email_verified == 1) {
+            req.session.user = results[0].id
 
-          return res.json({
-            status: true,
-            message: 'Welcome. You are successfully logged in.',
-            user_id: results[0].id,
-            user_type: results[0].user_type,
-            user_name: results[0].First_name + ' ' + results[0].last_name,
-          });
-         }else{
+            return res.json({
+              status: true,
+              message: 'Welcome. You are successfully logged in.',
+              user_id: results[0].id,
+              user_type: results[0].user_type,
+              user_name: results[0].First_name + ' ' + results[0].last_name,
+            });
+          } else {
 
-          try {
-            emailverify(results[0].email);
-            console.log("Email sent successfully!");
-          } catch (error) {
-            console.error("Failed to send email:", error);
+            try {
+              emailverify(results[0].email);
+              console.log("Email sent successfully!");
+            } catch (error) {
+              console.error("Failed to send email:", error);
+            }
+
+            return res.json({
+              status: false,
+              message: 'Please verify your email we send an otp to your email',
+              email: results[0].email
+            });
           }
-
-          return res.json({
-            status: false,
-            message: 'Please verify your email we send an otp to your email',
-            email: results[0].email
-          });
-         }
 
         } else {
           return res.status(400).json({ status: false, message: 'Incorrect password.' });
@@ -216,7 +243,7 @@ exports.profileverify = async (req, res) => {
         message: "Internal server error",
       });
     }
-  
+
     if (existingResults && existingResults.length > 0) {
       // If a row with the user_id already exists, update the existing row
       const updateQuery = `
@@ -224,7 +251,7 @@ exports.profileverify = async (req, res) => {
         SET id_documents = ?, address_prove = ? 
         WHERE user_id = ?
       `;
-      
+
       connection.query(updateQuery, [iddocument, addresprove, userid], (updateError, updateResults) => {
         if (updateError) {
           console.error('Error updating data:', updateError);
@@ -233,7 +260,7 @@ exports.profileverify = async (req, res) => {
             message: "Internal server error",
           });
         }
-        
+
         res.status(200).json({
           status: true,
           message: "Row updated",
@@ -245,7 +272,7 @@ exports.profileverify = async (req, res) => {
         INSERT INTO verification_documents (user_id, id_documents, address_prove) 
         VALUES (?, ?, ?)
       `;
-      
+
       connection.query(insertQuery, [userid, iddocument, addresprove], (insertError, insertResults) => {
         if (insertError) {
           console.error('Error inserting data:', insertError);
@@ -254,7 +281,7 @@ exports.profileverify = async (req, res) => {
             message: "Internal server error",
           });
         }
-  
+
         res.status(200).json({
           status: true,
           message: "New row inserted",
@@ -262,7 +289,7 @@ exports.profileverify = async (req, res) => {
       });
     }
   });
- 
+
 
 
 };

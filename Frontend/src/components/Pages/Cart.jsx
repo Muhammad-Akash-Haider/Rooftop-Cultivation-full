@@ -18,7 +18,7 @@ function Checkout() {
     setid(localStorage.getItem('user_id'));
   }, [id]);
 
-
+  const [address , setaddress] =useState();
   const [cartData, setCartData] = useState([]);
   const [carttotal, setcarttotal] = useState()
 
@@ -53,6 +53,37 @@ function Checkout() {
     }
   };
 
+  const getaddress = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/user/getaddress/${id}`);
+      const data = await response.json();
+      setaddress(data.address[0].delievery_address);
+    } catch (error) {
+      console.error('Error fetching cart data:', error);
+    }
+  };
+
+  const saveaddress = async () =>{
+    if(!address){
+      toast.warning("Please enter delievery addess", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }else{
+      try {
+        const response = await fetch(`http://localhost:5000/user/saveaddress/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ address }),
+        });
+  
+        
+      } catch (error) {
+        console.error('Error updating stock:', error);
+      }
+    }
+  }
 
   // Define the updateStock function
   const updateStock = async (productId) => {
@@ -122,6 +153,7 @@ function Checkout() {
     window.scrollTo(0, 0);
     fetchData();  // Call fetchData immediately after defining it
     cartTotal();
+    getaddress();
   }, [id]); // Include id in the dependency array
 
 
@@ -218,6 +250,18 @@ function Checkout() {
               </div>
             </div>
           </div>
+         
+          <div className="mt-4">
+            <h2 className='font-bold'>Delivery address</h2>
+            <div className='flex justify-between'>
+            <input className='inline p-2 border-2 rounded-xl w-[90%]' type="text" value={address} onChange={(e)=>{setaddress(e.target.value)}} />
+              <button className="w-20 py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={saveaddress}>
+                save
+              </button>
+            </div>
+           
+            </div>
+
          
             <div className="mt-4">
               <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>

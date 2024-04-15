@@ -13,7 +13,7 @@ const Nav = () => {
     total_cart: '',
     total_order_count: ''
   });
-  
+
   const logout = () => {
     localStorage.clear();
     setUser_id(null);
@@ -31,17 +31,17 @@ const Nav = () => {
       try {
         const response = await fetch(`http://localhost:5000/order/buyerstatics/${user_id}`);
         const data = await response.json();
-        
+
         // Update the state variable with the fetched data
         setBuyerStats(data);
       } catch (error) {
         console.error('Error fetching buyer statistics:', error);
       }
     };
-    
+
     fetchData();
   }, [user_id]);
-  
+
   return (
     <header class="text-gray-700 body-font">
       <div class="container cursor-pointer mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -52,8 +52,8 @@ const Nav = () => {
             <span class="ml-3 cursor-pointer text-xl">RoofTop Cultivation</span>
           </span>
         </Link>
-       
-        
+
+
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-black	flex flex-wrap items-center text-base gap-8 ">
           {
             user_type == 1 ?
@@ -62,22 +62,30 @@ const Nav = () => {
               <div className='flex justify-between gap-6 ml-20'>
                 <Link to="/My_Orders">
                   <div>
-                    <div className="relative inline-block">
-                      <div className="absolute flex items-center justify-center w-5 h-5 text-white bg-red-500 rounded-full -top-1 -right-1">
-                        <span>{buyerStats.total_order_count}</span>
-                      </div>
-                    </div>
+                    {!user_id ?
+                      <></>
+                      :
+                      <div className="relative inline-block">
+                        <div className="absolute flex items-center justify-center w-5 h-5 text-white bg-red-500 rounded-full -top-1 -right-1">
+                          <span>{buyerStats.total_order_count}</span>
+                        </div>
+                      </div>}
                     <CgProfile className='text-2xl ' />
                   </div>
-         
+
                 </Link>
                 <Link to={`/cart`}>
                   <div>
-                  <div className="relative inline-block">
-                      <div className="absolute flex items-center justify-center w-5 h-5 text-white bg-red-500 rounded-full -top-1 -right-1">
-                        <span>{buyerStats.total_cart}</span>
+                    {!user_id ?
+                      <></>
+                      :
+                      <div className="relative inline-block">
+                        <div className="absolute flex items-center justify-center w-5 h-5 text-white bg-red-500 rounded-full -top-1 -right-1">
+                          <span>{buyerStats.total_cart}</span>
+                        </div>
                       </div>
-                    </div>
+                    }
+
                     <BsCart3 className='text-2xl ' />
                   </div>
                 </Link>
