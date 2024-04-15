@@ -277,7 +277,7 @@ function Checkout() {
 
             {address ?
             <div className="mt-4">
-              <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={makePayment}>
+              <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={() => {makePayment();saveaddress(); }} >
                 Proceed to Checkout
               </button>
             </div>
