@@ -82,6 +82,7 @@ function Checkout() {
         position: toast.POSITION.TOP_RIGHT,
       });
     }else{
+      
       try {
         const response = await fetch(`http://localhost:5000/user/saveaddress/${id}`, {
           method: 'POST',
@@ -91,7 +92,7 @@ function Checkout() {
           body: JSON.stringify({ address }),
         });
   
-        
+        makePayment();
       } catch (error) {
         console.error('Error updating stock:', error);
       }
@@ -277,7 +278,10 @@ function Checkout() {
 
             {address ?
             <div className="mt-4">
-              <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]" onClick={() => {makePayment();saveaddress(); }} >
+              <button className="w-full py-2 text-center text-white bg-[#00967C] rounded-md shadow hover:bg-[#113630]"
+              //  onClick={() => {makePayment();saveaddress(); }}
+              onClick={saveaddress}
+                >
                 Proceed to Checkout
               </button>
             </div>
