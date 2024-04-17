@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import img15 from'../images/img15.png'
 
 
@@ -21,11 +22,21 @@ const Section=()=>{
         <button onClick={()=> window.scrollTo(0, 1300)} class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded text-lg">New Arrivals</button>
       </div>
     </div>
-    <div className='w-5/6 lg:max-w-s lg:w-s md:w-1/2'>
-        <img className='object-cover object-center rounded' src={img15} alt="" />
+    <div className='w-5/6 lg:max-w-s lg:w-s md:w-1/2 mx-20'>
+        <img className='' src={img15} alt="" />
     </div>
+    {/* <link to="/chat">
+    <button className="text-4xl  scroll-to-top fixed bottom-20 right-16 text-green-500  duration-300 animate-bounce">
+         Hello</button></link> */}
+         <Link to="/chat">
+                <button className="text-4xl  scroll-to-top fixed bottom-20 right-16 text-green-500  duration-300 animate-bounce">Sign Up
+                </button></Link>
   </div>
+
+
+  
 </section>
+
     </div>
   )
 }
