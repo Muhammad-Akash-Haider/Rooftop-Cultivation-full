@@ -20,6 +20,7 @@ import Product from "./components/Pages/Product";
 import Forgot from "./components/Pages/Forgot";
 import Header from "./components/Header";
 import Business from "./components/Pages/Business";
+import Chat from "./components/Pages/Chat";
 
 import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 
@@ -59,6 +60,7 @@ function App() {
           <Route path="/" element={<Home/>}></Route>
           <Route path="/business/:id" element={<Business/>}></Route>
           <Route path="/categoryPlants/:category" element={<CategoryPlants/>}></Route>
+          <Route path="/chat" element={<Chat/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>
