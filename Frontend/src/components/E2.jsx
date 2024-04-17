@@ -57,7 +57,6 @@ export default function E2() {
             ))}
 
 
-
           </div>
         </div>
 
