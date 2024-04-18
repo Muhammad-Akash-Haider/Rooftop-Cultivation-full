@@ -70,7 +70,11 @@ const Nav = () => {
                           <span>{buyerStats.total_order_count}</span>
                         </div>
                       </div>}
-                    <CgProfile className='text-2xl ' />
+                    {/* <CgProfile className='text-2xl' /> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                    </svg>
+
                   </div>
 
                 </Link>
@@ -86,7 +90,11 @@ const Nav = () => {
                       </div>
                     }
 
-                    <BsCart3 className='text-2xl ' />
+                    {/* <BsCart3 className='text-2xl ' /> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                    <path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" />
+                    </svg>
+
                   </div>
                 </Link>
               </div>
@@ -94,7 +102,17 @@ const Nav = () => {
           }
   
           <div>
-            <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' />
+            {/* <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' /> */}
+            <form action="" class="relative w-max mx-auto">
+
+            <input type="search" name="search" id="search"
+            class="relative peer z-10 bg-transparent w-10 h-10 rounded-full border outline-none cursor-pointer pl-12 pr-4 focus:w-full focus:border-gray-900 stroke-gray-900 focus:cursor-text focus:pl-16 focus:pr-4 "
+            />
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-y-0 my-auto h-8 w-12 px-3.5 stroke-gray-900 border-r border-transparent peer-focus:border-gray-900 peer-focus:stroke-gray-900" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
+            </svg>
+
+            </form>
           </div>
           {user_id ?
             (
