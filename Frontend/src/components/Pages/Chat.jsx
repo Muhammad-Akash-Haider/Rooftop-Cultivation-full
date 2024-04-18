@@ -121,14 +121,20 @@ function ChatInterface() {
             ))}
           </div>
         </div>
-        <div className="bg-gray-200 px-4 py-2 flex">
+        <div className="bg-gray-200 px-4 py-2 flex gap-6">
+
+           {/* Choose Attach files   */}
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mt-1 cursor-pointer">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+        </svg>
+
           <input
             type="text"
             className="flex-1 border-gray-300 focus:ring-indigo-500 focus:border-bg-[#00967C] rounded-md px-3 py-1"
             placeholder="Type your message..."
             onChange={(e) => setIsTyping(e.target.value !== '')}
           />
-          <button onClick={sendMessage} className="ml-2 px-4 py-1 bg-[#00967C] text-white rounded-md">Send</button>
+          <button onClick={sendMessage} className="ml-2 px-4 py-1 bg-[#00967C] hover:bg-[#1B4636] text-white rounded-md">Send</button>
         </div>
       </div>
     </div>
