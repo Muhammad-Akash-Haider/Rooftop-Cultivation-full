@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import Akash2 from '../images/Akash2.jpg';
 import Akash2 from '../Pages/images2/Akash2.jpg';
 
 function ChatMessage({ name, message, isSentByUser }) {
