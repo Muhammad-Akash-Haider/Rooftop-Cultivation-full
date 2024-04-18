@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import img15 from'../images/img15.png'
+import img15 from'../images/img15.png';
 
 
 const Section=()=>{
@@ -25,12 +25,16 @@ const Section=()=>{
     <div className='w-5/6 lg:max-w-s lg:w-s md:w-1/2 mx-20'>
         <img className='' src={img15} alt="" />
     </div>
-    {/* <link to="/chat">
-    <button className="text-4xl  scroll-to-top fixed bottom-20 right-16 text-green-500  duration-300 animate-bounce">
-         Hello</button></link> */}
-         <Link to="/chat">
-                <button className="text-4xl  scroll-to-top fixed bottom-20 right-16 text-green-500  duration-300 animate-bounce">Sign Up
-                </button></Link>
+        <Link to="/chat">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-[60px] h-[60px] scroll-to-top fixed bottom-20 right-16 text-[#00967C] hover:text-[#1B4636] cursor-pointer duration-300 animate-bounce">
+        <path fill-rule="evenodd" d="M4.804 21.644A6.707 6.707 0 0 0 6 21.75a6.721 6.721 0 0 0 3.583-1.029c.774.182 1.584.279 2.417.279 5.322 0 9.75-3.97 9.75-9 0-5.03-4.428-9-9.75-9s-9.75 3.97-9.75 9c0 2.409 1.025 4.587 2.674 6.192.232.226.277.428.254.543a3.73 3.73 0 0 1-.814 1.686.75.75 0 0 0 .44 1.223ZM8.25 10.875a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25ZM10.875 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875-1.125a1.125 1.125 0 1 0 0 2.25 1.125 1.125 0 0 0 0-2.25Z" clip-rule="evenodd" />
+        </svg>
+        </Link>
+
+
+
+
+
   </div>
 
 
