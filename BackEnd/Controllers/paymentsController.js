@@ -31,11 +31,9 @@ exports.getpaymentsbyId = async (req, res) => {
   );
 };
 
-///// payments work for seller  
+// payments work for seller  
 exports.SellerPaymentMethod = async (req, res) => {
-  console.log(req.params);
   const id = req.params.id;
-  console.log(id)
   const { amount } = req.body;
 
   const lineItems = [{
