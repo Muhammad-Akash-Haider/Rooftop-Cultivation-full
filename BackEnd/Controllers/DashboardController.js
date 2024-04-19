@@ -29,7 +29,6 @@ router.get('/dashboardDetails/:id', async (req, res) => {
         const total_amount = results1[0].total_order_amount;
 
         // Fetch data from the second table
-        // Fetch data from the second table
         const query2 = 'SELECT COUNT(*) AS return_count FROM `return/cancels` WHERE seller_id = ?';
         const results2 = await queryAsync(query2, [req.params.id]);
         const returns = results2[0].return_count;
