@@ -21,6 +21,7 @@ import Forgot from "./components/Pages/Forgot";
 import Header from "./components/Header";
 import Business from "./components/Pages/Business";
 import Chat from "./components/Pages/Chat";
+import About from "./components/Pages/About";
 
 import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 
@@ -61,6 +62,7 @@ function App() {
           <Route path="/business/:id" element={<Business/>}></Route>
           <Route path="/categoryPlants/:category" element={<CategoryPlants/>}></Route>
           <Route path="/chat" element={<Chat/>}></Route>
+          <Route path="/about" element={<About/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>
