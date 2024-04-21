@@ -19,7 +19,7 @@ function About() {
         <div class="container mx-auto py-10 px-20">
         <div class="md:flex md:items-center md:justify-between my-10 gap-5">
             <div class="md:w-1/2 md:pr-12">
-                <h1 class="text-4xl font-bold mb-4 mt-20">About Our Company</h1>
+                <h1 class="text-4xl font-bold mb-10 mt-20">About Our Company</h1>
                 <p class="text-gray-700 leading-relaxed mb-4">
                   Welcome to our Rooftop Cultivation company dedicated to empowering individuals with the knowledge and resources to cultivate plants, enhance their surroundings, and contribute to a cleaner environment. At our core, we specialize in providing guidance on plant care, propagation techniques, and innovative methods for selling plants to generate income sustainably.
                 </p>
@@ -33,13 +33,13 @@ function About() {
         </div>
         
         <div class="m-2 my-20">
-          <h2 class="text-2xl text-center font-bold mb-5 mt-32">Services</h2>
+          <h2 class="text-2xl text-center font-bold mb-10 mt-32">Services</h2>
           <p class="text-gray-700 leading-relaxed text-center">
             At our Rooftop Cultivation, we provide a range of essential services to support individuals in their journey towards cultivating green spaces and contributing to a cleaner environment. Our offerings include expert plant care guidance and propagation techniques, ensuring that every plant thrives in its unique environment. Additionally, we offer educational resources aimed at empowering individuals to create green oases within their homes, even in limited spaces like rooftops. Our focus on sustainable income generation encourages learning innovative methods to sell plants responsibly, generating income while positively impacting the environment. We pride ourselves on our seamless delivery system, ensuring that plants reach customers' doorsteps safely and promptly. Moreover, our commitment to environmental stewardship is reflected in our sustainable packaging and delivery practices, minimizing our ecological footprint. Join us in this journey towards transforming spaces, promoting green living, and fostering a deeper connection with nature. Together, let's sow the seeds of a greener, more vibrant future.
           </p>
       </div>
       <div class="m-2 my-20">
-        <h2 class="text-2xl text-center font-bold mb-5 mt-32">Target Market</h2>
+        <h2 class="text-2xl text-center font-bold mb-10 mt-32">Target Market</h2>
         <p class="text-gray-700 leading-relaxed text-center my-14">
           Rooftop Cultivation company is tailored to serve a diverse and environmentally-conscious target market. We cater to individuals who are passionate about cultivating green spaces, whether they are seasoned gardeners or beginners seeking guidance. Our services are ideal for homeowners, renters, and urban dwellers looking to incorporate more greenery into their living environments, including those with limited space such as rooftops or indoor areas.
         </p>
@@ -58,7 +58,7 @@ function About() {
     </div>
 
         <div>
-          <h1 class="text-2xl text-center font-bold mb-10">Team Member's</h1>
+          <h1 class="text-2xl text-center font-bold mb-10">Developer Team</h1>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -104,7 +104,7 @@ function About() {
         </div>
 
         <div class="m-12 my-20">
-            <h2 class="text-2xl text-center font-bold mt-32 mb-16">Our Mission</h2>
+            <h2 class="text-2xl text-center font-bold mt-32 mb-10">Our Mission</h2>
             <p class="text-gray-700 leading-relaxed text-center mb-10">
               Our mission goes beyond mere plant sales. We aim to educate and inspire individuals on the benefits of nurturing greenery, even in limited spaces like rooftops and indoors. We provide comprehensive advice on maximizing space efficiency and creating thriving green environments indoors and outdoors.
             </p>
