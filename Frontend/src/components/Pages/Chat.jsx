@@ -1,21 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Chat() {
     
     const param = useParams();
     const recieverid = param.id;
-
+    const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
+    
     const [selectedChat, setSelectedChat] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [chats, setchats] = useState([]);
 
     // Dummy chat data
-    const chats = [
-        { id: 1, name: 'John', message: 'Hello there!' },
-        { id: 2, name: 'Alice', message: 'How are you?' },
-        { id: 3, name: 'Bob', message: 'Nice weather today.' },
-    ];
+ 
+    const getchats = async () => {
+        console.log(user_id);
+        try {
+            const response = await fetch(`http://localhost:5000/chat/getchats/${user_id}`);
+            if (response.ok) {
+                const data = await response.json();
 
+                setchats(data.data);
+            } else {
+                console.error('Failed to fetch chats:', response.status);
+            }
+        } catch (error) {
+            console.error('Error fetching chats:', error);
+        }
+    };
+
+    useEffect(() => {
+        getchats();
+    }, []); //
+    
+    
     // Dummy messages data
     const initialMessages = [
         { id: 1, sender: 'John', text: 'Hello!' },
@@ -40,8 +58,8 @@ function Chat() {
             {/* Chat List */}
             <div className="w-1/4 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white ">
                 {chats.map((chat) => (
-                    <div key={chat.id} onClick={() => handleChatSelection(chat.id)} className="p-4 m-4 text-black rounded shadow-lg cursor-pointer hover:bg-grrounded-sm hover:bg-green-300 ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white">
-                        <div className="font-semibold text-black ">{chat.name}</div>
+                    <div key={chat.chatid} onClick={() => handleChatSelection(chat.chatid)} className="p-4 m-4 text-black rounded shadow-lg cursor-pointer hover:bg-grrounded-sm hover:bg-green-300 ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white">
+                        <div className="font-semibold text-black ">{chat.business_name}</div>
                         <div className="text-black">{chat.message}</div>
                     </div>
                 ))}

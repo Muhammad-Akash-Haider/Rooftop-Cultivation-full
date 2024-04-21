@@ -36,10 +36,8 @@ const UserVerify = require('./Routes/adminverifyUsersRoutes')
 
 
 
-//Routes Trackttps://www.thunderclient.com/welcome
 
-// app.use('/admin',admin)
-// app.use('/chat', chat)
+app.use('/chat', chat)
 app.use('/nursery',nursery)
 app.use('/order',order)
 app.use('/payment', payment)
