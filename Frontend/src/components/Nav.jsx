@@ -70,7 +70,6 @@ const Nav = () => {
                           <span>{buyerStats.total_order_count}</span>
                         </div>
                       </div>}
-                    {/* <CgProfile className='text-2xl' /> */}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
                     <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                     </svg>
@@ -90,19 +89,25 @@ const Nav = () => {
                       </div>
                     }
 
-                    {/* <BsCart3 className='text-2xl ' /> */}
+
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
                     <path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" />
                     </svg>
 
                   </div>
                 </Link>
+                <Link to={'/about_us'}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
+                   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                    </svg></Link>
+
+
+
               </div>
 
           }
   
           <div>
-            {/* <input className=' hover:rounded border bg-white  rounded  focus:border-[#00967C] focus:ring-2 focus:ring-green-200  outline-none text-gray-700 px-3 leading-8 transition-colors text-sm duration-200 ease-in-out' type="text" placeholder='Search' /> */}
             <form action="" class="relative w-max mx-auto">
 
             <input type="search" name="search" id="search"
@@ -145,12 +150,12 @@ const Nav = () => {
 
             )
             :
-            (<div className='flex justify-between gap-2 ml-20'>
+            (<div className='flex justify-between gap-4 ml-20'>
               <Link to="/Login">
-                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
+                <button className="rounded-full shadow-lg inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-4 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign In
                 </button></Link>
               <Link to="/Register">
-                <button className="inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
+                <button className="rounded-full shadow-lg inline-flex items-center text-white bg-[#00967C] border-0 py-1 px-3 focus:outline-none hover:bg-[#1B4636] rounded text-base mt-4 md:mt-0">Sign Up
                 </button></Link>
             </div>)
           }
