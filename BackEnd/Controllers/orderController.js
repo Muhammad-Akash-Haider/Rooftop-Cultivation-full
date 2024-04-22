@@ -31,7 +31,8 @@ exports.getOrderbyIdseller = async (req, res) => {
     connection.query("SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE order_items.status NOT IN ('return', 'Cancelled') AND seller_id = '" + req.params.id + "'", (err, rows, fields) => {
+    WHERE order_items.status NOT IN ('return', 'Cancelled') AND seller_id = '" + req.params.id + "' \
+    ORDER BY orders.id DESC", (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
