@@ -14,7 +14,6 @@ function Chat() {
     // Dummy chat data
  
     const getchats = async () => {
-        console.log(user_id);
         try {
             const response = await fetch(`http://localhost:5000/chat/getchats/${user_id}`);
             if (response.ok) {
