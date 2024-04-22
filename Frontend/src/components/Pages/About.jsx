@@ -26,6 +26,7 @@ function About() {
                 <p class="text-gray-700 leading-relaxed mb-4">
                     We are dedicated to providing innovative solutions and excellent service to our customers.
                 </p>
+                <div></div>
             </div>
             <div class="md:w-1/2">
                 <img src={Aboutus} alt="Team" class="rounded-lg shadow-md"/>
