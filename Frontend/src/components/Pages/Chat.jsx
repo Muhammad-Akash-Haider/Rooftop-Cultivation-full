@@ -45,6 +45,7 @@ function Chat() {
     const handleChatSelection = (chatId) => {
         setSelectedChat(chatId);
         // Simulating loading older messages
+        console.log(selectedChat);
         setMessages(initialMessages);
     };
 
@@ -79,6 +80,7 @@ function Chat() {
                         </div>
                     )}
                 </div>
+                {selectedChat ? 
                 <div className="p-4 bg-green-200 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ">
                     <input
                         type="text"
@@ -95,6 +97,8 @@ function Chat() {
                         Send
                     </button>
                 </div>
+               : 
+               <></> }
             </div>
         </div>
     );
