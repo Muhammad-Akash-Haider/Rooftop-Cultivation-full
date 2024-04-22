@@ -27,6 +27,44 @@ exports.getchats = async (req, res) => {
     }
 };
 
+exports.getmessagesuser =async (req ,res) =>{
+    const chatId = req.params.chatid;
+
+    // Execute the SQL query
+    connection.query('SELECT * FROM messages INNER JOIN chat ON chat.chatid = messages.chatid WHERE messages.chatid = ?', [chatId], (error, messages, fields) => {
+      if (error) {
+        console.error('Error fetching messages:', error);
+        return;
+      }
+      res.json({
+        data: messages,
+    });
+    });
+    
+}
+
+exports.createMessage = async (req, res) => {
+    const { chatid, text } = req.body; // Assuming you receive chatid, message, and recieverseen in the request body
+    const currentDate = new Date(); // Get the current date and time
+    const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+    // Execute the SQL query
+
+    if(chatid && text){
+    connection.query('INSERT INTO messages (chatid, message, date_time) VALUES (?, ?, ?)', [chatid, text ,formattedDate], (error, result) => {
+        if (error) {
+            console.error('Error creating message:', error);
+            res.status(500).json({ error: 'An error occurred while creating the message.' });
+            return;
+        }
+        // Assuming you want to send back the ID of the newly created message
+        res.json({
+            message: 'Message created successfully',
+            messageId: result.insertId
+        });
+    });
+        }
+};
+
 
 exports.savechat = async (req, res) => {
 

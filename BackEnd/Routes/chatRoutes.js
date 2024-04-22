@@ -1,8 +1,10 @@
 const express= require('express')
 const router = express.Router()
 
-const {savechat ,getchats} = require('../Controllers/chatController');
+const {savechat ,getchats,getmessagesuser,createMessage} = require('../Controllers/chatController');
 
+router.route('/savemessage').post(createMessage)
+router.route('/getmessages/:chatid').get(getmessagesuser)
 router.route('/savechat').post(savechat)
 router.route('/getchats/:id').get(getchats)
 

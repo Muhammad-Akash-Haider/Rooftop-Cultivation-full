@@ -55,7 +55,7 @@ function Business() {
 
       const result = await response.json();
       const chatid =result.chatid;
-      navigation(`/chat/${nurseryid}/${chatid}`);
+      navigation(`/chat/${chatid}`);
    }
 
 

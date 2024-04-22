@@ -1,21 +1,20 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Chat() {
-    
+
     const param = useParams();
-   
-    const recieverid = param.id;
+
     const chatid = param.chatid;
-    
+
     const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
-    
+
     const [selectedChat, setSelectedChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chats, setchats] = useState([]);
 
     // Dummy chat data
- 
+
     const getchats = async () => {
         try {
             const response = await fetch(`http://localhost:5000/chat/getchats/${user_id}`);
@@ -34,8 +33,8 @@ function Chat() {
     useEffect(() => {
         getchats();
     }, []); //
-    
-    
+
+
     // Dummy messages data
     const initialMessages = [
         { id: 1, sender: 'John', text: 'Hello!' },
@@ -44,17 +43,39 @@ function Chat() {
 
     const handleChatSelection = (chatId) => {
         setSelectedChat(chatId);
-        // Simulating loading older messages
-        console.log(selectedChat);
-        setMessages(initialMessages);
+        setInitialMessages(chatId)
     };
 
-    const sendMessage = (text) => {
-        if (text.trim() !== '') {
-            const newMessage = { id: messages.length + 1, sender: 'You', text };
-            setMessages([...messages, newMessage]);
+    const setInitialMessages = async (chatId) => {
+        try {
+            const response = await fetch(`http://localhost:5000/chat/getmessages/${chatId}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch messages');
+            }
+            const data = await response.json();
+            console.log(data.data)
+            setMessages(data.data);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+            // Handle the error appropriately, e.g., display a message to the user
         }
     };
+
+    const sendMessage = async (text,user_id) => {
+        if (text.trim() !== '') {
+            const newMessage = { id: messages.length + 1, sender_id: user_id, message: text };
+            setMessages([...messages, newMessage]);
+        }
+        document.querySelector('input[type="text"]').value = '';
+            const response = await fetch(`http://localhost:5000/chat/savemessage`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ chatid ,text }),
+              });
+        
+    }
 
     return (
         <div className="flex h-screen text-black bg-white">
@@ -73,32 +94,34 @@ function Chat() {
                     {selectedChat && (
                         <div>
                             {messages.map((message) => (
-                                <div key={message.id} className={`p-2 ${message.sender === 'You' ? 'text-right' : ''}`}>
-                                    <div className="inline-block max-w-xs p-2 text-white bg-green-500 rounded-lg">{message.text}</div>
+                                
+                                <div key={message.chatid} className={`p-2 ${message.sender_id == user_id ? 'text-right' : 'text-left'}`}>
+                                  
+                                    <div className="inline-block max-w-xs p-2 text-white bg-green-500 rounded-lg">{message.message}</div>
                                 </div>
                             ))}
                         </div>
                     )}
                 </div>
-                {selectedChat ? 
-                <div className="p-4 bg-green-200 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ">
-                    <input
-                        type="text"
-                        placeholder="Type your message..."
-                        className="p-2 border border-white rounded-l-lg w-[90%]"
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                sendMessage(e.target.value);
-                                e.target.value = '';
-                            }
-                        }}
-                    />
-                    <button onClick={() => sendMessage(document.querySelector('input[type="text"]').value)} className="px-4 py-2 text-white bg-green-500 rounded-r-lg hover:bg-green-600 w-[10%]">
-                        Send
-                    </button>
-                </div>
-               : 
-               <></> }
+                {selectedChat ?
+                    <div className="p-4 bg-green-200 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ">
+                        <input
+                            type="text"
+                            placeholder="Type your message..."
+                            className="p-2 border border-white rounded-l-lg w-[90%]"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    sendMessage(e.target.value);
+                                    e.target.value = '';
+                                }
+                            }}
+                        />
+                        <button onClick={() => sendMessage(document.querySelector('input[type="text"]').value ,user_id)} className="px-4 py-2 text-white bg-green-500 rounded-r-lg hover:bg-green-600 w-[10%]">
+                            Send
+                        </button>
+                    </div>
+                    :
+                    <></>}
             </div>
         </div>
     );
