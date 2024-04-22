@@ -74,9 +74,9 @@ INNER JOIN users ON plant.seller_id = users.id WHERE order_items.status NOT IN (
 
                 /////query for transation 
                 const currentDate = new Date();
-                const insertQuery = `INSERT INTO payments_history (payment_date, payment_method, order_id, payment_amount )
-                     VALUES (?, ?, ?, ?)`;
-                const values = [ currentDate , 'Bank Transfer', order.items_id, order.price ];
+                const insertQuery = `INSERT INTO payments_history (payment_date, payment_method, order_id, payment_amount ,seller_id )
+                     VALUES (?, ?, ?, ? ,?)`;
+                const values = [currentDate, 'Bank Transfer', order.items_id, order.price ,order.seller_id];
 
                 // Execute the query
                 connection.query(insertQuery, values, (error, results, fields) => {
