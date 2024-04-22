@@ -37,18 +37,23 @@ exports.savechat = async (req, res) => {
         connection.query(`SELECT * FROM chat WHERE sender_id = ${user_id} AND receiver_id = ${nurseryid}`, (selectErr, selectRows) => {
             if (!selectErr) {
                 if (selectRows.length > 0) {
-                    // Data already exists
+                    
+                  
                     res.json({
                         status: false,
                         message: 'Data already exists.',
+                        chatid: selectRows[0].chatid,
                     });
                 } else {
                     // Data doesn't exist, perform the insert
                     connection.query(`INSERT INTO chat (sender_id, receiver_id) VALUES (${user_id}, ${nurseryid})`, (insertErr, insertRows, insertFields) => {
                         if (!insertErr) {
+                            const insertedId = insertRows.insertId; // Get the inserted ID
+                          
                             res.json({
                                 status: true,
-                                data: insertRows,
+                                chatid: insertedId, // Include the inserted ID in the response
+                               
                             });
                         } else {
                             console.log(insertErr);

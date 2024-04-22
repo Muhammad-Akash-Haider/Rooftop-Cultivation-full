@@ -4,7 +4,10 @@ import { useParams } from 'react-router-dom';
 function Chat() {
     
     const param = useParams();
+   
     const recieverid = param.id;
+    const chatid = param.chatid;
+    
     const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
     
     const [selectedChat, setSelectedChat] = useState(null);
