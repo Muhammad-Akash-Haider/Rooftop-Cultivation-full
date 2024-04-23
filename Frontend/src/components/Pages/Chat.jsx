@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Chat() {
@@ -13,6 +13,12 @@ function Chat() {
     const [messages, setMessages] = useState([]);
     const [chats, setchats] = useState([]);
 
+    const divRef = useRef(null);
+
+    const scrollToBottom = () => {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    };
+    
     // Dummy chat data
 
     const getchats = async () => {
@@ -22,7 +28,7 @@ function Chat() {
                 const data = await response.json();
 
                 setchats(data.data);
-                
+                console.log(data.data)
             } else {
                 console.error('Failed to fetch chats:', response.status);
             }
@@ -36,13 +42,13 @@ function Chat() {
     }, []); //
 
 
-   
-  
+
+
     const handleChatSelection = (chatId) => {
-       
+
         setSelectedChat(chatId);
         setInitialMessages(chatId)
-       
+
     };
 
     const setInitialMessages = async (chatId) => {
@@ -54,27 +60,32 @@ function Chat() {
             }
             const data = await response.json();
             setMessages(data.data);
-            
+
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
     };
 
-    const sendMessage = async (text,user_id) => {
+    const handleClick = () => {
+    const inputValue = document.querySelector('input[type="text"]').value;
+    sendMessage(inputValue, user_id);
+    scrollToBottom();
+    };
+    const sendMessage = async (text, user_id) => {
         if (text.trim() !== '') {
             const newMessage = { id: messages.length + 1, sender_id: user_id, message: text };
             setMessages([...messages, newMessage]);
         }
-        
+
         document.querySelector('input[type="text"]').value = '';
-            const response = await fetch(`http://localhost:5000/chat/savemessage`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ selectedChat ,text }),
-              });
-        
+        const response = await fetch(`http://localhost:5000/chat/savemessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ selectedChat, text }),
+        });
+
     }
 
     return (
@@ -91,14 +102,31 @@ function Chat() {
             </div>
             {/* Chat Window */}
             <div className="w-3/4 bg-[rgb(246 247 246)] bg-[#ece5dd]">
-                <div className="h-full overflow-y-scroll" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
+                <div ref={divRef} className="h-full overflow-y-scroll" style={{ maxHeight: 'calc(100vh - 5rem)' }}>
                     {selectedChat && (
                         <div>
                             {messages.map((message) => (
-                                
+
                                 <div key={message.chatid} className={`p-2 ${message.sender_id == user_id ? 'text-right' : 'text-left'}`}>
-                                  
-                                    <div className="inline-block max-w-xs p-2 text-white bg-green-500 rounded-lg">{message.message}</div>
+
+                                    <div className="inline-block max-w-xs p-2 text-white bg-green-500 rounded-lg">{message.message}
+                                        {message.date_time ? (
+                                            <div>{new Intl.DateTimeFormat('en-US', {
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: 'numeric',
+                                                minute: 'numeric'
+                                            }).format(new Date(message.date_time))}</div>
+                                        ) : (
+                                            <div>{new Intl.DateTimeFormat('en-US', {
+                                                month: 'long',
+                                                day: 'numeric',
+                                                hour: 'numeric',
+                                                minute: 'numeric'
+                                            }).format(new Date())}</div>
+                                        )}
+                                    </div>
+
                                 </div>
                             ))}
                         </div>
@@ -117,7 +145,7 @@ function Chat() {
                                 }
                             }}
                         />
-                        <button onClick={() => sendMessage(document.querySelector('input[type="text"]').value ,user_id)} className="px-4 py-2 text-white bg-green-500 rounded-r-lg hover:bg-green-600 w-[10%]">
+                        <button onClick={handleClick} className="px-4 py-2 text-white bg-green-500 rounded-r-lg hover:bg-green-600 w-[10%]">
                             Send
                         </button>
                     </div>

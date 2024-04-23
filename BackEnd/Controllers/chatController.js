@@ -6,9 +6,32 @@ exports.getchats = async (req, res) => {
     const user_id = req.params.id; 
     
     if (user_id) {
-        connection.query(`SELECT * FROM chat INNER JOIN nursery ON chat.receiver_id = nursery.seller_id WHERE sender_id = ${user_id}`, (selectErr, rows) => {
+            connection.query(`SELECT 
+            chat.*, 
+            nursery.*, 
+            messages.message
+        FROM 
+            chat 
+        INNER JOIN 
+            nursery ON chat.receiver_id = nursery.seller_id 
+        INNER JOIN 
+            messages ON chat.chatid = messages.chatid
+        INNER JOIN 
+            (
+                SELECT 
+                    chatid, 
+                    MAX(date_time) AS latest_date_time 
+                FROM 
+                    messages 
+                GROUP BY 
+                    chatid
+            ) AS latest_msg ON chat.chatid = latest_msg.chatid 
+            AND messages.date_time = latest_msg.latest_date_time
+        WHERE 
+            chat.sender_id = ${user_id}
+        `, (selectErr, rows) => {
             if (!selectErr) {
-                if (rows.length > 0) { // Corrected variable name
+                if (rows.length > 0) { 
                     res.json({
                         data: rows,
                     });
