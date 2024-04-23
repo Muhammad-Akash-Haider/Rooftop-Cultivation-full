@@ -3,7 +3,7 @@ const express = require('express')
 const connection = require('../Config/db')
 
 exports.getchats = async (req, res) => {
-    const user_id = req.params.id; // Corrected extraction of route parameter
+    const user_id = req.params.id; 
     
     if (user_id) {
         connection.query(`SELECT * FROM chat INNER JOIN nursery ON chat.receiver_id = nursery.seller_id WHERE sender_id = ${user_id}`, (selectErr, rows) => {

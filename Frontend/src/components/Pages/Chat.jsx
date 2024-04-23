@@ -35,12 +35,8 @@ function Chat() {
     }, []); //
 
 
-    // Dummy messages data
-    const initialMessages = [
-        { id: 1, sender: 'John', text: 'Hello!' },
-        { id: 2, sender: 'You', text: 'Hi there!' },
-    ];
-
+   
+  
     const handleChatSelection = (chatId) => {
         setSelectedChat(chatId);
         setInitialMessages(chatId)
