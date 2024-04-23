@@ -22,6 +22,7 @@ function Chat() {
                 const data = await response.json();
 
                 setchats(data.data);
+                
             } else {
                 console.error('Failed to fetch chats:', response.status);
             }
@@ -38,22 +39,24 @@ function Chat() {
    
   
     const handleChatSelection = (chatId) => {
+       
         setSelectedChat(chatId);
         setInitialMessages(chatId)
+       
     };
 
     const setInitialMessages = async (chatId) => {
         try {
+            setMessages([]);
             const response = await fetch(`http://localhost:5000/chat/getmessages/${chatId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch messages');
             }
             const data = await response.json();
-            console.log(data.data)
             setMessages(data.data);
+            
         } catch (error) {
             console.error('Error fetching messages:', error);
-            // Handle the error appropriately, e.g., display a message to the user
         }
     };
 
@@ -62,13 +65,14 @@ function Chat() {
             const newMessage = { id: messages.length + 1, sender_id: user_id, message: text };
             setMessages([...messages, newMessage]);
         }
+        
         document.querySelector('input[type="text"]').value = '';
             const response = await fetch(`http://localhost:5000/chat/savemessage`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ chatid ,text }),
+                body: JSON.stringify({ selectedChat ,text }),
               });
         
     }
@@ -79,6 +83,7 @@ function Chat() {
             <div className="w-1/4 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white ">
                 {chats.map((chat) => (
                     <div key={chat.chatid} onClick={() => handleChatSelection(chat.chatid)} className="p-4 m-4 text-black rounded shadow-lg cursor-pointer hover:bg-grrounded-sm hover:bg-green-300 ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white">
+                        {chat.chatid}
                         <div className="font-semibold text-black ">{chat.business_name}</div>
                         <div className="text-black">{chat.message}</div>
                     </div>

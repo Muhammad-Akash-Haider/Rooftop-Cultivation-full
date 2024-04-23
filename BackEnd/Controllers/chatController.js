@@ -44,13 +44,13 @@ exports.getmessagesuser =async (req ,res) =>{
 }
 
 exports.createMessage = async (req, res) => {
-    const { chatid, text } = req.body; // Assuming you receive chatid, message, and recieverseen in the request body
-    const currentDate = new Date(); // Get the current date and time
+    const { selectedChat, text } = req.body; 
+   
+    const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-    // Execute the SQL query
 
-    if(chatid && text){
-    connection.query('INSERT INTO messages (chatid, message, date_time) VALUES (?, ?, ?)', [chatid, text ,formattedDate], (error, result) => {
+    if(selectedChat && text){
+    connection.query('INSERT INTO messages (chatid, message, date_time) VALUES (?, ?, ?)', [selectedChat, text ,formattedDate], (error, result) => {
         if (error) {
             console.error('Error creating message:', error);
             res.status(500).json({ error: 'An error occurred while creating the message.' });
