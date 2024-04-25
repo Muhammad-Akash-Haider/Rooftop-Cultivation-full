@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2024 at 07:02 AM
+-- Generation Time: Apr 25, 2024 at 05:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id`, `buyer_id`, `product_id`, `stock`) VALUES
-(5, '25', 31, 2);
+(5, '25', 31, 2),
+(38, '26', 36, 1);
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,8 @@ CREATE TABLE `chat` (
 --
 
 INSERT INTO `chat` (`chatid`, `sender_id`, `receiver_id`) VALUES
-(7, 26, 25);
+(7, 26, 25),
+(8, 26, 69);
 
 -- --------------------------------------------------------
 
@@ -117,7 +119,23 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`messageid`, `chatid`, `message`, `recieverseen`, `date_time`) VALUES
-(20, 7, 'hey', 0, '2024-04-22 17:45:06');
+(26, 8, 'hey', 0, '2024-04-23 15:56:34'),
+(27, 7, 'you have baby plants', 0, '2024-04-23 15:57:10'),
+(28, 8, 'wan t rose trager do you have', 0, '2024-04-23 15:57:35'),
+(29, 8, 'hi', 0, '2024-04-23 15:57:44'),
+(30, 7, 'hi', 0, '2024-04-23 16:23:28'),
+(31, 7, 'hu', 0, '2024-04-23 16:24:36'),
+(32, 7, 'last message', 0, '2024-04-23 16:27:30'),
+(33, 7, 'hey', 0, '2024-04-23 16:29:17'),
+(34, 7, 'hi', 0, '2024-04-23 16:32:09'),
+(35, 7, 'how are you', 0, '2024-04-23 16:32:17'),
+(36, 7, 'i am not here', 0, '2024-04-23 16:32:27'),
+(37, 7, 'hi', 0, '2024-04-23 16:32:34'),
+(38, 7, 'hy', 0, '2024-04-23 16:43:17'),
+(39, 7, 'hey', 0, '2024-04-23 16:43:28'),
+(40, 7, 'omg', 0, '2024-04-23 16:43:34'),
+(41, 8, 'hi', 0, '2024-04-23 16:43:46'),
+(42, 8, 'hey', 0, '2024-04-23 16:43:50');
 
 -- --------------------------------------------------------
 
@@ -159,7 +177,8 @@ CREATE TABLE `nursery` (
 --
 
 INSERT INTO `nursery` (`id`, `seller_id`, `business_name`, `business_location`, `description`, `gallery`) VALUES
-(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622766027-asdasdasd.jpeg, images-1704622766028-images-1701593342454-kissan-nnl1o120i.png, images-1704622766031-images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1704622766049-images-1701593342460-image-pepper-nursery-new.jpg');
+(7, 25, 'Kasur Nursery', 'Main Simly Dam Road, Bank Colony Barakahu, Islamabad, Islamabad Capital Territory', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622766027-asdasdasd.jpeg, images-1704622766028-images-1701593342454-kissan-nnl1o120i.png, images-1704622766031-images-1701593342455-kissan-nursery-garden-santhur-krishnagiri-plant-nurseries-yqnl1o120i.avif, images-1704622766049-images-1701593342460-image-pepper-nursery-new.jpg'),
+(8, 69, 'Al Faisal Nursery', ' 70 Peshawar Mor Interchange, MPCHS H-9, Islamabad, Islamabad Capital Territory 44000', '<p><strong>It\'s wonderful to hear that Islamabad Nursery Farm is dedicated to providing high-quality Landscape Works on site and that the services are well-received by its customers. Customer satisfaction is a crucial aspect of any business, and it\'s great that INF places a strong emphasis on it.</strong></p><p>&nbsp;</p><p><strong>Maintaining a commitment to productivity and standards is essential in the landscaping industry, where attention to detail and the quality of workmanship can greatly influence the overall success of a project. It\'s evident that Islamabad Nursery Farm takes pride in its work, and the positive feedback from customers is a testament to the company\'s dedication to excellence.</strong></p><p>&nbsp;</p><p><strong>Building strong affiliations with customers is key for the long-term success of any business. A satisfied and loyal customer base often leads to repeat business and positive word-of-mouth recommendations, which can contribute significantly to the growth and reputation of Islamabad Nursery Farm.</strong></p>', 'images-1713884806732-nurser3.jpg, images-1713884806736-nurser2.jpg, images-1713884806742-nurser1.jpg');
 
 -- --------------------------------------------------------
 
@@ -260,7 +279,8 @@ INSERT INTO `plant` (`id`, `seller_id`, `name`, `price`, `stock`, `category`, `d
 (30, '25', 'Iris virginica ', 2500, 1, 'flowers', '<h2><em>Itea virginica</em></h2><h3><em>Itea virginica</em>&nbsp;L.</h3><h3>Virginia Sweetspire, Tassel-white, Virginia Willow</h3><p>Virginia sweetspire is a mound-shaped, slender-branched,&nbsp;<span style=\"color: rgb(103, 118, 23);\">deciduous</span>&nbsp;<span style=\"color: rgb(103, 118, 23);\">shrub</span>&nbsp;to 10 ft. Small, white flowers bloom in 4 in. spires that droop with the arching branches. Flowers open from base to tip so that the plant appears to bloom for a long time. Leaves turn red to purple in fall and persist well into the winter. This plant is&nbsp;<span style=\"color: rgb(103, 118, 23);\">semi-evergreen</span>&nbsp;in the southern part of its range.</p><p>The long tassels of white flowers and red fall foliage make this an attractive ornamental. Most effective in massed plantings, as single plants tend to be scraggly.</p><p>&nbsp;</p>', 'images-1704622464852-images-1701595984146-satosa3).jpeg, images-1704622464852-images-1701596015936-satosa1).jpeg, images-1704622464853-images-1701596015936-satosa3).jpeg', 'medium', 'medium', 'outdoor'),
 (31, '25', 'Setosa', 1400, 1, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1704622593085-images-1701596015936-satosa3).jpeg, images-1701593799952-satosa3).jpeg, images-1701593799952-satosa (2).jpeg', 'medium', 'medium', 'indoor'),
 (32, '25', 'Setosa tea', 1800, 2, 'fruits', '<h3><strong>Why to Choose Kasur Nursery Farm Islamabad.</strong></h3><p>If you have a yard, garden or balcony that needs a little love, we can help.</p><p>We offer a wide range of plants in all shapes and sizes—from hardy flowers to tropical trees and shrubs. We also have a large selection of ornamental grasses, succulents and cacti.</p><p>We offer a range of garden design services in Bhara Kahu so you can choose what your garden needs for success. We can build your dream garden with our custom-designed gardens or we can help you bring your vision to life by designing your garden layout on our website.</p>', 'images-1701596015936-satosa (2).jpeg, images-1701596015936-satosa3).jpeg, images-1701596015936-satosa1).jpeg', 'small', 'medium', 'both'),
-(34, '25', 'Red Rose ', 1000, 1, 'flowers', '<p>This is my collection of rose have multiple bariants</p>', 'images-1704882669750-adelaide-hoodless-rose.jpg, images-1704882669750-04.-Rose-Flower-zoom-view-image.jpg', 'medium', 'high', 'outdoor');
+(34, '25', 'Red Rose ', 1000, 1, 'flowers', '<p>This is my collection of rose have multiple bariants</p>', 'images-1704882669750-adelaide-hoodless-rose.jpg, images-1704882669750-04.-Rose-Flower-zoom-view-image.jpg', 'medium', 'high', 'outdoor'),
+(36, '69', 'Alocasia', 1000, 6, 'flowers', '<p>The large,&nbsp;<a href=\"https://en.wikipedia.org/wiki/Leaf_shape\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">cordate or sagittate</a>&nbsp;<a href=\"https://en.wikipedia.org/wiki/Leaf\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">leaves</a>&nbsp;grow to a length of 20 to 90&nbsp;cm (8 to 35&nbsp;in) on long&nbsp;<a href=\"https://en.wikipedia.org/wiki/Petiole_(botany)\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">petioles</a>. Their araceous&nbsp;<a href=\"https://en.wikipedia.org/wiki/Flower\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">flowers</a>&nbsp;grow at the end of a short stalk, but are not conspicuous; often hidden behind the leaf petioles.</p><p>The&nbsp;<a href=\"https://en.wikipedia.org/wiki/Corm\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">corms</a>&nbsp;of some species can be processed to make them edible, however, the raw plants contain&nbsp;<a href=\"https://en.wikipedia.org/wiki/Ergastic_substance#Crystals\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">raphid</a>&nbsp;or&nbsp;<a href=\"https://en.wikipedia.org/wiki/Raphide\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">raphide</a>&nbsp;crystals of&nbsp;<a href=\"https://en.wikipedia.org/wiki/Calcium_oxalate\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">calcium oxalate</a>&nbsp;along with other irritants (possibly including&nbsp;<a href=\"https://en.wikipedia.org/wiki/Protease\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\">proteases</a>)<a href=\"https://en.wikipedia.org/wiki/Alocasia#cite_note-3\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: initial; color: rgb(51, 102, 204);\"><sup>[3]</sup></a>&nbsp;that can numb and swell the tongue and pharynx. This can cause difficulty breathing and sharp pain in the throat. Lower parts of the plant contain the highest concentrations of the poison.</p><p>Prolonged boiling before serving or processing may reduce risk of adverse reactions. Additionally, acidic fruit such as tamarind may dissolve the raphides altogether. It\'s important to note, however, that this genus varies in toxicity, and can still be dangerous to ingest, even after taking precautions.</p>', 'images-1713884301876-images.jpg, images-1713884301881-Cactus.jpg, images-1713884301883-alocasia_mooiwatplantendoen_1.jpg', 'medium', 'medium', 'both');
 
 -- --------------------------------------------------------
 
@@ -316,7 +336,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `First_name`, `last_name`, `email`, `password`, `user_type`, `city`, `delievery_address`, `phone`, `user_status`, `otp`, `email_verified`) VALUES
 (25, 'Majid ', 'ali', 'ma5788678@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '1', 'Rawalpindi', NULL, '03185402854', 1, 968597, 1),
 (26, 'muhammad ', 'ashba', 'majid.glaxit@gmail.com', '$2b$10$YjXfWrnKDSyYNnGa2yMoROOsX/I2hcRnrXy44pwRAXPazMn0teBXa', '0', 'Rawalpindi', 'wah cantt b block taxila islamabd', '03110794433', 0, 321489, 1),
-(69, 'asfasd ', 'yar', 'asfand@gamil.com', '$2b$10$RFxExNvU/.mSF1CzZGhvFOq339dI1vKNHsUPuq39nY15MN/MvXVkW', '1', 'Islamabad', NULL, '03110794433', 0, 557704, 1);
+(69, 'asfasd ', 'yar', 'asfand@gamil.com', '$2b$10$RFxExNvU/.mSF1CzZGhvFOq339dI1vKNHsUPuq39nY15MN/MvXVkW', '1', 'Islamabad', NULL, '03110794433', 1, 557704, 1);
 
 -- --------------------------------------------------------
 
@@ -448,19 +468,19 @@ ALTER TABLE `bankaccounts`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
-  MODIFY `chatid` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `chatid` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `messageid` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `messageid` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -472,7 +492,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `nursery`
 --
 ALTER TABLE `nursery`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -496,7 +516,7 @@ ALTER TABLE `payments_history`
 -- AUTO_INCREMENT for table `plant`
 --
 ALTER TABLE `plant`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `return/cancels`
