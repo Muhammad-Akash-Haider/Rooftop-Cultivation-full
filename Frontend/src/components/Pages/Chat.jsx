@@ -73,7 +73,7 @@ function Chat() {
     };
     const sendMessage = async (text, user_id) => {
         if (text.trim() !== '') {
-            const newMessage = { id: messages.length + 1, sender_id: user_id, message: text };
+            const newMessage = { id: messages.length + 1, sendermessage: user_id, message: text };
             setMessages([...messages, newMessage]);
         }
 
@@ -83,7 +83,7 @@ function Chat() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ selectedChat, text }),
+            body: JSON.stringify({ selectedChat, text ,user_id}),
         });
 
     }
@@ -107,7 +107,7 @@ function Chat() {
                         <div>
                             {messages.map((message) => (
 
-                                <div key={message.chatid} className={`p-2 ${message.sender_id == user_id ? 'text-right' : 'text-left'}`}>
+                                <div key={message.chatid} className={`p-2 ${message.sendermessage == user_id ? 'text-right' : 'text-left'}`}>
 
                                     <div className="inline-block max-w-xs p-2 text-white bg-green-500 rounded-lg">{message.message}
                                         {message.date_time ? (

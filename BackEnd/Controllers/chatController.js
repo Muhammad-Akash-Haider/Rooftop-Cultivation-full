@@ -49,6 +49,56 @@ exports.getchats = async (req, res) => {
         res.status(400).json({ error: 'User ID parameter is missing.' });
     }
 };
+exports.getchatsbusiness = async (req, res) => {
+    const user_id = req.params.id; 
+    
+    if (user_id) {
+            connection.query(`SELECT 
+            chat.*, 
+            sender.*, 
+            receiver.*, 
+            messages.message
+        FROM 
+            chat 
+        INNER JOIN 
+            users AS sender ON chat.sender_id = sender.id
+        INNER JOIN 
+            nursery AS receiver ON chat.receiver_id = receiver.seller_id
+        INNER JOIN 
+            messages ON chat.chatid = messages.chatid
+        INNER JOIN 
+            (
+                SELECT 
+                    chatid, 
+                    MAX(date_time) AS latest_date_time 
+                FROM 
+                    messages 
+                GROUP BY 
+                    chatid
+            ) AS latest_msg ON chat.chatid = latest_msg.chatid 
+            AND messages.date_time = latest_msg.latest_date_time
+        WHERE 
+            chat.receiver_id = ${user_id}
+        `, (selectErr, rows) => {
+            if (!selectErr) {
+                if (rows.length > 0) { 
+                    res.json({
+                        data: rows,
+                    });
+                } else {
+                    res.json({
+                        message: 'No chats found for the specified user.',
+                    });
+                }
+            } else {
+                console.error('Error fetching chats:', selectErr);
+                res.status(500).json({ error: 'An error occurred while fetching chats.' });
+            }
+        });
+    } else {
+        res.status(400).json({ error: 'User ID parameter is missing.' });
+    }
+};
 
 exports.getmessagesuser =async (req ,res) =>{
     const chatId = req.params.chatid;
@@ -67,13 +117,13 @@ exports.getmessagesuser =async (req ,res) =>{
 }
 
 exports.createMessage = async (req, res) => {
-    const { selectedChat, text } = req.body; 
+    const { selectedChat, text,user_id } = req.body; 
    
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
     if(selectedChat && text){
-    connection.query('INSERT INTO messages (chatid, message, date_time) VALUES (?, ?, ?)', [selectedChat, text ,formattedDate], (error, result) => {
+    connection.query('INSERT INTO messages (chatid, message, date_time,sendermessage) VALUES (?, ?, ?,?)', [selectedChat, text ,formattedDate,user_id], (error, result) => {
         if (error) {
             console.error('Error creating message:', error);
             res.status(500).json({ error: 'An error occurred while creating the message.' });

@@ -18,19 +18,16 @@ import Login from "./components/Pages/Login";
 import Register from "./components/Pages/Register"
 import Product from "./components/Pages/Product";
 import Forgot from "./components/Pages/Forgot";
-import Header from "./components/Header";
 import Business from "./components/Pages/Business";
 import Chat from "./components/Pages/Chat";
 import About from "./components/Pages/About";
 
 import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
-
+import ChatBusiness from './Dashboards/SellerDashboard/businesschat';
 import My_Orders from "./components/Pages/My_Orders";
 import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
 import CategoryPlants from "./components/Pages/CategoryPlants"
 import Verifyemail from "./components/Pages/Verifyemail";
-
-
 
 
 
@@ -50,6 +47,7 @@ function App() {
           <Route path="/yournurcery" element={<Yournurcery />}></Route>
           <Route path="/returns" element={<Returns />}></Route>
           <Route path="/Products" element={<AllProducts />}></Route>
+          <Route path="/chatbusiness" element={<ChatBusiness />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/emailverify" element={<Verifyemail/>}></Route>
