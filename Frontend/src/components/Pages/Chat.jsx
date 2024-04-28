@@ -137,12 +137,12 @@ function Chat() {
                             type="text"
                             placeholder="Type your message..."
                             className="p-2 border border-white rounded-l-lg w-[90%]"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    sendMessage(e.target.value);
-                                    e.target.value = '';
-                                }
-                            }}
+                            // onKeyDown={(e) => {
+                            //     if (e.key === 'Enter') {
+                            //         sendMessage(e.target.value);
+                            //         e.target.value = '';
+                            //     }
+                            // }}
                         />
                         <button onClick={handleClick} className="px-4 py-2 text-white bg-green-500 rounded-r-lg hover:bg-green-600 w-[10%]">
                             Send
