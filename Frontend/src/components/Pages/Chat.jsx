@@ -94,7 +94,6 @@ function Chat() {
             <div className="w-1/4 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white ">
                 {chats.map((chat) => (
                     <div key={chat.chatid} onClick={() => handleChatSelection(chat.chatid)} className="p-4 m-4 text-black rounded shadow-lg cursor-pointer hover:bg-grrounded-sm hover:bg-green-300 ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white">
-                        {chat.chatid}
                         <div className="font-semibold text-black ">{chat.business_name}</div>
                         <div className="text-black">{chat.message}</div>
                     </div>

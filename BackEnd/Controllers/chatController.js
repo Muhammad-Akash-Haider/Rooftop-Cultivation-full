@@ -2,42 +2,49 @@ const express = require('express')
 
 const connection = require('../Config/db')
 
+
 exports.getchats = async (req, res) => {
-    const user_id = req.params.id; 
-    
+    const user_id = req.params.id;
+
     if (user_id) {
-            connection.query(`SELECT 
-            chat.*, 
-            nursery.*, 
-            messages.message
-        FROM 
-            chat 
-        INNER JOIN 
-            nursery ON chat.receiver_id = nursery.seller_id 
-        INNER JOIN 
-            messages ON chat.chatid = messages.chatid
-        INNER JOIN 
-            (
-                SELECT 
-                    chatid, 
-                    MAX(date_time) AS latest_date_time 
-                FROM 
-                    messages 
-                GROUP BY 
-                    chatid
-            ) AS latest_msg ON chat.chatid = latest_msg.chatid 
-            AND messages.date_time = latest_msg.latest_date_time
-        WHERE 
-            chat.sender_id = ${user_id}
-        `, (selectErr, rows) => {
+        connection.query(`
+            SELECT 
+                chat.*,
+                nursery.*,
+                latest_message.message,
+                latest_message.date_time
+            FROM 
+                chat
+            INNER JOIN 
+                nursery ON chat.receiver_id = nursery.seller_id
+            LEFT JOIN 
+                (
+                    SELECT 
+                        messages1.chatid, 
+                        messages1.message, 
+                        messages1.date_time
+                    FROM 
+                        messages messages1
+                    LEFT JOIN 
+                        messages messages2
+                    ON 
+                        (messages1.chatid = messages2.chatid AND messages1.date_time < messages2.date_time)
+                    WHERE 
+                        messages2.date_time IS NULL
+                ) AS latest_message ON chat.chatid = latest_message.chatid
+            WHERE 
+                chat.sender_id = ?
+            ORDER BY 
+                latest_message.date_time DESC
+        `, [user_id], (selectErr, rows) => {
             if (!selectErr) {
-                if (rows.length > 0) { 
+                if (rows.length > 0) {
                     res.json({
-                        data: rows,
+                        data: rows
                     });
                 } else {
                     res.json({
-                        message: 'No chats found for the specified user.',
+                        message: 'No chats found for the specified user.'
                     });
                 }
             } else {
@@ -49,45 +56,53 @@ exports.getchats = async (req, res) => {
         res.status(400).json({ error: 'User ID parameter is missing.' });
     }
 };
+
+
 exports.getchatsbusiness = async (req, res) => {
     const user_id = req.params.id; 
     
     if (user_id) {
-            connection.query(`SELECT 
-            chat.*, 
-            sender.*, 
-            receiver.*, 
-            messages.message
-        FROM 
-            chat 
-        INNER JOIN 
-            users AS sender ON chat.sender_id = sender.id
-        INNER JOIN 
-            nursery AS receiver ON chat.receiver_id = receiver.seller_id
-        INNER JOIN 
-            messages ON chat.chatid = messages.chatid
-        INNER JOIN 
-            (
-                SELECT 
-                    chatid, 
-                    MAX(date_time) AS latest_date_time 
-                FROM 
-                    messages 
-                GROUP BY 
-                    chatid
-            ) AS latest_msg ON chat.chatid = latest_msg.chatid 
-            AND messages.date_time = latest_msg.latest_date_time
-        WHERE 
-            chat.receiver_id = ${user_id}
-        `, (selectErr, rows) => {
+        connection.query(`
+            SELECT 
+                chat.*,
+                sender.*,
+                receiver.*,
+                latest_message.message,
+                latest_message.date_time
+            FROM 
+                chat
+            INNER JOIN 
+                users AS sender ON chat.sender_id = sender.id
+            INNER JOIN 
+                nursery AS receiver ON chat.receiver_id = receiver.seller_id
+            LEFT JOIN 
+                (
+                    SELECT 
+                        messages1.chatid, 
+                        messages1.message, 
+                        messages1.date_time
+                    FROM 
+                        messages messages1
+                    LEFT JOIN 
+                        messages messages2
+                    ON 
+                        (messages1.chatid = messages2.chatid AND messages1.date_time < messages2.date_time)
+                    WHERE 
+                        messages2.date_time IS NULL
+                ) AS latest_message ON chat.chatid = latest_message.chatid
+            WHERE 
+                chat.receiver_id = ?
+            ORDER BY 
+                latest_message.date_time DESC
+        `, [user_id], (selectErr, rows) => {
             if (!selectErr) {
                 if (rows.length > 0) { 
                     res.json({
-                        data: rows,
+                        data: rows
                     });
                 } else {
                     res.json({
-                        message: 'No chats found for the specified user.',
+                        message: 'No chats found for the specified user.'
                     });
                 }
             } else {
@@ -99,6 +114,7 @@ exports.getchatsbusiness = async (req, res) => {
         res.status(400).json({ error: 'User ID parameter is missing.' });
     }
 };
+
 
 exports.getmessagesuser =async (req ,res) =>{
     const chatId = req.params.chatid;
