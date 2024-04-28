@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-function Chat() {
+function Chat({ socket }) {
 
     const param = useParams();
 
@@ -71,12 +71,30 @@ function Chat() {
     sendMessage(inputValue, user_id);
     scrollToBottom();
     };
+    
+  
+    useEffect(() => {
+        socket.on('messageResponse', (data) => {
+            if (data.selectedchat === selectedChat) {
+             setMessages([...messages, data])
+            }
+        });
+      }, [socket, messages]);
+    
     const sendMessage = async (text, user_id) => {
-        if (text.trim() !== '') {
-            const newMessage = { id: messages.length + 1, sendermessage: user_id, message: text };
-            setMessages([...messages, newMessage]);
-        }
+        // if (text.trim() !== '') {
+        //     const newMessage = { id: messages.length + 1, sendermessage: user_id, message: text };
+        //     setMessages([...messages, newMessage]);
+        // }
 
+        
+        socket.emit('message', {
+            message: text,
+            sendermessage: user_id,
+            socketID: socket.id,
+            selectedchat:selectedChat
+          });
+          
         document.querySelector('input[type="text"]').value = '';
         const response = await fetch(`http://localhost:5000/chat/savemessage`, {
             method: 'POST',

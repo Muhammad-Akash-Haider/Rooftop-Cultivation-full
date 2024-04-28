@@ -28,7 +28,8 @@ import My_Orders from "./components/Pages/My_Orders";
 import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
 import CategoryPlants from "./components/Pages/CategoryPlants"
 import Verifyemail from "./components/Pages/Verifyemail";
-
+import socketIO from 'socket.io-client';
+const socket = socketIO.connect('http://localhost:5000');
 
 
 function App() {
@@ -47,7 +48,6 @@ function App() {
           <Route path="/yournurcery" element={<Yournurcery />}></Route>
           <Route path="/returns" element={<Returns />}></Route>
           <Route path="/Products" element={<AllProducts />}></Route>
-          <Route path="/chatbusiness" element={<ChatBusiness />}></Route>
           <Route path="/SellerDashboard" element={<Sellerdashboard />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/emailverify" element={<Verifyemail/>}></Route>
@@ -57,9 +57,10 @@ function App() {
           <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
-          <Route path="/business/:id" element={<Business/>}></Route>
+          <Route path="/business/:id" element={<Business />}></Route>
           <Route path="/categoryPlants/:category" element={<CategoryPlants/>}></Route>
-          <Route path="/chat/:chatid" element={<Chat/>}></Route>
+          <Route path="/chatbusiness" element={<ChatBusiness  socket={socket} />}></Route>
+          <Route path="/chat/:chatid" element={<Chat socket={socket}/>}></Route>
           <Route path="/about" element={<About/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
