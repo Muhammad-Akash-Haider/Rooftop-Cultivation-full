@@ -283,8 +283,8 @@ exports.userorderstatics = async (req, res) => {
     // SQL query to fetch the total items in the cart and the count of latest orders
     const sqlQuery = `SELECT
     (SELECT COUNT(*) FROM cart WHERE buyer_id = ?) AS total_cart,
-    (SELECT COUNT(*) FROM orders WHERE buyer_id = ? AND order_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)) AS total_order_count;
-    `;
+    (SELECT COUNT(*) FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.buyer_id = ? AND order_items.status = 'Pending') AS total_order_count;
+`; 
 
     // Execute the query
     connection.query(sqlQuery, [userId, userId], (error, results, fields) => {
