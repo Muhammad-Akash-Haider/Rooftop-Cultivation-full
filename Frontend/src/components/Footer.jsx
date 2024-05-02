@@ -15,8 +15,8 @@ function Footer() {
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
             <span class="ml-3 text-xl">Rooftop Cultivation</span>
           </a>
-          <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2023 — Supervision By Prof Tajamul Shahzad
-            {/* <a href="{LOGO}" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@Supervision By Prof Tajamul Shahzad</a> */}
+          <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2023 — 
+            {/* <a href="{LOGO}" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@</a> */}
           </p>
           <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
             <a class="text-[#1877F2]">

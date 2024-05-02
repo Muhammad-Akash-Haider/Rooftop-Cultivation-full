@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/LOGO.png';
-import { CgProfile } from "react-icons/cg";
-import { BsCart3 } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
+
 
 const Nav = () => {
+  
+  const navigae= useNavigate();
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   const [user_type, setUser_type] = useState(localStorage.getItem('user_type'));
   const [user_name, setuser_name] = useState(localStorage.getItem('user_name'));
@@ -18,6 +20,7 @@ const Nav = () => {
     localStorage.clear();
     setUser_id(null);
     setUser_type(null);
+    navigae('/');
   };
 
   useEffect(() => {

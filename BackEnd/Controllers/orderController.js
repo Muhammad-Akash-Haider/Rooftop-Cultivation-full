@@ -31,7 +31,8 @@ exports.getOrderbyIdseller = async (req, res) => {
     connection.query("SELECT * FROM orders \
     INNER JOIN order_items ON orders.id = order_items.order_id \
     INNER JOIN plant ON plant.id = order_items.product_id \
-    WHERE order_items.status NOT IN ('return', 'Cancelled') AND seller_id = '" + req.params.id + "'", (err, rows, fields) => {
+    WHERE order_items.status NOT IN ('return', 'Cancelled') AND seller_id = '" + req.params.id + "' \
+    ORDER BY orders.id DESC", (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -185,7 +186,7 @@ exports.getAllOrder = async (req, res) => {
 
 exports.getAllreturnsByid = async (req, res) => {
     console.log(req.params.id)
-    connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE users.id = ? AND order_items.status = "Return" OR  order_items.status = "Cancelled"', [req.params.id], (err, rows, fields) => {
+    connection.query('SELECT * FROM `orders` INNER JOIN `order_items` ON orders.id = order_items.order_id INNER JOIN `plant` ON order_items.product_id = plant.id INNER JOIN `users` ON plant.seller_id = users.id  WHERE users.id = ? AND (order_items.status = "Return" OR order_items.status = "Cancelled")', [req.params.id], (err, rows, fields) => {
         if (!err) {
             res.json({
                 rows,
@@ -282,8 +283,8 @@ exports.userorderstatics = async (req, res) => {
     // SQL query to fetch the total items in the cart and the count of latest orders
     const sqlQuery = `SELECT
     (SELECT COUNT(*) FROM cart WHERE buyer_id = ?) AS total_cart,
-    (SELECT COUNT(*) FROM orders WHERE buyer_id = ? AND order_date >= DATE_SUB(NOW(), INTERVAL 3 DAY)) AS total_order_count;
-    `;
+    (SELECT COUNT(*) FROM orders INNER JOIN order_items ON orders.id = order_items.order_id WHERE orders.buyer_id = ? AND order_items.status = 'Pending') AS total_order_count;
+`; 
 
     // Execute the query
     connection.query(sqlQuery, [userId, userId], (error, results, fields) => {

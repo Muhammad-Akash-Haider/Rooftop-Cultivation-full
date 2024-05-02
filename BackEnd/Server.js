@@ -7,8 +7,9 @@ var cors = require('cors')
 const session = require('express-session');
 require('./utils/Paymentsheduler');
 
+const http = require('http').Server(app);
 app.use(cors())
-//Configuring Express Server
+
 
 app.use(bodyparser.json());
 app.use(session({
@@ -20,6 +21,28 @@ app.use(session({
 
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use("/uploads",express.static('uploads'));
+
+const socketIO = require('socket.io')(http, {
+  cors: {
+      origin: "http://localhost:3000"
+  }
+});
+
+//Add this before the app.get() block
+socketIO.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+
+  socket.on('message', (data) => {
+    console.log(data)
+    socketIO.emit('messageResponse', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+  });
+});
+
+
 
 //Routes
 
@@ -36,10 +59,8 @@ const UserVerify = require('./Routes/adminverifyUsersRoutes')
 
 
 
-//Routes Trackttps://www.thunderclient.com/welcome
 
-// app.use('/admin',admin)
-// app.use('/chat', chat)
+app.use('/chat', chat)
 app.use('/nursery',nursery)
 app.use('/order',order)
 app.use('/payment', payment)
@@ -61,7 +82,7 @@ app.use('*' ,(req,res, next)=>{
     })
 
 
-app.listen(port, ()=>{
+http.listen(port, ()=>{
     console.log(`Server is listening on Port ${port}`)
 })
 
