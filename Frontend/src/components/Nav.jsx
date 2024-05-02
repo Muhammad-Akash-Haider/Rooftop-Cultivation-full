@@ -5,9 +5,10 @@ import logo from '../images/LOGO.png';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const Nav = () => {
-  
-  const navigae= useNavigate();
+
+  const navigae = useNavigate();
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   const [user_type, setUser_type] = useState(localStorage.getItem('user_type'));
   const [user_name, setuser_name] = useState(localStorage.getItem('user_name'));
@@ -15,6 +16,41 @@ const Nav = () => {
     total_cart: '',
     total_order_count: ''
   });
+
+  const [products, setproducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/plant/get`);
+
+        const data = await response.json();
+        
+        setproducts(data.rows);
+
+      } catch (error) {
+        console.error('Error fetching plant data:', error);
+      }
+    };
+   
+    fetchData();
+  }, []); 
+  
+
+  // State for search query
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Function to handle search input change
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter products based on search query
+  const filteredProducts = searchQuery ?
+    products.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ) : [];
+
 
   const logout = () => {
     localStorage.clear();
@@ -74,7 +110,7 @@ const Nav = () => {
                         </div>
                       </div>}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
-                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                      <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
                     </svg>
 
                   </div>
@@ -94,34 +130,54 @@ const Nav = () => {
 
 
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
-                    <path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" />
+                      <path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" />
                     </svg>
 
                   </div>
                 </Link>
                 <Link to={'/About'}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
-                   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-                    </svg></Link>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="hover:animate-ping duration-1000 w-6 h-6">
+                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                  </svg></Link>
 
 
 
               </div>
 
           }
-  
+
+
           <div>
-            <form action="" class="relative w-max mx-auto">
+            <div  className="relative mx-auto w-max">
+              <input
+                type="search"
+                name="search"
+                id="search"
+                className="relative z-10 w-10 h-10 pl-12 pr-4 bg-transparent border rounded-full outline-none cursor-pointer peer focus:w-full focus:border-gray-900 stroke-gray-900 focus:cursor-text focus:pl-16 focus:pr-4"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={handleSearchInputChange}
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute inset-y-0 my-auto h-8 w-12 px-3.5 stroke-gray-900 border-r border-transparent peer-focus:border-gray-900 peer-focus:stroke-gray-900"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
 
-            <input type="search" name="search" id="search"
-            class="relative peer z-10 bg-transparent w-10 h-10 rounded-full border outline-none cursor-pointer pl-12 pr-4 focus:w-full focus:border-gray-900 stroke-gray-900 focus:cursor-text focus:pl-16 focus:pr-4 "
-            />
-            <svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-y-0 my-auto h-8 w-12 px-3.5 stroke-gray-900 border-r border-transparent peer-focus:border-gray-900 peer-focus:stroke-gray-900" viewBox="0 0 24 24" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clip-rule="evenodd" />
-            </svg>
-
-            </form>
           </div>
+
+
+
+
+
           {user_id ?
             (
               user_type == 1 ?
@@ -163,10 +219,31 @@ const Nav = () => {
             </div>)
           }
 
-
-
         </nav>
+
       </div>
+      
+      {searchQuery && (
+              <div className='absolute w-6/12 m-auto mt-2 bg-white rounded-lg shadow-lg left-1/4'>
+                {filteredProducts.length > 0 ? (
+                  <ul>
+                    {filteredProducts.map(product => (
+                      <Link to= {`/product/${product.id}`}>
+                      <li className='p-3 font-medium border-b rounded-md cursor-pointer hover:bg-slate-300' key={product.id}>
+                        <div className='flex '>
+                        <img className='block object-cover object-center w-12 h-10' src={`http://localhost:5000/uploads/${product.images.split(',')[0]}`} alt="" />
+                       <p className='ml-8'>{product.name}</p> 
+                        </div>
+                      
+                        </li>
+                      </Link>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className='p-4'>No products found.</p>
+                )}
+              </div>
+            )}
     </header>
   )
 }
