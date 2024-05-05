@@ -224,7 +224,7 @@ const Nav = () => {
       </div>
       
       {searchQuery && (
-              <div className='absolute w-6/12 m-auto mt-2 bg-white rounded-lg shadow-lg left-1/4'>
+              <div className='absolute w-6/12 m-auto mt-2 bg-white rounded-lg shadow-lg left-1/4 max-h-[339px] overflow-y-scroll ' style={scrollbarStyle}>
                 {filteredProducts.length > 0 ? (
                   <ul>
                     {filteredProducts.map(product => (
@@ -247,5 +247,11 @@ const Nav = () => {
     </header>
   )
 }
+
+const scrollbarStyle = {
+  /* For WebKit (Chrome, Safari, etc.) */
+  scrollbarWidth: 'thin',
+  scrollbarColor: '#888 #f1f1f1',
+};
 
 export default Nav;
