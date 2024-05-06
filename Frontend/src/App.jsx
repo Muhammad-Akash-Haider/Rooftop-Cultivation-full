@@ -29,6 +29,7 @@ import My_Order_Buyer from "./components/Pages/My_Order_Buyer";
 import CategoryPlants from "./components/Pages/CategoryPlants"
 import Verifyemail from "./components/Pages/Verifyemail";
 import socketIO from 'socket.io-client';
+import Searchpage from "./components/Pages/Searchpage";
 const socket = socketIO.connect('http://localhost:5000');
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/chatbusiness" element={<ChatBusiness  socket={socket} />}></Route>
           <Route path="/chat/:chatid" element={<Chat socket={socket}/>}></Route>
           <Route path="/about" element={<About/>}></Route>
+          <Route path="/search/:product" element={<Searchpage/>}></Route>
        
           <Route path="/My_Orders_Buyer" element={<My_Order_Buyer/>}></Route>
         </Routes>

@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
+
 const Nav = () => {
 
   const navigae = useNavigate();
@@ -25,17 +27,17 @@ const Nav = () => {
         const response = await fetch(`http://localhost:5000/plant/get`);
 
         const data = await response.json();
-        
+
         setproducts(data.rows);
 
       } catch (error) {
         console.error('Error fetching plant data:', error);
       }
     };
-   
+
     fetchData();
-  }, []); 
-  
+  }, []);
+
 
   // State for search query
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,6 +61,12 @@ const Nav = () => {
     navigae('/');
   };
 
+  const searchdata = () => {
+    console.log(searchQuery)
+    if (searchQuery) {
+      navigae(`/search/${searchQuery}`)
+     }
+  }
   useEffect(() => {
 
     setUser_id(localStorage.getItem('user_id'));
@@ -148,32 +156,22 @@ const Nav = () => {
 
 
           <div>
-            <div  className="relative mx-auto w-max">
-              <input
-                type="search"
-                name="search"
-                id="search"
-                className="relative z-10 w-10 h-10 pl-12 pr-4 bg-transparent border rounded-full outline-none cursor-pointer peer focus:w-full focus:border-gray-900 stroke-gray-900 focus:cursor-text focus:pl-16 focus:pr-4"
-                placeholder="Search products..."
-                value={searchQuery}
+
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+            <div class="relative w-[300px]">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+              </div>
+              <input value={searchQuery}
                 onChange={handleSearchInputChange}
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="absolute inset-y-0 my-auto h-8 w-12 px-3.5 stroke-gray-900 border-r border-transparent peer-focus:border-gray-900 peer-focus:stroke-gray-900"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                  clipRule="evenodd"
-                />
-              </svg>
+                type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500" placeholder="Search plants, flowers..." required />
+              <button type="button" onClick={searchdata} class="text-white absolute end-2.5 bottom-2.5 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300  rounded-lg text-sm px-4 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Search</button>
             </div>
 
-          </div>
 
+          </div>
 
 
 
@@ -222,28 +220,28 @@ const Nav = () => {
         </nav>
 
       </div>
-      
+
       {searchQuery && (
-              <div className='absolute w-6/12 m-auto mt-2 bg-white rounded-lg shadow-lg left-1/4 max-h-[339px] overflow-y-scroll ' style={scrollbarStyle}>
-                {filteredProducts.length > 0 ? (
-                  <ul>
-                    {filteredProducts.map(product => (
-                      <Link to= {`/product/${product.id}`}>
-                      <li className='p-3 font-medium border-b rounded-md cursor-pointer hover:bg-slate-300' key={product.id}>
-                        <div className='flex '>
-                        <img className='block object-cover object-center w-12 h-10' src={`http://localhost:5000/uploads/${product.images.split(',')[0]}`} alt="" />
-                       <p className='ml-8'>{product.name}</p> 
-                        </div>
-                      
-                        </li>
-                      </Link>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className='p-4'>No products found.</p>
-                )}
-              </div>
-            )}
+        <div className='absolute w-6/12 m-auto mt-2 bg-white rounded-lg shadow-lg left-1/4 max-h-[339px] overflow-y-scroll z-10 ' style={scrollbarStyle}>
+          {filteredProducts.length > 0 ? (
+            <ul>
+              {filteredProducts.map(product => (
+                <Link to={`/product/${product.id}`}>
+                  <li className='p-3 font-medium border-b rounded-md cursor-pointer hover:bg-slate-300' key={product.id}>
+                    <div className='flex '>
+                      <img className='block object-cover object-center w-12 h-10' src={`http://localhost:5000/uploads/${product.images.split(',')[0]}`} alt="" />
+                      <p className='ml-8'>{product.name}</p>
+                    </div>
+
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          ) : (
+            <p className='p-4'>No products found.</p>
+          )}
+        </div>
+      )}
     </header>
   )
 }
