@@ -59,8 +59,34 @@ exports.getPantToEdit = async (req, res) => {
 
 
 
+exports.getsearchedproducts = async (req, res) => {
 
-
+    try {
+        const searchTerm = req.params.data;
+    
+        const query = `SELECT * FROM plant WHERE name LIKE ? OR category LIKE ?`;
+        connection.query(query, [`%${searchTerm}%`, `%${searchTerm}%`], (err, rows, fields) => {
+            if (!err) {
+                res.json({
+                    rows
+                });
+            } else {
+                console.error(err);
+                res.status(500).json({
+                    error: 'Internal Server Error',
+                    status: 'failure',
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error: 'Internal Server Error',
+            status: 'failure',
+        });
+    }
+    
+};
 
 
 //  Get All Nursey
