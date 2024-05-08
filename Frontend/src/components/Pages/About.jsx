@@ -113,6 +113,20 @@ function About() {
     </div>
 
     </div>
+    <div class="max-w-[1200px] mx-auto py-2">
+    <h1 class="text-2xl text-center font-bold ">Video Guidance</h1>
+      </div>
+      <div class="max-w-[1100px] mx-auto grid lg:grid-cols-3 sm:grid-cols-2 gap-5 py-20 pt-30 ">
+
+
+        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+
+        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+
+        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+
+       
+      </div>
     <Footer/>
     </>
   )
