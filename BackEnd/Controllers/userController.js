@@ -1,6 +1,6 @@
 const express = require('express')
 const { emailverify } = require('../utils/EmailSender');
-
+const { sendEmail } = require('../utils/EmailSender');
 const connection = require('../Config/db')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -132,8 +132,9 @@ exports.isverified = async (req, res) => {
     }
   })
 }
+
 exports.forgotpassword = async (req, res) => {
-  console.log(req.body.email)
+  
   const query = "SELECT * FROM users WHERE email = ?";
   if (req.body.email) {
     connection.query(query, [req.body.email], async (error, result) => {
@@ -142,10 +143,15 @@ exports.forgotpassword = async (req, res) => {
         res.status(500).send({ error: "Internal server error" });
       } else {
         if (result.length > 0) {
+
+          const subject = 'Change Password Rooftopcultivation';
+          const text = `http://localhost:3000/forgot/${result[0].id}`;
+          await sendEmail(req.body.email, subject, text);
+
           res.status(200).send({
             status: true,
             message: "forgot password link is sended to you at mail",
-            user: result[0] 
+            user: result[0]
           });
         } else {
           res.send({
@@ -160,10 +166,41 @@ exports.forgotpassword = async (req, res) => {
   }
 };
 
+exports.changepassword = async (req, res) => {
+  const query = "UPDATE users SET password = ? WHERE id = ?";
 
-exports.getaddress =async (req, res) => {
+  // Check if the required parameters are provided
+  if (req.body.password && req.body.userid) {
+    const { password, userid } = req.body;
+    const encryptedPassword = await bcrypt.hash(req.body.password, saltRounds)
+    connection.query(query, [encryptedPassword, userid], async (error, result) => {
+      if (error) {
+        console.error("Error querying the database:", error);
+        res.status(500).send({ error: "Internal server error" });
+      } else {
+        if (result.affectedRows > 0) {
+          res.status(200).send({
+            status: true,
+            message: "Password changed successfully"
+          });
+        } else {
+          res.send({
+            status: false,
+            message: "User not found"
+          });
+        }
+      }
+    });
+  } else {
+    res.status(400).send({ error: "Missing parameters: password or userid" });
+  }
+};
+
+
+
+exports.getaddress = async (req, res) => {
   const query = "SELECT delievery_address FROM users WHERE id = ?";
-  if ( req.params.id) {
+  if (req.params.id) {
     connection.query(query, [req.params.id], async (error, result) => {
       if (!error) {
         res.send({

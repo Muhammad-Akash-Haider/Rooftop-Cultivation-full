@@ -54,7 +54,7 @@ function App() {
           <Route path="/emailverify" element={<Verifyemail/>}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/product/:id" element={<Product />}></Route>
-          <Route path="/forgot" element={<Forgot />}></Route>
+          <Route path="/forgot/:id" element={<Forgot />}></Route>
           <Route path="/forgotpassword" element={<Forgotpassword />}></Route>
           <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>

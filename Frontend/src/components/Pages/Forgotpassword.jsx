@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Forgotpassword = () => {
 
   const [email, setEmail] = useState('');
-  const navigate = useNavigate();
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
