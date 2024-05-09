@@ -132,6 +132,34 @@ exports.isverified = async (req, res) => {
     }
   })
 }
+exports.forgotpassword = async (req, res) => {
+  console.log(req.body.email)
+  const query = "SELECT * FROM users WHERE email = ?";
+  if (req.body.email) {
+    connection.query(query, [req.body.email], async (error, result) => {
+      if (error) {
+        console.error("Error querying the database:", error);
+        res.status(500).send({ error: "Internal server error" });
+      } else {
+        if (result.length > 0) {
+          res.status(200).send({
+            status: true,
+            message: "forgot password link is sended to you at mail",
+            user: result[0] 
+          });
+        } else {
+          res.send({
+            status: false,
+            message: "Email not found"
+          });
+        }
+      }
+    });
+  } else {
+    res.status(400).send({ error: "Missing email parameter" });
+  }
+};
+
 
 exports.getaddress =async (req, res) => {
   const query = "SELECT delievery_address FROM users WHERE id = ?";

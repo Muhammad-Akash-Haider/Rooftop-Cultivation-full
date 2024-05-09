@@ -10,36 +10,31 @@ const Forgotpassword = () => {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
-    console.log(email);
-    // try {
-    //   const response = await fetch("http://localhost:5000/user/verify-otp", {
-    //     method: "POST",
-    //     body: JSON.stringify({ }),
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error('Failed to verify OTP');
-    //   }
-
-    //   const data = await response.json();
-    //   if(data.status == false){
-    //     toast.warning(data.message, {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //   }else{
-    //     toast.success(data.message, {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //     });
-    //     localStorage.clear();
-    //     navigate('/login');
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error.message);
-    // }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/user/forgotemail", {
+        method: "POST",
+        body: JSON.stringify({email}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      console.log(data);
+      if(data.status == false){
+        toast.warning(data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }else{
+        toast.success(data.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+       
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
 
   return (

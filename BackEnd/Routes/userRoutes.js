@@ -3,7 +3,7 @@ const router = express.Router()
 const multer = require('multer');
 const connection = require('../Config/db')
 
-const{ login, signup ,profileverify,saveaddress,getaddress ,isverified,verifyotp }=require('../Controllers/userController')
+const{ login, signup ,profileverify,saveaddress,getaddress ,isverified,verifyotp ,forgotpassword }=require('../Controllers/userController')
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -20,6 +20,7 @@ router.route('/getaddress/:id').get(getaddress);
 router.route('/isverified/:id').get(isverified);
 router.route('/login').post(login);
 router.route('/verify-otp').post(verifyotp); 
+router.route('/forgotemail').post(forgotpassword); 
 
 router.route('/signup').post(signup)
 
