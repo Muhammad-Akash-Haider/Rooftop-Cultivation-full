@@ -104,7 +104,7 @@ function Login() {
             <button type='submit' onClick={submit} class="text-white bg-[#00967C] border-0 py-2 px-8 focus:outline-none hover:bg-[#1B4636] rounded text-m">Sign In</button>
             <br />
             <div className='w-full px-8 py-2 text-center outline-none'>
-              <Link to="/Forgot">
+              <Link to="/forgotpassword">
                 <button class="text-xs hover:underline text-gray-500 mb-3">Forgot Password</button></Link>
               <Link to="/Register">
                 <button class="text-center py-0 px-0 w-full outline-none text-xs hover:underline text-gray-500 mt-3">Sign Up</button></Link>

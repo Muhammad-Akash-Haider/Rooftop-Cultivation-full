@@ -21,7 +21,7 @@ import Forgot from "./components/Pages/Forgot";
 import Business from "./components/Pages/Business";
 import Chat from "./components/Pages/Chat";
 import About from "./components/Pages/About";
-
+import Forgotpassword from "./components/Pages/Forgotpassword";
 import UpdatePlant from "./Dashboards/SellerDashboard/UpdatePlant";
 import ChatBusiness from './Dashboards/SellerDashboard/businesschat';
 import My_Orders from "./components/Pages/My_Orders";
@@ -55,6 +55,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/product/:id" element={<Product />}></Route>
           <Route path="/forgot" element={<Forgot />}></Route>
+          <Route path="/forgotpassword" element={<Forgotpassword />}></Route>
           <Route path="/cart" element={<Checkout />}></Route>
           <Route path="/My_Orders" element={<My_Orders/>}></Route>
           <Route path="/" element={<Home/>}></Route>
