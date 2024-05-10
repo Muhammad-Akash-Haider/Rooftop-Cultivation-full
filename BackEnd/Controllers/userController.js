@@ -4,8 +4,42 @@ const { sendEmail } = require('../utils/EmailSender');
 const connection = require('../Config/db')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const crypto = require("crypto")
+
+const encrypt = (plainText, password) => {
+  try {
+    const iv = crypto.randomBytes(16);
+    const key = crypto.createHash('sha256').update(password).digest('base64').substr(0, 32);
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+
+    let encrypted = cipher.update(plainText);
+    encrypted = Buffer.concat([encrypted, cipher.final()])
+    return iv.toString('hex') + ':' + encrypted.toString('hex');
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const decrypt = (encryptedText, password) => {
+  try {
+    const textParts = encryptedText.split(':');
+    const iv = Buffer.from(textParts.shift(), 'hex');
+
+    const encryptedData = Buffer.from(textParts.join(':'), 'hex');
+    const key = crypto.createHash('sha256').update(password).digest('base64').substr(0, 32);
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    
+    const decrypted = decipher.update(encryptedData);
+    const decryptedText = Buffer.concat([decrypted, decipher.final()]);
+    return decryptedText.toString();
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
+const pass = "secret1234"
 
 
 
@@ -143,9 +177,12 @@ exports.forgotpassword = async (req, res) => {
         res.status(500).send({ error: "Internal server error" });
       } else {
         if (result.length > 0) {
+          const stringtext = result[0].id.toString();
+
+          const encText = encrypt(stringtext, pass)
 
           const subject = 'Change Password Rooftopcultivation';
-          const text = `http://localhost:3000/forgot/${result[0].id}`;
+          const text = `http://localhost:3000/forgot/${encText}`;
           await sendEmail(req.body.email, subject, text);
 
           res.status(200).send({
@@ -173,7 +210,9 @@ exports.changepassword = async (req, res) => {
   if (req.body.password && req.body.userid) {
     const { password, userid } = req.body;
     const encryptedPassword = await bcrypt.hash(req.body.password, saltRounds)
-    connection.query(query, [encryptedPassword, userid], async (error, result) => {
+    const decText = decrypt(userid, pass)
+
+    connection.query(query, [encryptedPassword, decText], async (error, result) => {
       if (error) {
         console.error("Error querying the database:", error);
         res.status(500).send({ error: "Internal server error" });
