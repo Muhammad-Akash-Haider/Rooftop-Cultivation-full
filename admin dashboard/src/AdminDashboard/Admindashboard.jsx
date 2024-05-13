@@ -2,6 +2,7 @@ import { FaBars } from 'react-icons/fa';
 import React, { useState, useEffect } from 'react';
 
 import Sidebar from './Sidebar';
+import ChartAdmin from './ChartAdmin';
 
 
 const Admindashboard = () => {
@@ -12,9 +13,6 @@ const Admindashboard = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  const [chartData, setChartData] = useState({});
-  const [chartOptions, setChartOptions] = useState({});
 
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
   useEffect(() => {
@@ -32,8 +30,8 @@ const Admindashboard = () => {
         const response = await fetch(`http://localhost:5000/dashboard/admindashboard`);
        
         const data = await response.json();
-       
         SetDashboardData(data);
+        console.log(DashboardData);
        
       } catch (error) {
         console.error('Error fetching plant data:', error);
@@ -44,41 +42,7 @@ const Admindashboard = () => {
   }, []); // Empty dependency array means this effect runs once after the initial render
 
 
-  useEffect(() => {
-      const data = {
-          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-          datasets: [
-              {
-                  label: 'Sales',
-                  data: [5, 5, 2, 6],
-                  backgroundColor: [
-                      'rgba(255, 159, 64, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgb(255, 159, 64)',
-                      'rgb(75, 192, 192)',
-                      'rgb(54, 162, 235)',
-                      'rgb(153, 102, 255)'
-                    ],
-                    borderWidth: 1
-              }
-          ]
-      };
-      const options = {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      };
-
-      setChartData(data);
-      setChartOptions(options);
-  }, []);
-
+ 
   return (
     <div className="flex">
       {/* Sidebar */}
@@ -119,11 +83,8 @@ const Admindashboard = () => {
        </div>
      </div>
 
-     {/* <div className="card w-[90%] m-auto">
-            <Chart type="bar" data={chartData} options={chartOptions} />
-        </div> */}
        
-
+       <ChartAdmin data={DashboardData}/>
       </div>
 
       {/* Toggle Button (Visible only on small screens) */}
