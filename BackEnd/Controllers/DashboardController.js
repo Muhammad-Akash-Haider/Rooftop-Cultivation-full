@@ -81,12 +81,12 @@ router.get('/dashboardDetails/:id', async (req, res) => {
         const returns = results2[0].return_count;
 
         // Fetch data from the third table
-        const query3 = 'SELECT COUNT(*) AS notification_count FROM Notifications WHERE user_id = ?';
+        const query3 = 'SELECT * from `users` WHERE id = ?';
         const results3 = await queryAsync(query3, [req.params.id]);
-        const notifications = results3[0].notification_count;
+        const user = results3[0];
 
         // Send the response with all the data
-        res.json({ orders, total_amount, returns, notifications });
+        res.json({ orders, total_amount, returns, user });
     } catch (error) {
         // Handle errors
         console.error(error);
