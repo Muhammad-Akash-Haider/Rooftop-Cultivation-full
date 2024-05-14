@@ -24,7 +24,6 @@ function Sidebar() {
         setid(localStorage.getItem('user_id'));
     }, [id]);
 
-
     const makePayment = async () => {
 
         const stripe = await loadStripe("pk_test_51OjdVEDLpC8Qo70IVmrn9xp7fa7RdrqIaACe9hBZF7MnFFHPjGE60paFnFR2hmSaEvYu4pnMf5Vvvix3kXtrMbHe00nTi6bTjs");
@@ -60,6 +59,7 @@ function Sidebar() {
                 throw new Error('Failed to fetch user data');
             }
             const userdata = await response.json();
+            console.log(userdata);
             setisverifieddata(userdata.data[0].user_status);
             console.log(userdata.data[0].user_status);
         } catch (error) {
@@ -86,6 +86,7 @@ function Sidebar() {
                         &nbsp; Dashboard
                     </li>
                 </Link>
+                
                 {isverifieddata == 0 ?
                 
                     <li onClick={information} className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />

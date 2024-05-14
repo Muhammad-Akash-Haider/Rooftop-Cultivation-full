@@ -28,6 +28,7 @@ exports.updateUserStatus = async (req, res) => {
     const userId = req.params.id;
     const newStatus = req.body.status;
 
+    console.log(req.body)
     
     if (!userId || !newStatus) {
         return res.status(400).json({ error: 'Invalid input' });
@@ -49,6 +50,7 @@ exports.updateUserStatus = async (req, res) => {
         // Successful update
         res.json({ message: 'Status updated successfully' });
     });
+
 
 }
 
