@@ -7,7 +7,7 @@ const Sellerdashboard = () => {
   const [user, setUser] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user_id, setUser_id] = useState(localStorage.getItem('user_id'));
-  const [dashboardData, setDashboardData] = useState([]);
+  const [dashboardData, setDashboardData] = useState(null);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -32,10 +32,7 @@ const Sellerdashboard = () => {
     fetchData();
   }, [user_id]);
 
-  if (!dashboardData) {
-    return <div>Loading...</div>;
-}
-  const chartConfig = {
+  const chartConfig = dashboardData ? {
     type: 'donut',
     width: 1000,
     height: 380,
@@ -63,7 +60,7 @@ const Sellerdashboard = () => {
         },
       },
       title: {
-        text: 'Orders vs Returns ',
+        text: 'Orders vs Returns vs Users',
       },
       dataLabels: {
         enabled: false,
@@ -73,7 +70,7 @@ const Sellerdashboard = () => {
         show: true,
       },
     },
-  };
+  } : null;
 
   return (
     <div className="flex">
@@ -97,15 +94,15 @@ const Sellerdashboard = () => {
           <div className="px-6 sm-auto max-w-7xl lg:px-8">
             <dl className="grid grid-cols-1 text-center gap-x-4 gap-y-4 md:grid-cols-3 lg:grid-cols-3">
               <div className="mx-auto flex flex-col gap-y-4 border-2 md:p-10 py-3 rounded-2xl bg-slate-200 w-[235px] md:w-[245px]">
-                <dt className="text-xl leading-7 text-gray-600">{dashboardData.total_amount} pkr</dt>
+                <dt className="text-xl leading-7 text-gray-600">{dashboardData?.total_amount} pkr</dt>
                 <dd className="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total sales</dd>
               </div>
               <div className="mx-auto flex flex-col gap-y-4 border-2 md:p-10 py-3 rounded-2xl bg-slate-200 px-10 w-[235px] md:w-[245px]">
-                <dt className="text-xl leading-7 text-gray-600">{dashboardData.orders}</dt>
+                <dt className="text-xl leading-7 text-gray-600">{dashboardData?.orders}</dt>
                 <dd className="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Orders</dd>
               </div>
               <div className="mx-auto flex flex-col gap-y-4 border-2 md:p-10 py-3 rounded-2xl bg-slate-200 px-10 w-[235px] md:w-[245px]">
-                <dt className="text-xl leading-7 text-gray-600">{dashboardData.returns}</dt>
+                <dt className="text-xl leading-7 text-gray-600">{dashboardData?.returns}</dt>
                 <dd className="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Returns</dd>
               </div>
             </dl>
@@ -113,16 +110,18 @@ const Sellerdashboard = () => {
         </div>
 
         {/* Chart */}
-        <div className="py-5 bg-white md:py-10 md:mt-3">
-          <Chart
-            className="p-5"
-            type={chartConfig.type}
-            series={chartConfig.series}
-            options={chartConfig.options}
-            width={chartConfig.width}
-            height={chartConfig.height}
-          />
-        </div>
+        {chartConfig ? (
+          <div className="py-5 bg-white md:py-10 md:mt-3">
+            <Chart
+              className="p-5"
+              type={chartConfig.type}
+              series={chartConfig.series}
+              options={chartConfig.options}
+              width={chartConfig.width}
+              height={chartConfig.height}
+            />
+          </div>
+        ) : null}
       </div>
 
       {/* Toggle Button (Visible only on small screens) */}
