@@ -35,12 +35,12 @@ router.get('/admindashboard', async (req, res) => {
         const returns = results2[0].return_count;
 
         // Fetch data from the third table
-        const query3 = 'SELECT COUNT(*) AS notification_count FROM Notifications ';
+        const query3 = 'SELECT COUNT(*) AS notification_count FROM users ';
         const results3 = await queryAsync(query3);
-        const notifications = results3[0].notification_count;
+        const users = results3[0].notification_count;
 
         // Send the response with all the data
-        res.json({ orders, total_amount, returns, notifications });
+        res.json({ orders, total_amount, returns, users });
     } catch (error) {
         // Handle errors
         console.error(error);

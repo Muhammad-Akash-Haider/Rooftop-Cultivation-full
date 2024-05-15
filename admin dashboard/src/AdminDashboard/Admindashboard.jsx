@@ -31,7 +31,7 @@ const Admindashboard = () => {
        
         const data = await response.json();
         SetDashboardData(data);
-        console.log(DashboardData);
+        console.log(data);
        
       } catch (error) {
         console.error('Error fetching plant data:', error);
@@ -68,7 +68,7 @@ const Admindashboard = () => {
          <dl class="grid  gap-x-4 gap-y-4 text-center  grid-cols-1  md:grid-cols-3 lg:grid-cols-3 ">
          
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200  w-[235px] md:w-[245px] " >
-             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.orders} </dt>
+             <dt class=" leading-7 text-gray-600 text-xl">{DashboardData.users} </dt>
              <dd class="order-first text-2xl font-semibold tracking-tight text-gray-900 sm:text-2xl">Total Users</dd>
            </div>
            <div class="mx-auto flex  flex-col gap-y-4 border-2 md:p-10 py-3  rounded-2xl  bg-slate-200 px-10 w-[235px]  md:w-[245px]">
