@@ -7,6 +7,9 @@ import Akash from '../Pages/images2/Akash2.jpg';
 import Ashba from '../Pages/images2/Ashba.jpg';
 import Majid from '../Pages/images2/Majid.jpg';
 
+import video1 from '../../../src/videos/video1.mp4';
+import video2 from '../../../src/videos/video2.mp4';
+import video3 from '../../../src/videos/video3.mp4';
 
 function About() {
   return (
@@ -119,11 +122,11 @@ function About() {
       <div class="max-w-[1100px] mx-auto grid lg:grid-cols-3 sm:grid-cols-2 gap-5 py-20 pt-30 ">
 
 
-        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+        <video controls w-400 h-200 class="rounded-lg" src={video1} >unavailble</video>
 
-        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+        <video controls w-400 h-200 class="rounded-lg" src={video2}>unavailble</video>
 
-        <video controls w-400 h-200 class="rounded-lg" src="videos/video1.mp4">unavailble</video>
+        <video controls w-400 h-200 class="rounded-lg" src={video3}>unavailble</video>
 
        
       </div>
