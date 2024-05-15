@@ -22,7 +22,7 @@ const Admindashboard = () => {
   }, []); 
 
 
-  const [DashboardData, SetDashboardData] = useState([]);
+  const [DashboardData, SetDashboardData] = useState('');
 
   useEffect(() => {
     const fetchData = async () => { 

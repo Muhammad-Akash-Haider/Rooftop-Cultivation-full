@@ -2,11 +2,9 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 
 const ChartAdmin = ({ data }) => {
-    if (!data) {
-        return <div>Loading...</div>;
-    }
+   
 
-    const chartConfig = {
+    const chartConfig = data ? {
         type: 'donut',
         width: 1000,
         height: 380,
@@ -44,17 +42,23 @@ const ChartAdmin = ({ data }) => {
                 show: true,
             },
         },
-    };
+    } : null;
 
     return (
-        <Chart
-            className="p-5"
-            type={chartConfig.type}
-            series={chartConfig.series}
-            options={chartConfig.options}
-            width={chartConfig.width}
-            height={chartConfig.height}
-        />
+        <div>
+            {data ? (
+                <div className="py-5 bg-white md:py-10 md:mt-3">
+                    <Chart
+                        className="p-5"
+                        type={chartConfig.type}
+                        series={chartConfig.series}
+                        options={chartConfig.options}
+                        width={chartConfig.width}
+                        height={chartConfig.height}
+                    />
+                </div>
+            ) : null}
+        </div>
     );
 };
 
