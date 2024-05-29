@@ -71,7 +71,7 @@ const ProfileVerify = () => {
     <div className="flex">
       {/* Sidebar */}
       <aside
-        className={`pt-[30px] w-[243px] rounded lg:pt-0 bg-red-600 text-white h-screen fixed top-0 left-0 overflow-y-auto transition-transform transform ${isSidebarOpen ? 'w-[300px]' : '-translate-x-full '
+        className={`pt-[30px] w-[243px] rounded lg:pt-0 bg-green-600 text-white h-screen fixed top-0 left-0 overflow-y-auto transition-transform transform ${isSidebarOpen ? 'w-[300px]' : '-translate-x-full '
           } lg:translate-x-0`}
       >
         <Sidebar />

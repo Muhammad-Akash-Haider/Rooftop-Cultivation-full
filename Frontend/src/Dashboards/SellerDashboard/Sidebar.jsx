@@ -89,8 +89,10 @@ function Sidebar() {
                 
                 {isverifieddata == 0 ?
                 
-                    <li onClick={information} className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />
-                    &nbsp; Add plant</li>
+                <Link to="/addplant">
+                    <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />
+                        &nbsp; Add plant</li>
+                </Link>
                     :
                     <Link to="/addplant">
                     <li className='pt-2 pb-2 pl-6 rounded-md hover:bg-green-500'>< GiPlantRoots className="inline text-white" />

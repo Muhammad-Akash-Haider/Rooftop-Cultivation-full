@@ -110,10 +110,13 @@ const Orders = () => {
                   Order date
                 </th>
                 <th scope="col" class="px-6 py-3">
+                  customer Address
+                </th>
+                <th scope="col" class="px-6 py-3">
                   Product name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Change Status
+                 Status
                 </th>
               </tr>
             </thead>
@@ -137,6 +140,9 @@ const Orders = () => {
                       minute: 'numeric',
 
                     }).format(new Date(product.order_date))}
+                  </td>
+                  <td class="px-6 py-4">
+                    {product.delievery_address}
                   </td>
                   <td class="px-6 py-4">
                     {product.name}

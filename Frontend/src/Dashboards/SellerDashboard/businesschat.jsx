@@ -22,7 +22,7 @@ const ChatBusiness = ({ socket }) => {
 
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [chats, setchats] = useState([]);
+  const [chats, setchats] = useState('');
 
   const divRef = useRef(null);
 
@@ -37,7 +37,7 @@ const ChatBusiness = ({ socket }) => {
           const response = await fetch(`http://localhost:5000/chat/getchatsbusiness/${user_id}`);
           if (response.ok) {
               const data = await response.json();
-
+              
               setchats(data.data);
               console.log(data.data)
           } else {
@@ -135,12 +135,21 @@ const ChatBusiness = ({ socket }) => {
       <div className="flex h-screen text-black bg-white">
             {/* Chat List */}
             <div className="w-1/4 shadow-lg ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white ">
-                {chats.map((chat) => (
+                
+                {chats ? 
+                <>
+                 {chats.map((chat) => (
                     <div key={chat.chatid} onClick={() => handleChatSelection(chat.chatid)} className="p-4 m-4 text-black rounded shadow-lg cursor-pointer hover:bg-grrounded-sm hover:bg-green-300 ring-1 ring-black ring-opacity-5 ring-offset-4 ring-offset-white">
                         <div className="font-semibold text-black ">{chat.First_name+' '+chat.last_name}</div>
                         <div className="text-black">{chat.message}</div>
                     </div>
                 ))}
+                </>
+                :
+                <>
+                <h1 className='p-6 font-semibold' >No message found</h1>
+                </>}
+               
             </div>
             {/* Chat Window */}
             <div className="w-3/4 bg-[rgb(246 247 246)] bg-[#ece5dd]">

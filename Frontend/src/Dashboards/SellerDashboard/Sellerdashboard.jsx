@@ -60,12 +60,12 @@ const Sellerdashboard = () => {
         },
       },
       title: {
-        text: 'Orders vs Returns vs Users',
+        text: 'Orders vs Returns ',
       },
       dataLabels: {
         enabled: false,
       },
-      colors: ['#00897b', '#ff8f00', '#ff1f23'],
+      colors: ['#00897b', '#ff1f23', '#ff1f23'], 
       legend: {
         show: true,
       },
